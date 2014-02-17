@@ -76,6 +76,7 @@
         <module>ejb3</module>
         <module>ejb3-bridge</module>
         <module>tx</module>
+        <module>distribution</module>
     </modules>
 
     <dependencyManagement>
@@ -746,7 +747,6 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${version.checkstyle.plugin}</version>
             </plugin>
-
         </plugins>
         
     </build>

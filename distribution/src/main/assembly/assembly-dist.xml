@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2014 Red Hat, inc., and individual contributors
+as indicated by the @author tags. See the copyright.txt file in the
+distribution for a full listing of individual contributors.
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+MA 02110-1301  USA
+-->
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+    <id>Legacy module Distribution</id>
+    <formats>
+        <format>zip</format>
+        <format>tar.gz</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>../lib/target/module</directory>
+            <outputDirectory>modules/system/layers/base</outputDirectory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <useDefaultExcludes>true</useDefaultExcludes>
+        </fileSet>
+        <fileSet>
+            <directory>../jnp/target/module</directory>
+            <outputDirectory>modules/system/layers/base</outputDirectory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <useDefaultExcludes>true</useDefaultExcludes>
+        </fileSet>
+        <fileSet>
+            <directory>../ejb3/target/module</directory>
+            <outputDirectory>modules/system/layers/base</outputDirectory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <useDefaultExcludes>true</useDefaultExcludes>
+        </fileSet>
+        <fileSet>
+            <directory>../ejb3-bridge/target/module</directory>
+            <outputDirectory>modules/system/layers/base</outputDirectory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <useDefaultExcludes>true</useDefaultExcludes>
+        </fileSet>
+        <fileSet>
+            <directory>../tx/target/module</directory>
+            <outputDirectory>modules/system/layers/base</outputDirectory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <useDefaultExcludes>true</useDefaultExcludes>
+        </fileSet>
+    </fileSets>
+    <!--
+
+        <module>lib</module>
+        <module>jnp</module>
+        <module>ejb3</module>
+        <module>ejb3-bridge</module>
+        <module>tx</module>
+
+    
+    <files>
+        <file>
+            <source>README.md</source>
+            <outputDirectory></outputDirectory>
+        </file>
+    </files>
+	-->
+</assembly>
