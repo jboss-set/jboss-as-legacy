@@ -1,4 +1,4 @@
-<module xmlns="urn:jboss:module:1.0" name="org.jboss.legacy.connector">
+<module xmlns="urn:jboss:module:1.0" name="org.jboss.legacy.ejb3.connector">
     <resources>
         <resource-root path="jboss-as-legacy-eap6-connector.jar"/>
     </resources>
@@ -9,6 +9,6 @@
         <module name="org.jboss.msc"/>
         <module name="org.jboss.staxmapper"/>
 
-        <module name="org.jboss.legacy.spi"/>
+        <module name="org.jboss.legacy.ejb3.spi"/>
     </dependencies>
 </module>

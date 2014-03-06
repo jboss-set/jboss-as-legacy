@@ -4,10 +4,8 @@
     </resources>
 
     <dependencies>
-        <module name="org.jboss.legacy.spi"/>
-        <module name="org.jboss.legacy.ejb3"/>
-        <module name="org.jboss.legacy.eap5"/>
-
+        <module name="org.jboss.legacy.ejb3.spi"/>
+        <module name="org.jboss.legacy.ejb3.proxy"/>
 
         <module name="javax.api"/>
         <module name="org.jboss.as.controller"/>
@@ -17,9 +15,5 @@
         <module name="org.jboss.modules"/>
         <module name="org.jboss.msc"/>
         <module name="org.jboss.staxmapper"/>
-        <!--
-        <module name="org.jboss.metadata"/>
-        -->
-        
     </dependencies>
 </module>

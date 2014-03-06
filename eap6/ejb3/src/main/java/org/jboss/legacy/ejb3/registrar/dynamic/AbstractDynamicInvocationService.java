@@ -26,7 +26,7 @@ import static org.jboss.as.ejb3.EjbMessages.MESSAGES;
 
 import java.lang.reflect.Method;
 
-import javax.naming.InitialContext;
+import org.jboss.as.naming.InitialContext;
 import javax.security.auth.Subject;
 import javax.transaction.TransactionManager;
 
@@ -44,9 +44,12 @@ import org.jboss.as.ejb3.deployment.ModuleDeployment;
 import org.jboss.invocation.InterceptorContext;
 import org.jboss.legacy.common.DeploymentEJBDataProxyMap;
 import org.jboss.legacy.common.ExtendedEJBDataProxy;
+import org.jboss.legacy.common.SecurityActions;
 import org.jboss.legacy.spi.ejb3.dynamic.DynamicInvocationProxy;
 import org.jboss.legacy.spi.ejb3.dynamic.DynamicInvocationTarget;
 import org.jboss.legacy.spi.ejb3.registrar.EJB3RegistrarProxy;
+import org.jboss.modules.ModuleClassLoader;
+import org.jboss.modules.ModuleLoadException;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
@@ -70,6 +73,8 @@ public abstract class AbstractDynamicInvocationService implements DynamicInvocat
     protected final String distinctName;
     protected final String componentName;
     protected final ExtendedEJBDataProxy ejb3Data;
+    
+    protected ModuleClassLoader namingClassLoader = null;
 
     protected DynamicInvocationProxy dynamicInvocationProxy;
     protected EjbDeploymentInformation ejbDeploymentInformation;
@@ -130,7 +135,7 @@ public abstract class AbstractDynamicInvocationService implements DynamicInvocat
     }
     
     protected InterceptorContext createInterceptorContext(Method method, Object[] arguments) throws Exception{
-        final InitialContext ic = new InitialContext();
+        final InitialContext ic = new InitialContext(null);
         try {
             final ComponentView view = viewInjectedValue.getValue();
             final InterceptorContext customContext = new InterceptorContext();
@@ -176,6 +181,18 @@ public abstract class AbstractDynamicInvocationService implements DynamicInvocat
         if (principal != null && credential != null) {
             this.serverSecurityManagerInjectedValue.getValue().push(securityDomain, principal.toString(), credential.toString().toCharArray(), subject);
         }
+    }
+
+    @Override
+    public ClassLoader getLookupContext() {
+        if(this.namingClassLoader == null){
+            try{
+                this.namingClassLoader = SecurityActions.moduleClassLoader("org.jboss.legacy.naming.spi");
+            } catch( ModuleLoadException mle){
+                throw new RuntimeException(mle);
+            }
+        }
+        return this.namingClassLoader;
     }
     
 }

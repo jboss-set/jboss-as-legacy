@@ -1,13 +1,9 @@
 #!/bin/sh
 
-#mvn clean install 
-# -Dversion.jboss.legacy=5.1.0.GA ... eap build does not produce artifacts...
-# -Dcheckstyle.skip=true - ... signed jars screw checkstyle
-#mvn clean install -s ~/redhat/git/jboss-eap/tools/maven/conf/settings.xml -Dmaven.repo.local=/home/baranowb/redhat/tmp/maven-local2 
-#mvn clean install -s ~/redhat/git/jboss-eap/tools/maven/conf/settings.xml
+#mvn clean install -s ~/redhat/git/jboss-eap/tools/maven/conf/settings.xml -Dmaven.repo.local=~/redhat/tmp/maven-local2 
+ 
 mvn clean install
-#-Dversion.jboss.legacy=5.1.0.GA -Dcheckstyle.skip=true 
-#mvn clean install -Dversion.jboss.legacy=5.3.0-SNAPSHOT
+
 if [ "x$JBOSS_HOME" = "x" ]; then
     # get the full path (without any relative bits)
     echo "Set ENV JBOSS_HOME!"
@@ -28,7 +24,7 @@ echo
 echo "To enable Remoting Connector:"
 echo "1 Add extension definition in <extensions>."
 echo
-echo "<extension module=\"org.jboss.legacy.connector\"/>"
+echo "<extension module=\"org.jboss.legacy.ejb3.connector\"/>"
 echo
 echo "2. Add subsystem definition(no args == default IP/port)"
 echo
@@ -43,7 +39,7 @@ echo
 echo "To enable EJB3:"
 echo "1 Add extension definition in <extensions>."
 echo
-echo "<extension module=\"org.jboss.legacy.ejb3\"/>"
+echo "<extension module=\"org.jboss.legacy.ejb3.proxy\"/>"
 echo
 echo "2. Add subsystem definition"
 echo

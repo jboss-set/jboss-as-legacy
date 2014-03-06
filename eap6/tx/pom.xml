@@ -24,7 +24,7 @@
     <parent>
         <artifactId>jboss-as-legacy-eap6</artifactId>
         <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
-    	<version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>jboss-as-legacy-eap6-tx</artifactId>
@@ -77,26 +77,26 @@
 
     <dependencies>
         <dependency>
-    		<artifactId>jboss-as-legacy-eap6-connector</artifactId>
-        	<groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
-        	<version>${project.version}</version>
-    	</dependency>
-		<dependency>
+            <artifactId>jboss-as-legacy-eap6-connector</artifactId>
+            <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.jboss.aspects</groupId>
             <artifactId>jboss-remoting-aspects</artifactId>
         </dependency>
         <dependency>
-			<groupId>org.jboss.aop</groupId>
-	    	<artifactId>jboss-aop</artifactId>
-		</dependency>
+            <groupId>org.jboss.aop</groupId>
+            <artifactId>jboss-aop</artifactId>
+        </dependency>
         <!-- EAP6 -->
         <dependency>
-	        <groupId>org.jboss.spec.javax.transaction</groupId>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
             <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-	    </dependency>
-	    <dependency>
-	   	    <groupId>org.jboss.jbossts.jts</groupId>
-     	    <artifactId>jbossjts-integration</artifactId>
-    	</dependency>
+        </dependency>
+        <dependency>
+               <groupId>org.jboss.jbossts.jts</groupId>
+             <artifactId>jbossjts-integration</artifactId>
+        </dependency>
     </dependencies>
 </project>

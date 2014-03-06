@@ -22,7 +22,7 @@
     <modelVersion>4.0.0</modelVersion>
 
 <!-- -->
-	<parent>
+    <parent>
         <artifactId>jboss-parent</artifactId>
         <groupId>org.jboss</groupId>
         <version>11-redhat-1</version>
@@ -41,42 +41,12 @@
         <!-- for some reason deps are not inherited... -->
         <version.checkstyle.plugin>2.10</version.checkstyle.plugin>
         <version.compiler.plugin>3.1</version.compiler.plugin>
-        <!--
-        <version.infinispan.infinispan-tree>5.2.7.Final</version.infinispan.infinispan-tree>
-        <version.jboss.aspects.remoting>1.0.3</version.jboss.aspects.remoting>
-        -->
-        <!-- NOTE: due to maven buggy nature, this value might be spread across poms, if you edit, please look in other files -->
+
         <version.jboss.as>7.3.1.Final-redhat-1</version.jboss.as>
         <version.jboss.as.legacy>5.2.0</version.jboss.as.legacy>
-        <!--
-        <version.jboss.as.legacy.cm>5.2.0</version.jboss.as.legacy.cm>
-        -->
-        <version.jboss.as.legacy.jnp>1.0.0-SNAPSHOT</version.jboss.as.legacy.jnp>
+
         <version.javax.transaction>1.0.1.Final-redhat-1</version.javax.transaction>
         <version.jboss.jts.itengration>4.17.15.Final-redhat-4</version.jboss.jts.itengration>
-        <!--
-        <version.jboss.jnpserver>5.0.3.GA_CP02</version.jboss.jnpserver>
-        <version.jboss.cache.core>3.2.11.GA</version.jboss.cache.core>
-        <version.jboss.cluster.ha-client>1.1.4.Final</version.jboss.cluster.ha-client>
-        <version.jboss.cluster.ha-server-api>1.2.1.Final</version.jboss.cluster.ha-server-api>
-        <version.jboss.cluster.ha-server-cache-jbc>2.0.3.Final</version.jboss.cluster.ha-server-cache-jbc>
-        <version.jboss.cluster.ha-server-cache-spi>2.0.0.GA</version.jboss.cluster.ha-server-cache-spi>
-        <version.jboss.ejb3.bom>1.0.4</version.jboss.ejb3.bom>
-        <version.jboss.ejb3.proxy-impl>1.0.6.SP2</version.jboss.ejb3.proxy-impl>
-        <version.jboss.ej3.proxy-spi>1.0.0</version.jboss.ej3.proxy-spi>
-        <version.jboss.ej3.security>1.0.2</version.jboss.ej3.security>
-        <version.jboss.javaee>5.0.2.GA</version.jboss.javaee>
-        <version.jboss.jbosssx>2.0.5.SP3-1</version.jboss.jbosssx>
-        <version.jboss.jbosssx.client>4.2.2.GA</version.jboss.jbosssx.client>
-        <version.jboss.metadata>7.0.8.Final-redhat-1</version.jboss.metadata>
-        <version.jboss.metadata.legacy>1.0.6.GA</version.jboss.metadata.legacy>
-        <version.jboss.microcontainer.jboss-kernel>2.0.10.GA</version.jboss.microcontainer.jboss-kernel>
-        <version.jboss.microcontainer.jboss-dependency>2.0.10.GA</version.jboss.microcontainer.jboss-dependency>
-        <version.jboss.remoting>2.5.4.SP4</version.jboss.remoting>
-        <version.jboss.ws.spi>1.1.2.SP8</version.jboss.ws.spi>
-        <version.junit>4.8.2</version.junit>
-        <version.plugin.maven.assembly>2.8</version.plugin.maven.assembly>
-        -->
 
     </properties>
 

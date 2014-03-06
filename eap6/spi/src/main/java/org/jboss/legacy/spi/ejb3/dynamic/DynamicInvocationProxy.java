@@ -131,7 +131,7 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
         final AspectManager aspectManager = AspectManager.instance(beanClassLoader);
         // TODO: probably ClassAdvisor won't do
         final Advisor advisor = new ClassAdvisor(Object.class, aspectManager);
-        //final ClassLoader old = switchLoader(getClass().getClassLoader());
+        final ClassLoader oldLoader = switchLoader(getDynamicInvocationTarget().getLookupContext());
         InitialContext context = null;
         try {
             context = createJNPLocalContext();
@@ -143,11 +143,11 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-//            try {
-//                Thread.currentThread().setContextClassLoader(old);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            try {
+                Thread.currentThread().setContextClassLoader(oldLoader);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
     }
@@ -156,7 +156,7 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
 
         final JBossSessionBeanMetaData metaData = createMetaData(this.ejb3Data);
         final JndiSessionRegistrarBase registrar = getJndiSessionRegistrarBase(this.ejb3Data, this.ejb3RegistrarProxy);
-        final ClassLoader old = switchLoader(getClass().getClassLoader());
+        final ClassLoader old = switchLoader(getDynamicInvocationTarget().getLookupContext());
         InitialContext context = null;
         try {
             context = createJNPLocalContext();
@@ -175,13 +175,29 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
             }
         }
     }
-
+    /**
+     * create context, this has to be invoked in jnp CL
+     * @return
+     * @throws NamingException
+     */
     protected InitialContext createJNPLocalContext() throws NamingException {
+        // only relevant if we are allowed to depend on jnp modules....
+        // TODO either use local-only or add config option for ctx ( I think, this is how it looks like it is done in EAP5
         final Hashtable<String, String> env = new Hashtable<String, String>();
         env.put("java.naming.factory.initial", "org.jnp.interfaces.LocalOnlyContextFactory");
         env.put("java.naming.factory.url.pkgs", "org.jboss.naming:org.jnp.interfaces");
         final InitialContext context = new InitialContext(env);
+
+        // remote
+        // final Hashtable<String, String> env = new Hashtable<String, String>();
+        // env.put("java.naming.factory.initial", "org.jnp.interfaces.NamingContextFactory");
+        // env.put("java.naming.factory.url.pkgs", "org.jnp.interfaces:org.jboss.naming");
+        // env.put("jnp.localAddress", "localhost");
+        // env.put("jnp.localPort","1099");
+        // env.put("java.naming.provider.url", "jnp://localhost:1099");
+        // final InitialContext context = new InitialContext(env);
         return context;
+
     }
 
     protected abstract InvokableContext createInvokableContext();

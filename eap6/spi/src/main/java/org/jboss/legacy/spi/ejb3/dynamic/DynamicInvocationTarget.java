@@ -35,6 +35,7 @@ public interface DynamicInvocationTarget {
     // TODO: check if Subject must be removed after call
     void setupSecurity(String securityDomain, String string, char[] cs, Subject subject);
 
+    ClassLoader getLookupContext();
     // void setupTrasaction;
 
 }

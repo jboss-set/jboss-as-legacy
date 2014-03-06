@@ -21,10 +21,11 @@
   --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-	<parent>
+    <parent>
         <artifactId>jboss-as-legacy-ejb3</artifactId>
-    	<groupId>org.jboss.as.legacy</groupId>
-    	<version>1.0.0-SNAPSHOT</version>
+        <groupId>org.jboss.as.legacy</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
     </parent>
 
     <artifactId>jboss-as-legacy-eap6</artifactId>
@@ -35,89 +36,76 @@
    
 
     <modules>
-    	<module>spi</module>
-    	<module>connector</module>
+        <module>spi</module>
+        <module>connector</module>
         <module>ejb3</module>
         <module>ejb3-bridge</module>
-	<!--
+    <!--
         <module>tx</module>
-       	-->
+           -->
     </modules>
 
     <dependencyManagement>
         <dependencies>
            <!-- TODO MOVE IT -->
            <dependency>
-				<groupId>org.jboss.as</groupId>
-        		<artifactId>jboss-as-parent</artifactId>
-        		<version>${version.jboss.as}</version>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-parent</artifactId>
+                <version>${version.jboss.as}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
-			    <artifactId>jboss-as-legacy-eap5</artifactId>
-    			<groupId>org.jboss.as.legacy.ejb3.eap5</groupId>
-        		<version>${project.version}</version>
-        		<scope>import</scope>
-        		<type>pom</type>
+                <artifactId>jboss-as-legacy-eap5</artifactId>
+                <groupId>org.jboss.as.legacy.ejb3.eap5</groupId>
+                <version>${project.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <!--
+            <dependency>
+                <groupId>org.jboss.as.legacy.naming</groupId>
+                <artifactId>jboss-as-legacy-naming-jnp</artifactId>
+                <version>${version.jboss.as.legacy.jnp}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>sun-*</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jboss.cluster</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jboss.logging</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            -->
+            <dependency>
+                <groupId>org.jboss.spec.javax.transaction</groupId>
+                <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+                  <version>${version.javax.transaction}</version>
+                  <scope>provided</scope>
             </dependency>
             <dependency>
-	    		<groupId>org.jboss.as.legacy.naming</groupId>
-	    		<artifactId>jboss-as-legacy-naming-jnp</artifactId>
-	    		<version>${version.jboss.as.legacy.jnp}</version>
-	    		<!-- exclude everything, bring nothing: seens like maven brings all excluded deps -->
-	    		<!--
-	    		<exclusions>
-	    			<exclusion>
-                    	<groupId>*</groupId>
-	    				<artifactId>*</artifactId>
-	    			</exclusion>
-	    		</exclusions>
-	    		-->
-	    		<exclusions>
-	    			<exclusion>
-                    	<groupId>sun-*</groupId>
-                    	<artifactId>*</artifactId>
-	    			</exclusion>
-	    			<exclusion>
-                    	<groupId>org.jboss.cluster</groupId>
-                    	<artifactId>*</artifactId>
-	    			</exclusion>
-	    			<!--
-	    			<exclusion>
-                    	<groupId>org.jboss.naming</groupId>
-                    	<artifactId>*</artifactId>
-	    			</exclusion>
-	    			-->
-	    			<exclusion>
-                    	<groupId>org.jboss.logging</groupId>
-                    	<artifactId>*</artifactId>
-	    			</exclusion>
-	    		</exclusions>
-	    	</dependency>
-	    	<dependency>
-	    	    <groupId>org.jboss.spec.javax.transaction</groupId>
-                <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-  	            <version>${version.javax.transaction}</version>
-  	            <scope>provided</scope>
-	    	</dependency>
-	    	<dependency>
-	    	    <groupId>org.jboss.jbossts.jts</groupId>
-	    	    <artifactId>jbossjts-integration</artifactId>
-	    		<version>${version.jboss.jts.itengration}</version>
-	    		<scope>provided</scope>
-	    	</dependency>
+                <groupId>org.jboss.jbossts.jts</groupId>
+                <artifactId>jbossjts-integration</artifactId>
+                <version>${version.jboss.jts.itengration}</version>
+                <scope>provided</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <!--
     <dependencies>
-    	<dependency>
-    		<groupId>org.jboss.as.legacy.naming</groupId>
-    		<artifactId>jboss-as-legacy-naming-jnp</artifactId>
-    		<version>${version.jboss.as.legacy.jnp}</version>
-    	</dependency>
+        <dependency>
+            <groupId>org.jboss.as.legacy.naming</groupId>
+            <artifactId>jboss-as-legacy-naming-jnp</artifactId>
+            <version>${version.jboss.as.legacy.jnp}</version>
+        </dependency>
     </dependencies>
-	-->
+    -->
     <build>
         <finalName>${project.artifactId}</finalName>
         <!-- if I add this, it makes maven download jaxb, ha-server etc.... nonsense

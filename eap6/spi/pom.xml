@@ -24,7 +24,7 @@
     <parent>
         <artifactId>jboss-as-legacy-eap6</artifactId>
         <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
-    	<version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>jboss-as-legacy-eap6-spi</artifactId>
@@ -32,68 +32,47 @@
     <packaging>jar</packaging>
 
     <properties>
-        <module.name>org.jboss.legacy.spi</module.name>
+        <module.name>org.jboss.legacy.ejb3.spi</module.name>
     </properties>
     
     <dependencies>
-    	<!--
-    	<dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-controller</artifactId>
-        </dependency>
+        <!-- connector -->
         <dependency>
-        	<groupId>org.jboss.as</groupId>
-    		<artifactId>jboss-as-remoting</artifactId>
-        </dependency>
-        -->
-        <!-- EAP5 dep, needs to be defined directly, since system deps are not trans -->
-        <!--
-		<dependency>
             <groupId>org.jboss.remoting</groupId>
             <artifactId>jboss-remoting</artifactId>
         </dependency>
-        
         <dependency>
-    		<groupId>org.jboss.as.legacy.naming</groupId>
-    		<artifactId>jboss-as-legacy-naming-jnp</artifactId>
-    	</dependency>-->
-    	<!-- connector -->
-    	<dependency>
-            <groupId>org.jboss.remoting</groupId>
-            <artifactId>jboss-remoting</artifactId>
-        </dependency>
-		<dependency>
             <groupId>org.jboss.aspects</groupId>
             <artifactId>jboss-remoting-aspects</artifactId>
         </dependency>
         <!-- EJB3 -->
         <dependency>
-			<groupId>org.jboss.aop</groupId>
-	    	<artifactId>jboss-aop</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.ejb3</groupId>
+            <groupId>org.jboss.aop</groupId>
+            <artifactId>jboss-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.ejb3</groupId>
             <artifactId>jboss-ejb3-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.ejb3</groupId>
-			<artifactId>jboss-ejb3-proxy-impl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.ejb3</groupId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.ejb3</groupId>
+            <artifactId>jboss-ejb3-proxy-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.ejb3</groupId>
             <artifactId>jboss-ejb3-proxy-spi</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.aspects</groupId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.aspects</groupId>
             <artifactId>jboss-transaction-aspects</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.metadata</groupId>
-			<artifactId>jboss-metadata</artifactId>
-		</dependency>
-		<dependency>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.metadata</groupId>
+            <artifactId>jboss-metadata</artifactId>
+        </dependency>
+        <dependency>
             <groupId>jboss</groupId>
-           	<artifactId>jbosssx-client</artifactId>
+               <artifactId>jbosssx-client</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jboss.security</groupId>

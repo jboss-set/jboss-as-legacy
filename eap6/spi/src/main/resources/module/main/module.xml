@@ -1,9 +1,9 @@
-<module xmlns="urn:jboss:module:1.0" name="org.jboss.legacy.spi">
+<?xml version="1.0" encoding="UTF-8"?><module xmlns="urn:jboss:module:1.0" name="org.jboss.legacy.ejb3.spi">
     <resources>
         <resource-root path="jboss-as-legacy-eap6-spi.jar"/>
     </resources>
 
     <dependencies>
-        <module name="org.jboss.legacy.eap5" export="false"/>
+        <module name="org.jboss.legacy.ejb3.eap5" export="false"/>
     </dependencies>
 </module>

@@ -1,50 +1,57 @@
-<module xmlns="urn:jboss:module:1.0" name="org.jboss.legacy.eap5">
+<?xml version="1.0" encoding="UTF-8"?><module xmlns="urn:jboss:module:1.0" name="org.jboss.legacy.ejb3.eap5">
     <resources>
-    	<resource-root path="lib/jboss-aop.jar"/>
-    	<resource-root path="lib/jboss-ejb3-common.jar"/>
-    	<resource-root path="lib/jboss-ejb3-proxy-impl.jar"/>
-    	<resource-root path="lib/jboss-ejb3-proxy-spi.jar"/>
-    	<resource-root path="lib/jboss-metadata.jar"/>
-    	<!--connector-->
-    	<resource-root path="lib/jboss-remoting-aspects.jar"/>
-    	<!-- ejb3 
-    	<resource-root path="lib/jboss-ejb3-proxy-impl.jar"/>
-    	-->
-    	<resource-root path="lib/jboss-ejb3-common.jar"/>
-    	<resource-root path="lib/trove.jar"/>
-    	<resource-root path="lib/jboss-mdr.jar"/>
-    	<!--
-    	<resource-root path="lib/jboss-logging-spi.jar"/>
-    	<resource-root path="lib/jboss-logging-log4j.jar"/>
-    	-->
-    	
-    	<!-- to be removed --> 
-    	<resource-root path="lib/jboss-remoting.jar"/>
-		
-		<resource-root path="lib/jbosssx.jar"/>
-		<resource-root path="lib/jboss-ejb3-ext-api.jar"/>
-		<resource-root path="lib/jboss-ejb3-security.jar"/>
-		<!--
-		<resource-root path="lib/jboss-jacc-api-1.1_spec.jar"/>
-		-->
-		<resource-root path="lib/jboss-as-security.jar"/>
-		<resource-root path="lib/jbossws-spi.jar"/>
-		<resource-root path="lib/jboss-serialization.jar"/>
-		
-		
-		<!-- test -->
+        <resource-root path="lib/jboss-aop.jar"/>
+        <resource-root path="lib/jboss-ejb3-common.jar"/>
+        <resource-root path="lib/jboss-ejb3-proxy-impl.jar"/>
+        <resource-root path="lib/jboss-ejb3-proxy-spi.jar"/>
+        <resource-root path="lib/jboss-metadata.jar"/>
+        <!--connector-->
+        <resource-root path="lib/jboss-remoting-aspects.jar"/>
+        <!-- ejb3 
+        <resource-root path="lib/jboss-ejb3-proxy-impl.jar"/>
+        -->
+        <resource-root path="lib/jboss-ejb3-common.jar"/>
+        <resource-root path="lib/trove.jar"/>
+        <resource-root path="lib/jboss-mdr.jar"/>
+        <resource-root path="lib/jboss-logging-spi.jar"/>
+        <!--
+        <resource-root path="lib/jboss-logging-log4j.jar"/>
+        -->
+        
+        <!-- to be removed --> 
+        <resource-root path="lib/jboss-remoting.jar"/>
+        
+        <resource-root path="lib/jbosssx.jar"/>
+        <resource-root path="lib/jboss-ejb3-ext-api.jar"/>
+        <resource-root path="lib/jboss-ejb3-security.jar"/>
+        <!--
+        <resource-root path="lib/jboss-jacc-api-1.1_spec.jar"/>
+        -->
+        <resource-root path="lib/jboss-as-security.jar"/>
+        <resource-root path="lib/jbossws-spi.jar"/>
+        <resource-root path="lib/jboss-serialization.jar"/>
+        <resource-root path="lib/jboss-javaee.jar"/>
+        
+        
+        <!-- test -->
+        <!-- TODO: move to generic eap5 module  -->
+        <resource-root path="lib/jboss-common-core.jar"/>
+        <resource-root path="lib/oswego-concurrent.jar"/>
+        
+        <!-- 
+        <resource-root path="lib/jnpserver.jar"/>
+        <resource-root path="lib/jnp-client.jar"/>
+        -->
+        
         <!-- TX -->
         <resource-root path="lib/jboss-transaction-aspects.jar"/>
     </resources>
 
-    <dependencies>    	
-    	<module name="org.jboss.legacy.jnp" export="true"/>
-    	<module name="org.javassist" />
-    	<!--test -->
-    	<module name="javax.persistence.api"/>
-    	<module name="javax.ejb.api"/>
-    	<module name="javax.jms.api"/>
-    	
-    	
+    <dependencies>
+        <module name="org.javassist"/>
+        <module name="javax.api" export="true"/>
+        <!-- would be nice, but no no...
+        <module name="org.jboss.legacy.naming.eap5" export="true"/>
+        -->
     </dependencies>
 </module>

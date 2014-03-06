@@ -24,7 +24,7 @@
     <parent>
         <artifactId>jboss-as-legacy-eap6</artifactId>
         <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
-    	<version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>jboss-as-legacy-eap6-ejb3</artifactId>
@@ -34,7 +34,7 @@
     <packaging>jar</packaging>
     
     <properties>
-    	<module.name>org.jboss.legacy.ejb3</module.name>
+        <module.name>org.jboss.legacy.ejb3.proxy</module.name>
     </properties>
 
     <dependencies>
@@ -43,60 +43,17 @@
             <artifactId>jboss-as-legacy-eap6-connector</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
-            <artifactId>jboss-as-legacy-eap6-spi</artifactId>
-            <version>${project.version}</version>
-            <exclusions>
-    			<exclusion>
-    				<groupId>*</groupId>
-    				<artifactId>*</artifactId>
-    			</exclusion>
-    		</exclusions>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.jboss.as</groupId>
             <artifactId>jboss-as-ejb3</artifactId>
             <!-- to be gone -->
             <exclusions>
-	            <exclusion>
-					<groupId>org.jboss.metadata</groupId>
-            		<artifactId>jboss-metadata-ejb</artifactId>
-            	</exclusion>
+                <exclusion>
+                    <groupId>org.jboss.metadata</groupId>
+                    <artifactId>jboss-metadata-ejb</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-    		<groupId>org.jboss.as.legacy.naming</groupId>
-    		<artifactId>jboss-as-legacy-naming-jnp</artifactId>
-    	</dependency>
-        <!-- EAP5 system deps, need to define directly, since those are not included as trans 
-        <dependency>
-			<groupId>org.jboss.aop</groupId>
-	    	<artifactId>jboss-aop</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.ejb3</groupId>
-            <artifactId>jboss-ejb3-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.ejb3</groupId>
-			<artifactId>jboss-ejb3-proxy-impl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.ejb3</groupId>
-            <artifactId>jboss-ejb3-proxy-spi</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.aspects</groupId>
-            <artifactId>jboss-transaction-aspects</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.metadata</groupId>
-			<artifactId>jboss-metadata</artifactId>
-		</dependency>
-		-->
     </dependencies>
     <build>
       <!-- Maven will append the version to the finalName (which is the name 
