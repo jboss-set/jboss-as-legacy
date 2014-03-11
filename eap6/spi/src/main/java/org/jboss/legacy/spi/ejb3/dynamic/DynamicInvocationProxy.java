@@ -131,7 +131,7 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
         final AspectManager aspectManager = AspectManager.instance(beanClassLoader);
         // TODO: probably ClassAdvisor won't do
         final Advisor advisor = new ClassAdvisor(Object.class, aspectManager);
-        final ClassLoader oldLoader = switchLoader(getDynamicInvocationTarget().getLookupContext());
+        final ClassLoader oldLoader = switchLoader(this.getClass().getClassLoader());
         InitialContext context = null;
         try {
             context = createJNPLocalContext();
@@ -156,7 +156,7 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
 
         final JBossSessionBeanMetaData metaData = createMetaData(this.ejb3Data);
         final JndiSessionRegistrarBase registrar = getJndiSessionRegistrarBase(this.ejb3Data, this.ejb3RegistrarProxy);
-        final ClassLoader old = switchLoader(getDynamicInvocationTarget().getLookupContext());
+        final ClassLoader old = switchLoader(this.getClass().getClassLoader());
         InitialContext context = null;
         try {
             context = createJNPLocalContext();

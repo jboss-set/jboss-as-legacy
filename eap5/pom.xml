@@ -27,7 +27,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jboss-as-legacy-eap5</artifactId>
+    <artifactId>jboss-as-legacy-ejb3-eap5</artifactId>
     <groupId>org.jboss.as.legacy.ejb3.eap5</groupId>
     <name>JBoss Application Server: Legacy : EAP5</name>
     <packaging>pom</packaging>
@@ -85,22 +85,6 @@
                 <systemPath>${eap5.home}/common/lib/jboss-metadata.jar</systemPath>
             </dependency>
 
-            <dependency>
-                <groupId>org.jboss.logging</groupId>
-                <artifactId>jboss-logging-log4j</artifactId>
-                <version>${version.jboss.as.legacy}</version>
-                <scope>system</scope>
-                <systemPath>${eap5.home}/client/jboss-logging-log4j.jar</systemPath>
-            </dependency>
-
-            <!-- XXX connector -->
-            <dependency>
-                <groupId>org.jboss.remoting</groupId>
-                <artifactId>jboss-remoting</artifactId>
-                <version>${version.jboss.as.legacy}</version>
-                <scope>system</scope>
-                <systemPath>${eap5.home}/common/lib/jboss-remoting.jar</systemPath>
-            </dependency>
             <!-- XXX connector -->
             <dependency>
                 <groupId>org.jboss.aspects</groupId>
@@ -152,15 +136,6 @@
                 <scope>system</scope>
                 <systemPath>${eap5.home}/lib/jboss-security-spi.jar</systemPath>
             </dependency>
-            
-            <!-- EJB/AOP needs this - LoggingPlugin, even though this one is banned --> 
-            <dependency>
-                <groupId>org.jboss.logging</groupId>
-                <artifactId>jboss-logging-spi</artifactId>
-                <version>${version.jboss.as.legacy}</version>
-                <scope>system</scope>
-                <systemPath>${eap5.home}/client/jboss-logging-spi.jar</systemPath>
-            </dependency>
 
             <!-- test -->
             <dependency>
@@ -206,13 +181,7 @@
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jbossws-spi.jar</systemPath>
             </dependency>
-            <dependency>
-                <groupId>jboss</groupId>
-                <artifactId>jboss-serialization</artifactId>
-                <version>${version.jboss.as.legacy}</version>
-                <scope>system</scope>
-                <systemPath>${eap5.home}/common/lib/jboss-serialization.jar</systemPath>
-            </dependency>
+
             <dependency>
                 <groupId>org.jboss.javaee</groupId>
                 <artifactId>jboss-javaee</artifactId>
@@ -220,39 +189,6 @@
                 <scope>system</scope>
                 <systemPath>${eap5.home}/lib/jboss-javaee.jar</systemPath>
             </dependency>
-    
-    
-            <dependency>
-                <groupId>org.jboss</groupId>
-                <artifactId>jboss-common-core</artifactId>
-                <version>${version.jboss.as.legacy}</version>
-                <scope>system</scope>
-                <systemPath>${eap5.home}/lib/jboss-common-core.jar</systemPath>
-            </dependency>
-            <dependency>
-                <groupId>concurrent</groupId>
-                <artifactId>oswego-concurrent</artifactId>
-                <version>${version.jboss.as.legacy}</version>
-                <scope>system</scope>
-                <systemPath>${eap5.home}/lib/concurrent.jar</systemPath>
-            </dependency>
-            <!--
-            <dependency>
-	            <groupId>org.jboss.naming</groupId>
-	            <artifactId>jnpserver</artifactId>
-	            <version>${version.jboss.as.legacy}</version>
-	            <scope>system</scope>
-                <systemPath>${eap5.home}/common/lib/jnpserver.jar</systemPath>
-	        </dependency>
-	        
-	        <dependency>
-                <groupId>org.jboss.naming</groupId>
-                <artifactId>jnp-client</artifactId>
-                <version>${version.jboss.as.legacy}</version>
-                <scope>system</scope>
-                <systemPath>${eap5.home}/client/jnp-client.jar</systemPath>
-            </dependency>
-            -->
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -280,17 +216,7 @@
             <groupId>org.jboss.metadata</groupId>
             <artifactId>jboss-metadata</artifactId>
         </dependency>
-        <!-- XXX: to be removed 
-        <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging-log4j</artifactId>
-        </dependency>
-        -->
-        <!-- XXX connector: to be removed -->
-        <dependency>
-            <groupId>org.jboss.remoting</groupId>
-            <artifactId>jboss-remoting</artifactId>
-        </dependency>
+
         <!-- XXX connector -->
         <dependency>
             <groupId>org.jboss.aspects</groupId>
@@ -321,13 +247,7 @@
             <groupId>org.jboss.security</groupId>
             <artifactId>jboss-security-spi</artifactId>
         </dependency>    
-        
-        <!-- EJB3/AOP needs this -->
-        <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging-spi</artifactId>
-        </dependency>
-        
+
         <!-- test -->
         <dependency>
             <groupId>org.jboss.jbossas</groupId>
@@ -353,34 +273,11 @@
             <groupId>org.jboss.ws</groupId>
             <artifactId>jbossws-spi</artifactId>
         </dependency>
-        <dependency>
-            <groupId>jboss</groupId>
-            <artifactId>jboss-serialization</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.jboss.javaee</groupId>
             <artifactId>jboss-javaee</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.jboss</groupId>
-            <artifactId>jboss-common-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>concurrent</groupId>
-            <artifactId>oswego-concurrent</artifactId>
-        </dependency>
-        <!--
-        <dependency>
-            <groupId>org.jboss.naming</groupId>
-            <artifactId>jnpserver</artifactId>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.jboss.naming</groupId>
-            <artifactId>jnp-client</artifactId>
-        </dependency>
-        -->
     </dependencies>
 
     <build>

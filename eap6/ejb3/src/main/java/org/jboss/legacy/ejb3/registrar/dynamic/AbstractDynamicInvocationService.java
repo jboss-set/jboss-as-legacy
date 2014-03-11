@@ -179,20 +179,7 @@ public abstract class AbstractDynamicInvocationService implements DynamicInvocat
     public void setupSecurity(String securityDomain, String principal, char[] credential, Subject subject) {
         //TODO: check CL, might need a switch
         if (principal != null && credential != null) {
-            this.serverSecurityManagerInjectedValue.getValue().push(securityDomain, principal.toString(), credential.toString().toCharArray(), subject);
+            this.serverSecurityManagerInjectedValue.getValue().push(securityDomain, principal.toString(), credential, subject);
         }
     }
-
-    @Override
-    public ClassLoader getLookupContext() {
-        if(this.namingClassLoader == null){
-            try{
-                this.namingClassLoader = SecurityActions.moduleClassLoader("org.jboss.legacy.naming.spi");
-            } catch( ModuleLoadException mle){
-                throw new RuntimeException(mle);
-            }
-        }
-        return this.namingClassLoader;
-    }
-    
 }
