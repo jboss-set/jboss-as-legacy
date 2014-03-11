@@ -2,7 +2,7 @@
 
 #mvn clean install -s ~/redhat/git/jboss-eap/tools/maven/conf/settings.xml -Dmaven.repo.local=~/redhat/tmp/maven-local2 
  
-mvn clean install
+mvn clean install -s config/settings.xml
 
 if [ "x$JBOSS_HOME" = "x" ]; then
     # get the full path (without any relative bits)
