@@ -82,7 +82,7 @@ public abstract class AbstractDynamicInvocationService implements DynamicInvocat
             EJBComponentDescription ejbComponentDescription) {
         this.ejb3Data = ejb3Data;
         this.serviceName = DeploymentEJBDataProxyMap.getServiceName(moduleDescription, ejbComponentDescription);
-        this.applicationName = moduleDescription.getEarApplicationName();
+        this.applicationName = moduleDescription.getEarApplicationName() != null ? moduleDescription.getEarApplicationName() : "";
         this.moduleName = moduleDescription.getModuleName();
         this.distinctName = moduleDescription.getDistinctName();
         this.componentName = ejbComponentDescription.getComponentName();
