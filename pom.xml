@@ -37,17 +37,14 @@
     <packaging>pom</packaging>
 
     <properties>
-        <directory.dependencies>${project.build.directory}/dependency</directory.dependencies>
         <!-- for some reason deps are not inherited... -->
         <version.checkstyle.plugin>2.10</version.checkstyle.plugin>
         <version.compiler.plugin>3.1</version.compiler.plugin>
 
         <version.jboss.as>7.3.1.Final-redhat-1</version.jboss.as>
         <version.jboss.as.legacy>5.2.0</version.jboss.as.legacy>
-
         <version.javax.transaction>1.0.1.Final-redhat-1</version.javax.transaction>
         <version.jboss.jts.itengration>4.17.15.Final-redhat-4</version.jboss.jts.itengration>
-
     </properties>
 
     <modules>

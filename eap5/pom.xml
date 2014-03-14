@@ -36,6 +36,7 @@
     </description>
          
     <properties>
+        <directory.dependencies>${project.build.directory}/dependency</directory.dependencies>
         <module.name>org.jboss.legacy.ejb3.eap5</module.name>
         <eap5.home>${env.EAP5_HOME}</eap5.home>
     </properties>
@@ -85,7 +86,14 @@
                 <systemPath>${eap5.home}/common/lib/jboss-metadata.jar</systemPath>
             </dependency>
 
-            <!-- XXX connector -->
+            <!-- only for compile time, this is provided by jnp -->
+            <dependency>
+                <groupId>org.jboss.remoting</groupId>
+                <artifactId>jboss-remoting</artifactId>
+                <version>${version.jboss.as.legacy}</version>
+                <scope>system</scope>
+                <systemPath>${eap5.home}/common/lib/jboss-remoting.jar</systemPath>
+            </dependency>
             <dependency>
                 <groupId>org.jboss.aspects</groupId>
                 <artifactId>jboss-remoting-aspects</artifactId>
@@ -93,7 +101,6 @@
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jboss-remoting-aspects.jar</systemPath>
             </dependency>
-            <!-- EJB3 -->
             <dependency>
                 <groupId>org.jboss.ejb3</groupId>
                 <artifactId>jboss-ejb3-proxy-impl</artifactId>
@@ -136,8 +143,6 @@
                 <scope>system</scope>
                 <systemPath>${eap5.home}/lib/jboss-security-spi.jar</systemPath>
             </dependency>
-
-            <!-- test -->
             <dependency>
                 <groupId>org.jboss.jbossas</groupId>
                 <artifactId>jboss-as-security</artifactId>
@@ -166,7 +171,6 @@
                 <scope>system</scope>
                 <systemPath>${eap5.home}/client/jboss-iiop-client.jar</systemPath>
             </dependency>
-            
             <dependency>
                 <groupId>org.jboss.security</groupId>
                 <artifactId>jbosssx</artifactId>
@@ -181,7 +185,6 @@
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jbossws-spi.jar</systemPath>
             </dependency>
-
             <dependency>
                 <groupId>org.jboss.javaee</groupId>
                 <artifactId>jboss-javaee</artifactId>
@@ -189,9 +192,23 @@
                 <scope>system</scope>
                 <systemPath>${eap5.home}/lib/jboss-javaee.jar</systemPath>
             </dependency>
+            <!-- to be removed -->
+            <dependency>
+	            <groupId>org.jboss.jbossas</groupId>
+	            <artifactId>jboss-as-server</artifactId>
+	            <version>${version.jboss.as.legacy}</version>
+                <scope>system</scope>
+                <systemPath>${eap5.home}/common/lib/jboss.jar</systemPath>
+	        </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
+        <!-- import from naming, not included in module 
+        <dependency>
+            <groupId>org.jboss.jbossas</groupId>
+            <artifactId>jboss-as-server</artifactId>
+        </dependency>-->
+        <!-- regular deps -->
         <dependency>
             <groupId>org.jboss.aop</groupId>
             <artifactId>jboss-aop</artifactId>
@@ -216,13 +233,10 @@
             <groupId>org.jboss.metadata</groupId>
             <artifactId>jboss-metadata</artifactId>
         </dependency>
-
-        <!-- XXX connector -->
         <dependency>
             <groupId>org.jboss.aspects</groupId>
             <artifactId>jboss-remoting-aspects</artifactId>
         </dependency>
-        <!-- EJB3 -->
         <dependency>
             <groupId>org.jboss.ejb3</groupId>
             <artifactId>jboss-ejb3-proxy-impl</artifactId>
@@ -247,8 +261,6 @@
             <groupId>org.jboss.security</groupId>
             <artifactId>jboss-security-spi</artifactId>
         </dependency>    
-
-        <!-- test -->
         <dependency>
             <groupId>org.jboss.jbossas</groupId>
             <artifactId>jboss-as-security</artifactId>
@@ -273,7 +285,6 @@
             <groupId>org.jboss.ws</groupId>
             <artifactId>jbossws-spi</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.jboss.javaee</groupId>
             <artifactId>jboss-javaee</artifactId>
@@ -339,6 +350,37 @@
                         <phase>package</phase>
                         <configuration>
                            <target>
+                                <taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+                                <for param="jar">
+                                    <path>
+                                        <fileset dir="${directory.dependencies}" includes="**/*.jar" />
+                                    </path>
+                                    <sequential>
+                                        <!-- Remove any existing signatures from a JAR file. -->
+                                        <tempfile prefix="usignjar-" destdir="${java.io.tmpdir}" property="temp.file" />
+                                        <echo message="Removing signatures from JAR: @{jar}" />
+                                        <mkdir dir="${temp.file}" />
+
+                                        <unjar src="@{jar}" dest="${temp.file}">
+                                            <patternset>
+                                                <include name="**" />
+                                                <exclude name="META-INF/*.SF" />
+                                                <exclude name="META-INF/*.DSA" />
+                                                <exclude name="META-INF/*.RSA" />
+                                            </patternset>
+                                        </unjar>
+
+                                        <delete file="@{jar}" failonerror="true" />
+                                        <!-- Touch it in case the file didn't have a manifest.
+                                        Otherwise the JAR task below will fail if the manifest
+                                        file doesn't exist. -->
+                                        <mkdir dir="${temp.file}/META-INF" />
+                                        <touch file="${temp.file}/META-INF/MANIFEST.MF" />
+                                        <jar destfile="@{jar}" basedir="${temp.file}" includes="**" manifest="${temp.file}/META-INF/MANIFEST.MF" />
+                                        <delete dir="${temp.file}" failonerror="true" />
+                                    </sequential>
+                                </for>
+                                
                                <!-- Replace the '.' in ${module.name} with '/' to get its path  -->
                                <tempfile property="temp.file"/>
                                <echo message="${module.name}" file="${temp.file}"/>
@@ -362,6 +404,24 @@
                         </configuration>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>ant-contrib</groupId>
+                        <artifactId>ant-contrib</artifactId>
+                        <version>1.0b3</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>ant</groupId>
+                                <artifactId>ant</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-nodeps</artifactId>
+                        <version>1.8.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

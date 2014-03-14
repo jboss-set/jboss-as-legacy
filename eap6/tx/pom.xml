@@ -27,12 +27,12 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jboss-as-legacy-eap6-tx</artifactId>
+    <artifactId>jboss-as-legacy-eap6-ejb3-tx</artifactId>
     <name>JBoss Application Server: Legacy : EAP6 : UserTransaction</name>
     <packaging>jar</packaging>
 
     <properties>
-        <module.name>org.jboss.legacy.tx</module.name>
+        <module.name>org.jboss.legacy.ejb3.tx</module.name>
     </properties>
 
     <build>
@@ -76,6 +76,7 @@
 
 
     <dependencies>
+       
         <dependency>
             <artifactId>jboss-as-legacy-eap6-connector</artifactId>
             <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
@@ -89,6 +90,7 @@
             <groupId>org.jboss.aop</groupId>
             <artifactId>jboss-aop</artifactId>
         </dependency>
+        
         <!-- EAP6 -->
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>

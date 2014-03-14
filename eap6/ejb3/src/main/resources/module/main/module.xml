@@ -23,5 +23,6 @@
         <module name="org.jboss.vfs"/>
         <module name="org.jboss.as.naming"/>
         <module name="org.jboss.as.ee"/>
+
     </dependencies>
 </module>

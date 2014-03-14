@@ -22,6 +22,12 @@
 
 package org.jboss.legacy.spi.common;
 
+import java.util.Hashtable;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 /**
  * Simple interface to define basic contract. Allows to inform legacy proxies about EAP6 start/stop actions.
  * 
@@ -66,5 +72,12 @@ public abstract class LegacyBean {
         ClassLoader current = Thread.currentThread().getContextClassLoader();
         Thread.currentThread().setContextClassLoader(loader);
         return current;
+    }
+    
+    public static InitialContext createJNPLocalContext() throws NamingException {
+        final Hashtable<String, String> env = new Hashtable<String, String>();
+        env.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.LocalOnlyContextFactory");
+        env.put(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
+        return new InitialContext(env);
     }
 }

@@ -23,7 +23,11 @@
 
     <dependencies>
         <module name="org.javassist"/>
-        <module name="javax.api" export="true"/>
+        <module name="javax.transaction.api" export="true"/>
+        <module name="org.jboss.jboss-transaction-spi"export="true"/>
+        <module name="org.jboss.as.transactions" export="true"/>
+        <module name="org.jboss.jts.integration"export="true"/>
+        <module name="org.jboss.jts" export="true"/>
         <module name="org.jboss.legacy.naming.eap5" export="true"/>
     </dependencies>
 </module>

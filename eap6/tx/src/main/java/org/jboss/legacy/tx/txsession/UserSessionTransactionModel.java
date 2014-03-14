@@ -27,5 +27,7 @@ package org.jboss.legacy.tx.txsession;
  * @author <a href="mailto:ehugonne@redhat.com">Emmanuel Hugonnet</a> (c) 2013 Red Hat, inc.
  */
 public interface UserSessionTransactionModel {
+    String SERVICE = "service";
+    String LEGACY = "legacy";
     String SERVICE_NAME = "usersessiontx";
 }

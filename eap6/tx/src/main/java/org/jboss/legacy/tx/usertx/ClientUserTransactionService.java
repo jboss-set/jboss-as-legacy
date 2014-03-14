@@ -35,116 +35,62 @@ import org.jboss.aop.proxy.Proxy;
 import org.jboss.aspects.remoting.InvokeRemoteInterceptor;
 import org.jboss.aspects.remoting.MergeMetaDataInterceptor;
 import org.jboss.aspects.remoting.RemotingProxyFactory;
-import static org.jboss.legacy.jnp.JNPSubsystemModel.LEGACY;
-import org.jboss.legacy.jnp.server.JNPServer;
+
+import org.jboss.legacy.spi.connector.ConnectorProxy;
+import org.jboss.legacy.spi.tx.session.UserSessionTransactionProxy;
+import org.jboss.legacy.spi.tx.user.ClientUserTransactionProxy;
 import org.jboss.msc.service.Service;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
 import org.jboss.msc.value.InjectedValue;
-import org.jboss.remoting.transport.Connector;
-import org.jboss.tm.usertx.client.ClientUserTransaction;
-import org.jboss.tm.usertx.interfaces.UserTransactionSessionFactory;
-import org.jnp.interfaces.Naming;
+
 
 /**
  *
  * @author <a href="mailto:ehugonne@redhat.com">Emmanuel Hugonnet</a> (c) 2013 Red Hat, inc.
  */
-public class ClientUserTransactionService implements Service<RemotingProxyFactory> {
+public class ClientUserTransactionService implements Service<ClientUserTransactionProxy> {
 
-    public static final ServiceName SERVICE_NAME = ServiceName.JBOSS.append(LEGACY).append(ClientUserTransactionModel.SERVICE_NAME);
-    private static final String JNDI_UT_SESSION_FACTORY = "UserTransactionSessionFactory";
-    private static final String JNDI_UT = "UserTransaction";
-    private static final String JNDI_JBOSS_CONTEXT = "java:jboss";
-    private static final String JNDI_COMP_CONTEXT = "java:comp";
+    public static final ServiceName SERVICE_NAME = ServiceName.JBOSS.append(ClientUserTransactionModel.LEGACY).append(ClientUserTransactionModel.SERVICE_NAME);
 
-    private RemotingProxyFactory service;
-    private final InjectedValue<Connector> injectedConnector = new InjectedValue<Connector>();
-    private final InjectedValue<JNPServer> injectedJNPServer = new InjectedValue<JNPServer>();
-    private final InjectedValue<RemotingProxyFactory> injectedUserSessionTransactionProxyFactory = new InjectedValue<RemotingProxyFactory>();
+    private ClientUserTransactionProxy service;
+    private final InjectedValue<ConnectorProxy> injectedConnector = new InjectedValue<ConnectorProxy>();
+        private final InjectedValue<UserSessionTransactionProxy> injectedUserSessionTransactionProxyFactory = new InjectedValue<UserSessionTransactionProxy>();
 
-    public InjectedValue<Connector> getInjectedConnector() {
+    public InjectedValue<ConnectorProxy> getInjectedConnector() {
         return injectedConnector;
     }
 
-    public InjectedValue<RemotingProxyFactory> getInjectedUserSessionTransactionProxyFactory() {
+    public InjectedValue<UserSessionTransactionProxy> getInjectedUserSessionTransactionProxyFactory() {
         return injectedUserSessionTransactionProxyFactory;
-    }
-
-    public InjectedValue<JNPServer> getInjectedJNPServer() {
-        return injectedJNPServer;
     }
 
     @Override
     public void start(StartContext context) throws StartException {
-        service = new RemotingProxyFactory();
+        
         try {
-            createSubcontext("java:");
-            createSubcontext(JNDI_JBOSS_CONTEXT);
-            createSubcontext(JNDI_COMP_CONTEXT);
-            bindGlobally(JNDI_UT, ClientUserTransaction.getSingleton().getReference(), ClientUserTransaction.class.getName());
-            service.setConnector(injectedConnector.getValue());
-            service.setInvokerLocator(injectedConnector.getValue().getInvokerLocator());
-            ArrayList<Interceptor> proxyInterceptors = new ArrayList<Interceptor>(2);
-            proxyInterceptors.add(MergeMetaDataInterceptor.singleton);
-            proxyInterceptors.add(InvokeRemoteInterceptor.singleton);
-            service.setInterceptors(proxyInterceptors);
-            service.setTarget(new LegacyUserTransactionSessionFactory(injectedUserSessionTransactionProxyFactory.getValue()));
-            service.setInterfaces(new Class<?>[]{UserTransactionSessionFactory.class});
-            service.setDispatchName("UserTransactionSessionFactory");
-            service.start();
-            Proxy ut = service.getProxy();
-            bindGlobally(JNDI_UT_SESSION_FACTORY, ut, UserTransactionSessionFactory.class.getName());
+            this.service = new ClientUserTransactionProxy();
+            this.service.setConnector(this.injectedConnector.getValue());
+            this.service.setUserSessionTransactionProxy(this.injectedUserSessionTransactionProxyFactory.getValue());
+            this.service.start();
         } catch (Exception ex) {
             throw new StartException(ex);
-        }
-    }
-
-    private void createSubcontext(String name) throws NamingException, RemoteException {
-        Naming namingServer = this.injectedJNPServer.getValue().getNamingBean().getNamingInstance();
-        Name compoundName = new CompoundName(name, new Properties());
-        try {
-            if (namingServer.lookup(compoundName) != null) {
-                return;
-            }
-            namingServer.createSubcontext(compoundName);
-        } catch (NameNotFoundException ex) {
-            namingServer.createSubcontext(compoundName);
-        }
-    }
-
-    private void bindGlobally(String name, Object object, String className) throws NamingException, RemoteException {
-        bind(JNDI_JBOSS_CONTEXT + '/' + name, object, className);
-        bind(JNDI_COMP_CONTEXT + '/' + name, object, className);
-        bind(name, object, className);
-    }
-
-    private void bind(String name, Object object, String className) throws NamingException, RemoteException {
-        Naming namingServer = this.injectedJNPServer.getValue().getNamingBean().getNamingInstance();
-        Name compoundName = new CompoundName(name, new Properties());
-        try {
-            if (namingServer.lookup(compoundName) != null) {
-                return;
-            }
-            namingServer.bind(compoundName, object, className);
-        } catch (NameNotFoundException ex) {
-            namingServer.bind(compoundName, object, className);
         }
     }
 
     @Override
     public void stop(StopContext context) {
         try {
-            service.stop();
+            this.service.stop();
         } catch (Exception ex) {
             Logger.getLogger(ClientUserTransactionService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public RemotingProxyFactory getValue() throws IllegalStateException, IllegalArgumentException {
+    public ClientUserTransactionProxy getValue() throws IllegalStateException, IllegalArgumentException {
         return service;
     }
 }

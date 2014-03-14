@@ -27,5 +27,7 @@ package org.jboss.legacy.tx.usertx;
  * @author <a href="mailto:ehugonne@redhat.com">Emmanuel Hugonnet</a> (c) 2013 Red Hat, inc.
  */
 public interface ClientUserTransactionModel {
+    String SERVICE = "service";
     String SERVICE_NAME = "usertx";
+    String LEGACY = "legacy";
 }

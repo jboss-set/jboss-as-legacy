@@ -111,7 +111,7 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
         if (ejb3RegistrarProxy == null)
             throw new IllegalArgumentException("EJB3 Registrar proxy must not be null");
         if (dynamicInvocationTarget == null)
-            throw new IllegalArgumentException("Dynamic Target must nto be null");
+            throw new IllegalArgumentException("Dynamic Target must not be null");
         createLegacyBinding();
     }
 
@@ -174,30 +174,6 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
                 e.printStackTrace();
             }
         }
-    }
-    /**
-     * create context, this has to be invoked in jnp CL
-     * @return
-     * @throws NamingException
-     */
-    protected InitialContext createJNPLocalContext() throws NamingException {
-        // only relevant if we are allowed to depend on jnp modules....
-        // TODO either use local-only or add config option for ctx ( I think, this is how it looks like it is done in EAP5
-        final Hashtable<String, String> env = new Hashtable<String, String>();
-        env.put("java.naming.factory.initial", "org.jnp.interfaces.LocalOnlyContextFactory");
-        env.put("java.naming.factory.url.pkgs", "org.jboss.naming:org.jnp.interfaces");
-        final InitialContext context = new InitialContext(env);
-
-        // remote
-        // final Hashtable<String, String> env = new Hashtable<String, String>();
-        // env.put("java.naming.factory.initial", "org.jnp.interfaces.NamingContextFactory");
-        // env.put("java.naming.factory.url.pkgs", "org.jnp.interfaces:org.jboss.naming");
-        // env.put("jnp.localAddress", "localhost");
-        // env.put("jnp.localPort","1099");
-        // env.put("java.naming.provider.url", "jnp://localhost:1099");
-        // final InitialContext context = new InitialContext(env);
-        return context;
-
     }
 
     protected abstract InvokableContext createInvokableContext();

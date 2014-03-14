@@ -24,20 +24,20 @@ package org.jboss.legacy.tx.usertx;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import org.jboss.as.controller.AbstractBoottimeAddStepHandler;
 import org.jboss.as.controller.OperationContext;
 import org.jboss.as.controller.OperationFailedException;
 import org.jboss.as.controller.ServiceVerificationHandler;
-import org.jboss.aspects.remoting.RemotingProxyFactory;
 import org.jboss.dmr.ModelNode;
 import org.jboss.legacy.connector.remoting.RemotingConnectorService;
-import org.jboss.legacy.jnp.server.JNPServer;
-import org.jboss.legacy.jnp.server.JNPServerService;
+import org.jboss.legacy.spi.connector.ConnectorProxy;
+import org.jboss.legacy.spi.tx.session.UserSessionTransactionProxy;
+import org.jboss.legacy.spi.tx.user.ClientUserTransactionProxy;
 import org.jboss.legacy.tx.txsession.UserSessionTransactionService;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceController;
 import org.jboss.msc.service.ServiceTarget;
-import org.jboss.remoting.transport.Connector;
 
 /**
  *
@@ -61,15 +61,15 @@ public class ClientUserTransactionServiceAddStepHandler extends AbstractBoottime
     Collection<ServiceController<?>> installRuntimeServices(final OperationContext context, final ModelNode operation, final ModelNode model, final ServiceVerificationHandler verificationHandler) throws OperationFailedException {
         final ClientUserTransactionService service = new ClientUserTransactionService();
         final ServiceTarget serviceTarget = context.getServiceTarget();
-        final ServiceBuilder<RemotingProxyFactory> serviceBuilder = serviceTarget.addService(ClientUserTransactionService.SERVICE_NAME, service);
-        serviceBuilder.addDependency(JNPServerService.SERVICE_NAME, JNPServer.class, service.getInjectedJNPServer())
-                .addDependency(RemotingConnectorService.SERVICE_NAME, Connector.class, service.getInjectedConnector())
-                .addDependency(UserSessionTransactionService.SERVICE_NAME, RemotingProxyFactory.class,
+        final ServiceBuilder<ClientUserTransactionProxy> serviceBuilder = serviceTarget.addService(ClientUserTransactionService.SERVICE_NAME, service);
+        //serviceBuilder.addDependency(JNPServerService.SERVICE_NAME, JNPServer.class, service.getInjectedJNPServer())
+        serviceBuilder.addDependency(RemotingConnectorService.SERVICE_NAME, ConnectorProxy.class, service.getInjectedConnector())
+                .addDependency(UserSessionTransactionService.SERVICE_NAME, UserSessionTransactionProxy.class,
                         service.getInjectedUserSessionTransactionProxyFactory());
         if (verificationHandler != null) {
             serviceBuilder.addListener(verificationHandler);
         }
-        final ServiceController<RemotingProxyFactory> clientUsertransactionServiceController = serviceBuilder.install();
+        final ServiceController<ClientUserTransactionProxy> clientUsertransactionServiceController = serviceBuilder.install();
         final List<ServiceController<?>> installedServices = new ArrayList<ServiceController<?>>();
         installedServices.add(clientUsertransactionServiceController);
         return installedServices;

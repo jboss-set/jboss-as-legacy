@@ -21,22 +21,24 @@
  */
 package org.jboss.legacy.tx;
 
-import java.util.List;
-import javax.xml.stream.XMLStreamException;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP_ADDR;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUBSYSTEM;
+import static org.jboss.as.controller.parsing.ParseUtils.requireNoAttributes;
+
+import java.util.List;
+
+import javax.xml.stream.XMLStreamException;
+
 import org.jboss.as.controller.operations.common.Util;
 import org.jboss.as.controller.parsing.ParseUtils;
-import static org.jboss.as.controller.parsing.ParseUtils.requireNoAttributes;
 import org.jboss.dmr.ModelNode;
-import static org.jboss.legacy.jnp.JNPSubsystemModel.SERVICE;
 import org.jboss.legacy.tx.txsession.UserSessionTransactionModel;
 import org.jboss.legacy.tx.usertx.ClientUserTransactionModel;
 import org.jboss.staxmapper.XMLElementReader;
 import org.jboss.staxmapper.XMLExtendedStreamReader;
 
 /**
- *
+ * 
  * @author <a href="mailto:ehugonne@redhat.com">Emmanuel Hugonnet</a> (c) 2013 Red Hat, inc.
  */
 public class UserTransactionSubsystem10Parser implements XMLElementReader<List<ModelNode>> {
@@ -55,12 +57,12 @@ public class UserTransactionSubsystem10Parser implements XMLElementReader<List<M
         result.add(txSubsystemAddOperation);
         final ModelNode clientUserTransactionServiceAddOperation = Util.createAddOperation();
         clientUserTransactionServiceAddOperation.get(OP_ADDR).add(SUBSYSTEM, UserTransactionExtension.SUBSYSTEM_NAME)
-                .add(SERVICE, ClientUserTransactionModel.SERVICE_NAME);
+                .add(ClientUserTransactionModel.SERVICE, ClientUserTransactionModel.SERVICE_NAME);
         result.add(clientUserTransactionServiceAddOperation);
 
         final ModelNode userSessionTransactionServiceAddOperation = Util.createAddOperation();
         userSessionTransactionServiceAddOperation.get(OP_ADDR).add(SUBSYSTEM, UserTransactionExtension.SUBSYSTEM_NAME)
-                .add(SERVICE, UserSessionTransactionModel.SERVICE_NAME);
+                .add(UserSessionTransactionModel.SERVICE, UserSessionTransactionModel.SERVICE_NAME);
         result.add(userSessionTransactionServiceAddOperation);
         ParseUtils.requireNoContent(xmlExtendedStreamReader);
     }

@@ -28,6 +28,7 @@ import java.lang.reflect.Method;
 
 import org.jboss.as.naming.InitialContext;
 import javax.security.auth.Subject;
+import javax.transaction.Transaction;
 import javax.transaction.TransactionManager;
 
 import org.jboss.as.core.security.ServerSecurityManager;
@@ -55,6 +56,8 @@ import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
 import org.jboss.msc.value.InjectedValue;
+
+import com.arjuna.ats.arjuna.common.Uid;
 
 /**
  * @author baranowb
@@ -182,4 +185,16 @@ public abstract class AbstractDynamicInvocationService implements DynamicInvocat
             this.serverSecurityManagerInjectedValue.getValue().push(securityDomain, principal.toString(), credential, subject);
         }
     }
+
+    @Override
+    public TransactionManager getTransactionManager() {
+        return ((EJBComponent)viewInjectedValue.getValue().getComponent()).getTransactionManager();
+    }
+
+    @Override
+    public Transaction importTransaction(String id) {
+        Uid importedTx = new Uid(id);
+        return com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionImple.getTransaction(importedTx);
+    }
+
 }
