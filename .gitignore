@@ -45,7 +45,8 @@ PutObjectStoreDirHere
 /.m2
 # ignore eap repo
 local-repo-eap
-
+*.zip
+*.tar.gz
 #These keep hanging around
 arquillian/*/server.log*
 client/shade/dependency-reduced-pom.xml
