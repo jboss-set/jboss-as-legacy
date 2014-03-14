@@ -23,9 +23,13 @@ package org.jboss.legacy.spi.ejb3.dynamic.stateles;
 
 import static org.jboss.legacy.spi.common.LegacyBean.switchLoader;
 
+import javax.transaction.Transaction;
+import javax.transaction.TransactionManager;
+
 import org.jboss.aop.joinpoint.Invocation;
 import org.jboss.aop.joinpoint.InvocationResponse;
 import org.jboss.aop.joinpoint.MethodInvocation;
+import org.jboss.aspects.tx.ClientTxPropagationInterceptor;
 import org.jboss.ejb3.common.lang.SerializableMethod;
 import org.jboss.ejb3.proxy.impl.remoting.SessionSpecRemotingMetadata;
 import org.jboss.ejb3.proxy.spi.container.InvokableContext;
@@ -61,16 +65,31 @@ public class StatelesDynamicInvokableContext implements InvokableContext {
 
     @Override
     public InvocationResponse dynamicInvoke(Invocation invocation) throws Throwable {
+        final TransactionManager tm = dynamicInvocationProxy.getDynamicInvocationTarget().getTransactionManager();
         final MethodInvocation si = (MethodInvocation) invocation;
         // deserialize old CTX in legacy loader
         final JBossSecurityContext context = (JBossSecurityContext) si.getMetaData(LEGACY_MD_SECURITY, LEGACY_MD_KEY_CONTEXT);
+        String tpc = (String)invocation.getMetaData(ClientTxPropagationInterceptor.TRANSACTION_PROPAGATION_CONTEXT,
+                ClientTxPropagationInterceptor.TRANSACTION_PROPAGATION_CONTEXT);
         ClassLoader invocationCL = switchLoader(this.dynamicInvocationProxy.getEjb3Data().getBeanClassLoader());
         try {
-            // TODO: check if tearDown is required.
+            Object returnValue = null;
             setupSecurity(si, context);
-            // final InterceptorContext customContext = createInterceptorContext(si);
-            // final Object returnValue = transactionalInvokation(si, customContext);
-            final Object returnValue = invoke(si);
+            if (tpc != null) {
+                Transaction tx = tm.getTransaction();
+                if (tx != null) {
+                    throw new RuntimeException("cannot import a transaction context when a transaction is already associated with the thread");
+                }
+                Transaction importedTx = dynamicInvocationProxy.getDynamicInvocationTarget().importTransaction(tpc);
+                tm.resume(importedTx);
+                try {
+                    returnValue = invoke(si);
+                } finally {
+                    tm.suspend();
+                }
+            } else {
+                returnValue = invoke(si);
+            }
             return new InvocationResponse(returnValue);
         } finally {
             switchLoader(invocationCL);

@@ -23,6 +23,8 @@
 package org.jboss.legacy.spi.ejb3.dynamic;
 
 import javax.security.auth.Subject;
+import javax.transaction.Transaction;
+import javax.transaction.TransactionManager;
 
 /**
  * This interface defines methods that can be called from SPI in AS7 space. SPI is responsible for setting up proper CL
@@ -35,7 +37,9 @@ public interface DynamicInvocationTarget {
     // TODO: check if Subject must be removed after call
     void setupSecurity(String securityDomain, String string, char[] cs, Subject subject);
 
-    ClassLoader getLookupContext();
+    TransactionManager getTransactionManager();
+    
+    Transaction importTransaction(String id);
     // void setupTrasaction;
 
 }

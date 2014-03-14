@@ -77,6 +77,10 @@ public class ConnectorProxy extends LegacyBean {
 
     @Override
     protected void internalStart() throws Exception {
+        if(this.host == null)
+            throw new IllegalArgumentException("Host value must not be null");
+        if(this.port == null)
+            throw new IllegalArgumentException("Port value must not be null");
         Logger logger = Logger.getLogger("org.jboss.remoting");
         logger.setLevel(Level.ALL);
         logger = Logger.getLogger("org.jnp");

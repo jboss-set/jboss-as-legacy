@@ -24,7 +24,6 @@ package org.jboss.legacy.tx.usertx;
 import org.jboss.as.controller.PathElement;
 import org.jboss.as.controller.SimpleResourceDefinition;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
-import static org.jboss.legacy.jnp.JNPSubsystemModel.SERVICE;
 import org.jboss.legacy.tx.UserTransactionExtension;
 
 /**
@@ -36,7 +35,7 @@ public class ClientUserTransactionResourceDefinition extends SimpleResourceDefin
     public static final ClientUserTransactionResourceDefinition INSTANCE = new ClientUserTransactionResourceDefinition();
 
     private ClientUserTransactionResourceDefinition() {
-        super(PathElement.pathElement(SERVICE, ClientUserTransactionModel.SERVICE_NAME),
+        super(PathElement.pathElement(ClientUserTransactionModel.SERVICE, ClientUserTransactionModel.SERVICE_NAME),
                 UserTransactionExtension.getResourceDescriptionResolver(ClientUserTransactionModel.SERVICE_NAME),
                 ClientUserTransactionServiceAddStepHandler.INSTANCE, ClientUserTransactionServiceRemoveStepHandler.INSTANCE);
     }

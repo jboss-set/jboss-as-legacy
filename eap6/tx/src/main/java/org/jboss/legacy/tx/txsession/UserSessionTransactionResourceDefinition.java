@@ -24,7 +24,7 @@ package org.jboss.legacy.tx.txsession;
 import org.jboss.as.controller.PathElement;
 import org.jboss.as.controller.SimpleResourceDefinition;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
-import static org.jboss.legacy.jnp.JNPSubsystemModel.SERVICE;
+
 import org.jboss.legacy.tx.UserTransactionExtension;
 
 /**
@@ -36,7 +36,7 @@ public class UserSessionTransactionResourceDefinition extends SimpleResourceDefi
     public static final UserSessionTransactionResourceDefinition INSTANCE = new UserSessionTransactionResourceDefinition();
 
     private UserSessionTransactionResourceDefinition() {
-        super(PathElement.pathElement(SERVICE, UserSessionTransactionModel.SERVICE_NAME),
+        super(PathElement.pathElement(UserSessionTransactionModel.SERVICE, UserSessionTransactionModel.SERVICE_NAME),
                 UserTransactionExtension.getResourceDescriptionResolver(UserSessionTransactionModel.SERVICE_NAME),
                 UserSessionTransactionServiceAddStepHandler.INSTANCE, UserSessionTransactionServiceRemoveStepHandler.INSTANCE);
     }

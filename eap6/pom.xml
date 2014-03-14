@@ -40,9 +40,7 @@
         <module>connector</module>
         <module>ejb3</module>
         <module>ejb3-bridge</module>
-    <!--
         <module>tx</module>
-           -->
     </modules>
 
     <dependencyManagement>
@@ -56,33 +54,12 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <artifactId>jboss-as-legacy-eap5</artifactId>
+                <artifactId>jboss-as-legacy-ejb3-eap5</artifactId>
                 <groupId>org.jboss.as.legacy.ejb3.eap5</groupId>
                 <version>${project.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-            <!--
-            <dependency>
-                <groupId>org.jboss.as.legacy.naming</groupId>
-                <artifactId>jboss-as-legacy-naming-jnp</artifactId>
-                <version>${version.jboss.as.legacy.jnp}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>sun-*</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.jboss.cluster</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.jboss.logging</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            -->
             <dependency>
                 <groupId>org.jboss.spec.javax.transaction</groupId>
                 <artifactId>jboss-transaction-api_1.1_spec</artifactId>
@@ -97,15 +74,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <!--
-    <dependencies>
-        <dependency>
-            <groupId>org.jboss.as.legacy.naming</groupId>
-            <artifactId>jboss-as-legacy-naming-jnp</artifactId>
-            <version>${version.jboss.as.legacy.jnp}</version>
-        </dependency>
-    </dependencies>
-    -->
+
     <build>
         <finalName>${project.artifactId}</finalName>
         <!-- if I add this, it makes maven download jaxb, ha-server etc.... nonsense

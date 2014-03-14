@@ -7,51 +7,27 @@
         <resource-root path="lib/jboss-metadata.jar"/>
         <!--connector-->
         <resource-root path="lib/jboss-remoting-aspects.jar"/>
-        <!-- ejb3 
-        <resource-root path="lib/jboss-ejb3-proxy-impl.jar"/>
-        -->
         <resource-root path="lib/jboss-ejb3-common.jar"/>
         <resource-root path="lib/trove.jar"/>
         <resource-root path="lib/jboss-mdr.jar"/>
-        <resource-root path="lib/jboss-logging-spi.jar"/>
-        <!--
-        <resource-root path="lib/jboss-logging-log4j.jar"/>
-        -->
-        
-        <!-- to be removed --> 
-        <resource-root path="lib/jboss-remoting.jar"/>
-        
+
         <resource-root path="lib/jbosssx.jar"/>
         <resource-root path="lib/jboss-ejb3-ext-api.jar"/>
         <resource-root path="lib/jboss-ejb3-security.jar"/>
-        <!--
-        <resource-root path="lib/jboss-jacc-api-1.1_spec.jar"/>
-        -->
         <resource-root path="lib/jboss-as-security.jar"/>
         <resource-root path="lib/jbossws-spi.jar"/>
-        <resource-root path="lib/jboss-serialization.jar"/>
         <resource-root path="lib/jboss-javaee.jar"/>
-        
-        
-        <!-- test -->
-        <!-- TODO: move to generic eap5 module  -->
-        <resource-root path="lib/jboss-common-core.jar"/>
-        <resource-root path="lib/oswego-concurrent.jar"/>
-        
-        <!-- 
-        <resource-root path="lib/jnpserver.jar"/>
-        <resource-root path="lib/jnp-client.jar"/>
-        -->
-        
         <!-- TX -->
         <resource-root path="lib/jboss-transaction-aspects.jar"/>
     </resources>
 
     <dependencies>
         <module name="org.javassist"/>
-        <module name="javax.api" export="true"/>
-        <!-- would be nice, but no no...
+        <module name="javax.transaction.api" export="true"/>
+        <module name="org.jboss.jboss-transaction-spi"export="true"/>
+        <module name="org.jboss.as.transactions" export="true"/>
+        <module name="org.jboss.jts.integration"export="true"/>
+        <module name="org.jboss.jts" export="true"/>
         <module name="org.jboss.legacy.naming.eap5" export="true"/>
-        -->
     </dependencies>
 </module>

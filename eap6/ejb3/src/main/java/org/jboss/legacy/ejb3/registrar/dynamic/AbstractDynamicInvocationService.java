@@ -28,6 +28,7 @@ import java.lang.reflect.Method;
 
 import org.jboss.as.naming.InitialContext;
 import javax.security.auth.Subject;
+import javax.transaction.Transaction;
 import javax.transaction.TransactionManager;
 
 import org.jboss.as.core.security.ServerSecurityManager;
@@ -55,6 +56,8 @@ import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
 import org.jboss.msc.value.InjectedValue;
+
+import com.arjuna.ats.arjuna.common.Uid;
 
 /**
  * @author baranowb
@@ -179,20 +182,19 @@ public abstract class AbstractDynamicInvocationService implements DynamicInvocat
     public void setupSecurity(String securityDomain, String principal, char[] credential, Subject subject) {
         //TODO: check CL, might need a switch
         if (principal != null && credential != null) {
-            this.serverSecurityManagerInjectedValue.getValue().push(securityDomain, principal.toString(), credential.toString().toCharArray(), subject);
+            this.serverSecurityManagerInjectedValue.getValue().push(securityDomain, principal.toString(), credential, subject);
         }
     }
 
     @Override
-    public ClassLoader getLookupContext() {
-        if(this.namingClassLoader == null){
-            try{
-                this.namingClassLoader = SecurityActions.moduleClassLoader("org.jboss.legacy.naming.spi");
-            } catch( ModuleLoadException mle){
-                throw new RuntimeException(mle);
-            }
-        }
-        return this.namingClassLoader;
+    public TransactionManager getTransactionManager() {
+        return ((EJBComponent)viewInjectedValue.getValue().getComponent()).getTransactionManager();
     }
-    
+
+    @Override
+    public Transaction importTransaction(String id) {
+        Uid importedTx = new Uid(id);
+        return com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionImple.getTransaction(importedTx);
+    }
+
 }

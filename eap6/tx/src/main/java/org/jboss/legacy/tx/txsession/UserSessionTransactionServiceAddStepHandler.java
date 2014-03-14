@@ -28,15 +28,14 @@ import org.jboss.as.controller.AbstractBoottimeAddStepHandler;
 import org.jboss.as.controller.OperationContext;
 import org.jboss.as.controller.OperationFailedException;
 import org.jboss.as.controller.ServiceVerificationHandler;
-import org.jboss.aspects.remoting.RemotingProxyFactory;
 import org.jboss.dmr.ModelNode;
 import org.jboss.legacy.connector.remoting.RemotingConnectorService;
-import org.jboss.legacy.jnp.server.JNPServer;
-import org.jboss.legacy.jnp.server.JNPServerService;
+import org.jboss.legacy.spi.connector.ConnectorProxy;
+import org.jboss.legacy.spi.tx.session.UserSessionTransactionProxy;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceController;
 import org.jboss.msc.service.ServiceTarget;
-import org.jboss.remoting.transport.Connector;
+
 
 /**
  *
@@ -60,13 +59,13 @@ public class UserSessionTransactionServiceAddStepHandler extends AbstractBoottim
     Collection<ServiceController<?>> installRuntimeServices(final OperationContext context, final ModelNode operation, final ModelNode model, final ServiceVerificationHandler verificationHandler) throws OperationFailedException {
         final UserSessionTransactionService service = new UserSessionTransactionService();
         final ServiceTarget serviceTarget = context.getServiceTarget();
-        final ServiceBuilder<RemotingProxyFactory> serviceBuilder = serviceTarget.addService(UserSessionTransactionService.SERVICE_NAME, service);
-        serviceBuilder.addDependency(JNPServerService.SERVICE_NAME, JNPServer.class, service.getInjectedJNPServer())
-                .addDependency(RemotingConnectorService.SERVICE_NAME, Connector.class, service.getInjectedConnector());
+        final ServiceBuilder<UserSessionTransactionProxy> serviceBuilder = serviceTarget.addService(UserSessionTransactionService.SERVICE_NAME, service);
+        //serviceBuilder.addDependency(JNPServerService.SERVICE_NAME, JNPServer.class, service.getInjectedJNPServer())
+        serviceBuilder.addDependency(RemotingConnectorService.SERVICE_NAME, ConnectorProxy.class, service.getInjectedConnector());
         if (verificationHandler != null) {
             serviceBuilder.addListener(verificationHandler);
         }
-        final ServiceController<RemotingProxyFactory> userSessionTransactionServiceController = serviceBuilder.install();
+        final ServiceController<UserSessionTransactionProxy> userSessionTransactionServiceController = serviceBuilder.install();
         final List<ServiceController<?>> installedServices = new ArrayList<ServiceController<?>>();
         installedServices.add(userSessionTransactionServiceController);
         return installedServices;

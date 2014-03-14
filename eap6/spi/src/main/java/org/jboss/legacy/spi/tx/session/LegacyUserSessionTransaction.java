@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.legacy.tx.txsession;
+package org.jboss.legacy.spi.tx.session;
 
 import java.rmi.RemoteException;
 import javax.transaction.HeuristicMixedException;
@@ -27,20 +27,22 @@ import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
+
+import org.jboss.legacy.spi.common.LegacyBean;
 import org.jboss.tm.usertx.interfaces.UserTransactionSession;
 import org.jboss.tm.usertx.server.UserTransactionSessionImpl;
 
 /**
- *
+ * 
  * @author <a href="mailto:ehugonne@redhat.com">Emmanuel Hugonnet</a> (c) 2013 Red Hat, inc.
  */
 public class LegacyUserSessionTransaction implements UserTransactionSession {
 
     @Override
     public void destroy() throws RemoteException {
-        /* We do nothing as the tx will timeout and the tx map is shared
-         across all sessions as we have no association with the txs
-         a given client has started.
+        /*
+         * We do nothing as the tx will timeout and the tx map is shared across all sessions as we have no association with the
+         * txs a given client has started.
          */
     }
 

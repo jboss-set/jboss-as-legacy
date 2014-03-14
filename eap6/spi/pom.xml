@@ -36,6 +36,11 @@
     </properties>
     
     <dependencies>
+        <dependency>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!-- connector -->
         <dependency>
             <groupId>org.jboss.remoting</groupId>
@@ -78,6 +83,19 @@
             <groupId>org.jboss.security</groupId>
             <artifactId>jboss-security-spi</artifactId>
         </dependency>        
+        <dependency>
+            <groupId>org.jboss.jbossas</groupId>
+            <artifactId>jboss-as-server</artifactId>
+        </dependency>
+        <!-- EAP6 -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+        </dependency>
+        <dependency>
+               <groupId>org.jboss.jbossts.jts</groupId>
+             <artifactId>jbossjts-integration</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

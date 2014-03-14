@@ -2,7 +2,7 @@
 
 #mvn clean install -s ~/redhat/git/jboss-eap/tools/maven/conf/settings.xml -Dmaven.repo.local=~/redhat/tmp/maven-local2 
  
-mvn clean install
+mvn clean install -s config/settings.xml
 
 if [ "x$JBOSS_HOME" = "x" ]; then
     # get the full path (without any relative bits)
@@ -15,7 +15,7 @@ cp -Rf eap6/spi/target/module/org $JBOSS_HOME/modules/system/layers/base/
 cp -Rf eap6/connector/target/module/org $JBOSS_HOME/modules/system/layers/base/
 cp -Rf eap6/ejb3/target/module/org $JBOSS_HOME/modules/system/layers/base/
 cp -Rf eap6/ejb3-bridge/target/module/org $JBOSS_HOME/modules/system/layers/base/
-#cp -Rf eap6/tx/target/module/org $JBOSS_HOME/modules/system/layers/base/
+cp -Rf eap6/tx/target/module/org $JBOSS_HOME/modules/system/layers/base/
 
 
 echo "Edit configuration file - for instance $JBOSS_HOME/standalone/configuration/standalone.xml"
