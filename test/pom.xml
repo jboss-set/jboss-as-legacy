@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+~ JBoss, Home of Professional Open Source.
+~ Copyright 2010, Red Hat, Inc., and individual contributors
+~ as indicated by the @author tags. See the copyright.txt file in the
+~ distribution for a full listing of individual contributors.
+~
+~ This is free software; you can redistribute it and/or modify it
+~ under the terms of the GNU Lesser General Public License as
+~ published by the Free Software Foundation; either version 2.1 of
+~ the License, or (at your option) any later version.
+~
+~ This software is distributed in the hope that it will be useful,
+~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+~ Lesser General Public License for more details.
+~
+~ You should have received a copy of the GNU Lesser General Public
+~ License along with this software; if not, write to the Free
+~ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>jboss-as-legacy-ejb3</artifactId>
+        <groupId>org.jboss.as.legacy</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <groupId>org.jboss.as.legacy.</groupId>
+    <artifactId>jboss-as-legacy-test</artifactId>
+    <packaging>jar</packaging>
+    <name>JBoss Application Server Legacy : Test</name>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-parent</artifactId>
+                <version>${jboss.eap6.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>1.1.2.Final</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.jbossas</groupId>
+                <artifactId>jboss-as-parent</artifactId>
+                <version>5.2.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-6.0</artifactId>
+            <version>3.0.2.Final</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.as</groupId>
+            <artifactId>jboss-as-arquillian-container-managed</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.as</groupId>
+            <artifactId>jboss-as-testsuite-shared</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jboss-transaction-spi</artifactId>
+                    <groupId>org.jboss</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hornetq</groupId>
+            <artifactId>hornetq-core-client</artifactId>
+            <version>${hornetq.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hornetq</groupId>
+            <artifactId>hornetq-jms-client</artifactId>
+            <version>${hornetq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.naming</groupId>
+            <artifactId>jnp-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.netty</groupId>
+            <artifactId>netty</artifactId>
+            <version>${jboss.netty.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>jboss-remoting</artifactId>
+            <groupId>org.jboss.remoting</groupId>
+        </dependency>
+        <dependency>
+            <artifactId>xnio-api</artifactId>
+            <groupId>org.jboss.xnio</groupId>
+            <version>${jboss.xnio.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>xnio-nio</artifactId>
+            <groupId>org.jboss.xnio</groupId>
+            <version>${jboss.xnio.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>jboss-logging-spi</artifactId>
+            <groupId>org.jboss.logging</groupId>
+            <version>${jboss.logging.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>jboss-logging-spi</artifactId>
+            <groupId>org.jboss.logging</groupId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.cluster</groupId>
+            <artifactId>jboss-ha-client</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.aspects</groupId>
+                    <artifactId>jboss-remoting-aspects</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.security</groupId>
+            <artifactId>jboss-security-spi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.client</groupId>
+            <artifactId>jboss-client</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.ejb3</groupId>
+            <artifactId>jboss-ejb3-proxy-impl</artifactId>
+            <classifier>client</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.ejb3</groupId>
+            <artifactId>jboss-ejb3-proxy-impl</artifactId>
+            <classifier>client</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.ejb3</groupId>
+            <artifactId>jboss-ejb3-proxy-spi</artifactId>
+            <classifier>client</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.ejb3</groupId>
+            <artifactId>jboss-ejb3-core</artifactId>
+            <classifier>client</classifier>
+        </dependency>
+        <dependency>
+            <groupId>oswego-concurrent</groupId>
+            <artifactId>concurrent</artifactId>
+        </dependency>
+    </dependencies>
+
+
+    <properties>
+        <!-- IP address defaults. -->
+        <node0>127.0.0.1</node0>
+        <node1>127.0.0.1</node1>
+        <mcast>230.0.0.4</mcast> <!-- Default multicast address. -->
+
+        <!-- IP stack configs. -->
+        <jvm.args.ip>-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
+        <jvm.args.ip.server>${jvm.args.ip}</jvm.args.ip.server>
+        <jvm.args.ip.client>${jvm.args.ip}</jvm.args.ip.client>
+
+
+        <!-- Timeout ratios. 100 will leave the timeout as it was coded. -->
+        <timeout.factor>100</timeout.factor>
+        <jvm.args.timeouts>-Dts.timeout.factor=${timeout.factor}</jvm.args.timeouts>
+
+        <!-- Common surefire properties. -->
+        <surefire.memory.args>-Xmx512m -XX:MaxPermSize=256m</surefire.memory.args>
+        <surefire.jpda.args />
+        <as.debug.port>8787</as.debug.port>
+        <surefire.system.args>${surefire.memory.args} ${surefire.jpda.args} -Djboss.dist=${jboss.dist}</surefire.system.args>
+        <surefire.forked.process.timeout>1500</surefire.forked.process.timeout>
+
+        <jbossas.eap6.zip><!-- To be defined --></jbossas.eap6.zip>
+        <jnp.extension.zip><!-- To be defined --></jnp.extension.zip>
+        <hornetq.version>2.2.13.Final</hornetq.version>
+        <jboss.eap6.version>7.3.1.Final-redhat-2</jboss.eap6.version>        
+        <jboss.xnio.version>3.0.7.GA-redhat-1</jboss.xnio.version>
+        <jboss.netty.version>3.2.5.Final</jboss.netty.version>
+        <jboss.logging.version>2.1.2.GA</jboss.logging.version>
+        <version.org.jboss.naming>5.0.3.GA_CP02</version.org.jboss.naming>
+        <version.org.jboss.remote-naming>1.0.7.Final-redhat-1</version.org.jboss.remote-naming>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>prepare</id>
+                        <phase>validate</phase>
+                        <configuration>
+                            <target>
+                                <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
+                                <if>
+                                    <available file="target/runtime" />
+                                    <then>
+                                        <echo message="Runtime already configured. Invoke mvn clean to have them reconfigured." />
+                                    </then>
+                                    <else>
+                                        <echo message="Unpacking target runtimes." />
+                                        <unzip src="${jbossas.eap6.zip}" dest="target/runtime" />
+                                        <unzip src="${jnp.extension.zip}" dest="target/runtime/jboss-eap-6.2" />
+                                        <unzip src="${project.basedir}/../legacy-ejb3-extension-${project.version}.zip" dest="target/runtime/jboss-eap-6.2" />
+                                        <chmod dir="target/runtime/jboss-eap-6.2" perm="ugo+rx" includes="**/*.sh" />
+
+                                        <echo message="Enabling JNP for EAP6." />
+                                        <xslt destdir="target/runtime/jboss-eap-6.2/standalone/configuration" style="src/test/resources/xslt/enableEJB3.xsl" extension=".xml.mod" useImplicitFileset="false">
+                                            <fileset dir="target/runtime/jboss-eap-6.2/standalone/configuration">
+                                                <include name="**/standalone-full.xml" />
+                                            </fileset>
+                                        </xslt>
+                                        <move todir="target/runtime/jboss-eap-6.2/standalone/configuration">
+                                            <fileset dir="target/runtime/jboss-eap-6.2/standalone/configuration">
+                                                <include name="**/standalone-full.xml.mod" />
+                                            </fileset>
+                                            <mapper type="glob" from="*.mod" to="*" />
+                                        </move>
+                                        <copy file="src/test/resources/config/application-roles.properties" todir="target/runtime/jboss-eap-6.2/standalone/configuration" overwrite="true" verbose="true" />
+                                        <copy file="src/test/resources/config/application-users.properties" todir="target/runtime/jboss-eap-6.2/standalone/configuration" overwrite="true" verbose="true" />
+                                    </else>
+                                </if>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>ant-contrib</groupId>
+                        <artifactId>ant-contrib</artifactId>
+                        <version>20020829</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Main Apache Maven Repository</name>
+            <url>http://repo.maven.apache.org/maven2/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+</project>
