@@ -103,13 +103,6 @@
             </dependency>
             <dependency>
                 <groupId>org.jboss.ejb3</groupId>
-                <artifactId>jboss-ejb3-proxy-impl</artifactId>
-                <version>${version.jboss.as.legacy}</version>
-                <scope>system</scope>
-                <systemPath>${eap5.home}/common/lib/jboss-ejb3-proxy-impl.jar</systemPath>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.ejb3</groupId>
                 <artifactId>jboss-ejb3-common</artifactId>
                 <version>${version.jboss.as.legacy}</version>
                 <scope>system</scope>
@@ -130,7 +123,7 @@
                 <systemPath>${eap5.home}/lib/trove.jar</systemPath>
             </dependency>
             <dependency>
-                <groupId>jboss</groupId>
+                <groupId>org.jboss.security</groupId>
                 <artifactId>jbosssx-client</artifactId>
                 <version>${version.jboss.as.legacy}</version>
                 <scope>system</scope>
@@ -165,11 +158,11 @@
                 <systemPath>${eap5.home}/common/lib/jboss-ejb3-security.jar</systemPath>
             </dependency>
             <dependency>
-                <groupId>org.jboss</groupId>
-                <artifactId>jboss-iiop-client</artifactId>
+                <groupId>org.jboss.jbossas</groupId>
+                <artifactId>jboss-as-iiop</artifactId>
                 <version>${version.jboss.as.legacy}</version>
                 <scope>system</scope>
-                <systemPath>${eap5.home}/client/jboss-iiop-client.jar</systemPath>
+                <systemPath>${eap5.home}/common/lib/jboss-iiop.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.security</groupId>
@@ -239,10 +232,6 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.ejb3</groupId>
-            <artifactId>jboss-ejb3-proxy-impl</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ejb3</groupId>
             <artifactId>jboss-ejb3-common</artifactId>
         </dependency>
         <dependency>
@@ -254,9 +243,9 @@
             <artifactId>trove</artifactId>
         </dependency>
         <dependency>
-            <groupId>jboss</groupId>
-               <artifactId>jbosssx-client</artifactId>
-        </dependency>  
+            <groupId>org.jboss.security</groupId>
+            <artifactId>jbosssx-client</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.jboss.security</groupId>
             <artifactId>jboss-security-spi</artifactId>
@@ -274,8 +263,8 @@
             <artifactId>jboss-ejb3-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jboss</groupId>
-            <artifactId>jboss-iiop-client</artifactId>
+            <groupId>org.jboss.jbossas</groupId>
+            <artifactId>jboss-as-iiop</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jboss.security</groupId>
