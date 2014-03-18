@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    Document   : enableJNP.xsl
-    Created on : 11 février 2014, 09:28
+    Document   : enableEJB3.xsl
+    Created on : 18 mars 2014, 09:28
     Author     : ehsavoie
-    Description: The aim is to enable the JNP extension with the matching socket-bindings
+    Description: The aim is to enable the Legacy extension with the matching socket-bindings
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"

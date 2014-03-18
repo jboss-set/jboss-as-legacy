@@ -114,7 +114,7 @@
                     <id>redhat.com-deprecated</id>
                     <url>http://repository.jboss.org/nexus/content/repositories/deprecated/</url>
                 </repository>
-                <repository>
+                <!-- <repository>
                     <releases>
                         <enabled>true</enabled>
                         <updatePolicy>always</updatePolicy>
@@ -125,7 +125,7 @@
                     </snapshots>
                     <id>redhat.com-public-jboss</id>
                     <url>https://repository.jboss.org/nexus/content/repositories/public-jboss/</url>
-                </repository>
+                </repository>-->
             </repositories>
             <pluginRepositories>
                 <pluginRepository>
