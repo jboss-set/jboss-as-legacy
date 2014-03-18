@@ -30,7 +30,7 @@
     <groupId>org.jboss.as.legacy.</groupId>
     <artifactId>jboss-as-legacy-test</artifactId>
     <packaging>jar</packaging>
-    <name>JBoss Application Server Legacy : Test</name>
+    <name>JBoss Application Server : Legacy : Test</name>
     
     <dependencyManagement>
         <dependencies>

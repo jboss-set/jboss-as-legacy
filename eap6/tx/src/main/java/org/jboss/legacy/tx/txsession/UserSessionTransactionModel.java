@@ -28,6 +28,9 @@ package org.jboss.legacy.tx.txsession;
  */
 public interface UserSessionTransactionModel {
     String SERVICE = "service";
-    String LEGACY = "legacy";
     String SERVICE_NAME = "usersessiontx";
+    
+    //dup, to avoid direct deps and messing CLs
+    String LEGACY = "legacy";
+    String SERVICE_NAME_JNP = "jnp-server";
 }

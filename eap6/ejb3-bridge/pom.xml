@@ -29,7 +29,7 @@
 
     <artifactId>jboss-as-legacy-eap6-ejb3-bridge</artifactId>
 
-    <name>JBoss Application Server: Legacy : EAP6 : EJB3 Bridge</name>
+    <name>JBoss Application Server : Legacy : EAP6 : EJB3 Bridge</name>
 
     <packaging>jar</packaging>
     

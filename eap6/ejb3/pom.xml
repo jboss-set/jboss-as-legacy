@@ -29,7 +29,7 @@
 
     <artifactId>jboss-as-legacy-eap6-ejb3</artifactId>
 
-    <name>JBoss Application Server: Legacy : EAP6 : EJB3</name>
+    <name>JBoss Application Server : Legacy : EAP6 : EJB3</name>
 
     <packaging>jar</packaging>
     
@@ -43,6 +43,7 @@
             <artifactId>jboss-as-legacy-eap6-connector</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.jboss.as</groupId>
             <artifactId>jboss-as-ejb3</artifactId>

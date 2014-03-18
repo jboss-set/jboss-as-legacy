@@ -28,7 +28,7 @@
     </parent>
 
     <artifactId>jboss-as-legacy-eap6-connector</artifactId>
-    <name>JBoss Application Server: Legacy : EAP6 : Connector</name>
+    <name>JBoss Application Server : Legacy : EAP6 : Connector</name>
     <packaging>jar</packaging>
 
     <properties>

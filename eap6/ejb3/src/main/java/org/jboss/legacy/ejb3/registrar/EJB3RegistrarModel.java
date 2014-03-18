@@ -30,5 +30,7 @@ public interface EJB3RegistrarModel {
 
     String SERVICE = "service";
     String SERVICE_NAME = "ejb3-registrar";
+    //dup, to avoid direct deps and messing CLs
     String LEGACY = "legacy";
+    String SERVICE_NAME_JNP = "jnp-server";
 }

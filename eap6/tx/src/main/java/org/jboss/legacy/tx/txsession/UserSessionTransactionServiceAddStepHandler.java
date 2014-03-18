@@ -21,6 +21,8 @@
  */
 package org.jboss.legacy.tx.txsession;
 
+import static org.jboss.legacy.tx.txsession.UserSessionTransactionModel.LEGACY;
+import static org.jboss.legacy.tx.txsession.UserSessionTransactionModel.SERVICE_NAME_JNP;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,6 +36,7 @@ import org.jboss.legacy.spi.connector.ConnectorProxy;
 import org.jboss.legacy.spi.tx.session.UserSessionTransactionProxy;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceController;
+import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.ServiceTarget;
 
 
@@ -60,8 +63,8 @@ public class UserSessionTransactionServiceAddStepHandler extends AbstractBoottim
         final UserSessionTransactionService service = new UserSessionTransactionService();
         final ServiceTarget serviceTarget = context.getServiceTarget();
         final ServiceBuilder<UserSessionTransactionProxy> serviceBuilder = serviceTarget.addService(UserSessionTransactionService.SERVICE_NAME, service);
-        //serviceBuilder.addDependency(JNPServerService.SERVICE_NAME, JNPServer.class, service.getInjectedJNPServer())
         serviceBuilder.addDependency(RemotingConnectorService.SERVICE_NAME, ConnectorProxy.class, service.getInjectedConnector());
+        serviceBuilder.addDependency(ServiceName.JBOSS.append(LEGACY).append(SERVICE_NAME_JNP));
         if (verificationHandler != null) {
             serviceBuilder.addListener(verificationHandler);
         }

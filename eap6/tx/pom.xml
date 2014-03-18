@@ -28,13 +28,41 @@
     </parent>
 
     <artifactId>jboss-as-legacy-eap6-ejb3-tx</artifactId>
-    <name>JBoss Application Server: Legacy : EAP6 : UserTransaction</name>
+    <name>JBoss Application Server : Legacy : EAP6 : UserTransaction</name>
     <packaging>jar</packaging>
 
     <properties>
         <module.name>org.jboss.legacy.ejb3.tx</module.name>
     </properties>
 
+    <dependencies>
+       
+        <dependency>
+            <artifactId>jboss-as-legacy-eap6-connector</artifactId>
+            <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
+            <version>${project.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.aspects</groupId>
+            <artifactId>jboss-remoting-aspects</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.aop</groupId>
+            <artifactId>jboss-aop</artifactId>
+        </dependency>
+        
+        <!-- EAP6 -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+        </dependency>
+        <dependency>
+               <groupId>org.jboss.jbossts.jts</groupId>
+             <artifactId>jbossjts-integration</artifactId>
+        </dependency>
+    </dependencies>
+    
     <build>
         <!-- Maven will append the version to the finalName (which is the name
         given to the generated war, and hence the context root) -->
@@ -72,33 +100,5 @@
                 </executions>
             </plugin>
         </plugins>
-    </build>
-
-
-    <dependencies>
-       
-        <dependency>
-            <artifactId>jboss-as-legacy-eap6-connector</artifactId>
-            <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.aspects</groupId>
-            <artifactId>jboss-remoting-aspects</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.aop</groupId>
-            <artifactId>jboss-aop</artifactId>
-        </dependency>
-        
-        <!-- EAP6 -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.transaction</groupId>
-            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-        </dependency>
-        <dependency>
-               <groupId>org.jboss.jbossts.jts</groupId>
-             <artifactId>jbossjts-integration</artifactId>
-        </dependency>
-    </dependencies>
+    </build>                
 </project>

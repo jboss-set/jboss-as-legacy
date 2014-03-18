@@ -28,7 +28,7 @@
     </parent>
 
     <artifactId>jboss-as-legacy-eap6-spi</artifactId>
-    <name>JBoss Application Server: Legacy : EAP6 : SPI</name>
+    <name>JBoss Application Server : Legacy : EAP6 : SPI</name>
     <packaging>jar</packaging>
 
     <properties>

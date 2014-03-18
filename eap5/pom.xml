@@ -29,7 +29,7 @@
 
     <artifactId>jboss-as-legacy-ejb3-eap5</artifactId>
     <groupId>org.jboss.as.legacy.ejb3.eap5</groupId>
-    <name>JBoss Application Server: Legacy : EAP5</name>
+    <name>JBoss Application Server : Legacy : EAP5</name>
     <packaging>pom</packaging>
     <description>
         Module to define all EAP5 dependencies, to isolate them here.
@@ -46,42 +46,42 @@
             <dependency>
                 <groupId>org.jboss.aop</groupId>
                 <artifactId>jboss-aop</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/lib/jboss-aop.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.ejb3</groupId>
                 <artifactId>jboss-ejb3-common</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jboss-ejb3-common.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.ejb3</groupId>
                 <artifactId>jboss-ejb3-proxy-impl</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jboss-ejb3-proxy-impl.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.ejb3</groupId>
                 <artifactId>jboss-ejb3-proxy-spi</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jboss-ejb3-proxy-spi.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.aspects</groupId>
                 <artifactId>jboss-transaction-aspects</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jboss-transaction-aspects.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.metadata</groupId>
                 <artifactId>jboss-metadata</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jboss-metadata.jar</systemPath>
             </dependency>
@@ -90,98 +90,98 @@
             <dependency>
                 <groupId>org.jboss.remoting</groupId>
                 <artifactId>jboss-remoting</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jboss-remoting.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.aspects</groupId>
                 <artifactId>jboss-remoting-aspects</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jboss-remoting-aspects.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.ejb3</groupId>
                 <artifactId>jboss-ejb3-common</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jboss-ejb3-common.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss</groupId>
                 <artifactId>jboss-mdr</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/lib/jboss-mdr.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>trove</groupId>
                 <artifactId>trove</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/lib/trove.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.security</groupId>
                 <artifactId>jbosssx-client</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/client/jbosssx-client.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.security</groupId>
                 <artifactId>jboss-security-spi</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/lib/jboss-security-spi.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.jbossas</groupId>
                 <artifactId>jboss-as-security</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/lib/jbosssx-server.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.ejb3</groupId>
                 <artifactId>jboss-ejb3-ext-api</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jboss-ejb3-ext-api.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.ejb3</groupId>
                 <artifactId>jboss-ejb3-security</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jboss-ejb3-security.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.jbossas</groupId>
                 <artifactId>jboss-as-iiop</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jboss-iiop.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.security</groupId>
                 <artifactId>jbosssx</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/lib/jbosssx.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.ws</groupId>
                 <artifactId>jbossws-spi</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jbossws-spi.jar</systemPath>
             </dependency>
             <dependency>
                 <groupId>org.jboss.javaee</groupId>
                 <artifactId>jboss-javaee</artifactId>
-                <version>${version.jboss.as.legacy}</version>
+                <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/lib/jboss-javaee.jar</systemPath>
             </dependency>
@@ -189,7 +189,7 @@
             <dependency>
 	            <groupId>org.jboss.jbossas</groupId>
 	            <artifactId>jboss-as-server</artifactId>
-	            <version>${version.jboss.as.legacy}</version>
+	            <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
                 <systemPath>${eap5.home}/common/lib/jboss.jar</systemPath>
 	        </dependency>
@@ -314,7 +314,7 @@
                                 <artifactItem>
                                     <groupId>org.jboss.aop</groupId>
                                     <artifactId>jboss-aop</artifactId>
-                                    <version>${version.jboss.as.legacy}</version>
+                                    <version>${version.jboss.legacy.as}</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${directory.dependencies}</outputDirectory>
