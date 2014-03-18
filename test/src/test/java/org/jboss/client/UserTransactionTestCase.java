@@ -18,17 +18,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-
 package org.jboss.client;
 
-import java.io.IOException;
-import java.util.Properties;
-import java.util.logging.Logger;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.transaction.Status;
-import javax.transaction.SystemException;
-import javax.transaction.UserTransaction;
+import java.io.File;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -37,8 +36,6 @@ import org.jboss.ejb.transactional.TransactionMandatoryBean;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.jboss.tm.usertx.client.ClientUserTransaction;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -48,122 +45,59 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @RunAsClient
-@Ignore
 public class UserTransactionTestCase {
-private static final Logger log = Logger.getLogger(UserTransactionTestCase.class.getName());
 
-    private static final String JNDI_CONFIG = "jndi-eap6.properties";
-    private static final String USER_TRANSACTION = "UserTransaction";
-    private static final String EJB_NAME = "TransactionMandatoryBean/remote-org.jboss.common.TransactionMandatoryRemote";
+    private final Pattern pattern = Pattern.compile(".*jboss-logging-[^spi].*");
 
-    private InitialContext getInitialContext() throws NamingException, IOException {
-        Properties jndiProperties = new Properties();
-        jndiProperties.load(this.getClass().getClassLoader().getResourceAsStream(System.getProperty("jndi_config", JNDI_CONFIG)));
-        return new javax.naming.InitialContext(jndiProperties);
-    }
-
-     @Deployment
+    @Deployment
     public static Archive createDeployment() {
         final JavaArchive jar = ShrinkWrap.create(JavaArchive.class, "usertx.jar");
         jar.addClasses(TransactionMandatoryBean.class, TransactionMandatoryRemote.class);
         return jar;
     }
 
-    @Test
-    public void commitTxMandatoryEJB() throws Exception {
-        InitialContext initialContext = getInitialContext();
-        UserTransaction xact = (UserTransaction) initialContext.lookup(USER_TRANSACTION);
-        try {
-            System.out.println("*********************************************************************");
-            System.out.println("******************************COMMIT*********************************");
-            TransactionMandatoryRemote ejb = (TransactionMandatoryRemote) initialContext.lookup(EJB_NAME);
-            checkClientTransactionStatus(xact);
-            checkServerTransactionStatus(ejb);
-            xact.begin();
-            checkClientTransactionStatus(xact);
-            checkServerTransactionStatus(ejb);
-            ejb.mandatoryTxOp();
-            xact.commit();
-            checkClientTransactionStatus(xact);
-            checkServerTransactionStatus(ejb);
-            System.out.println("*********************************************************************");
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.severe(e.getMessage());
-            throw e;
-        } finally {
-            initialContext.close();
+
+    private ClassLoader buildEap5ClassLoader() throws Exception {
+        List<URL> urls = new ArrayList<URL>();
+        String classpath = System.getProperty("java.class.path");
+        StringTokenizer tokenizer = new StringTokenizer(classpath, File.pathSeparator);
+        while (tokenizer.hasMoreTokens()) {
+            String fileName = tokenizer.nextToken();
+            if (!pattern.matcher(fileName).find()) {
+                urls.add(new File(fileName).toURI().toURL());
+            }
         }
+        URLClassLoader testCl = new URLClassLoader(urls.toArray(new URL[urls.size()]), null);
+        return testCl;
     }
 
+    @Test
+    public void commitTxMandatoryEJB() throws Exception {
+        ClassLoader originCl = Thread.currentThread().getContextClassLoader();
+        ClassLoader cl = buildEap5ClassLoader();
+        Thread.currentThread().setContextClassLoader(cl);
+        try {
+            Class userTxCheckerClass = cl.loadClass(UserTransactionChecker.class.getName());
+            Object checker = userTxCheckerClass.newInstance();
+            Method method = userTxCheckerClass.getMethod("commitTxMandatoryEJB", new Class[0]);
+            method.invoke(checker, new Object[0]);
+        } finally {
+            Thread.currentThread().setContextClassLoader(originCl);
+        }
+    }
 
     @Test
     public void rollbackTxMandatoryEJB() throws Exception {
-        InitialContext initialContext = getInitialContext();
-        UserTransaction xact = (UserTransaction) initialContext.lookup(USER_TRANSACTION);
+        ClassLoader originCl = Thread.currentThread().getContextClassLoader();
+        ClassLoader cl = buildEap5ClassLoader();
+        Thread.currentThread().setContextClassLoader(cl);
         try {
-            System.out.println("*********************************************************************");
-            System.out.println("**************************ROLLBACK***********************************");
-            TransactionMandatoryRemote ejb = (TransactionMandatoryRemote) initialContext.lookup(EJB_NAME);
-            checkClientTransactionStatus(xact);
-            checkServerTransactionStatus(ejb);
-            xact.begin();
-            checkClientTransactionStatus(xact);
-            checkServerTransactionStatus(ejb);
-            ejb.mandatoryTxOp();
-            xact.setRollbackOnly();
-            checkClientTransactionStatus(xact);
-            checkServerTransactionStatus(ejb);
-            xact.rollback();
-            checkClientTransactionStatus(xact);
-            checkServerTransactionStatus(ejb);
-            System.out.println("*********************************************************************");
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.severe(e.getMessage());
-            throw e;
+            Class userTxCheckerClass = cl.loadClass(UserTransactionChecker.class.getName());
+            Object checker = userTxCheckerClass.newInstance();
+            Method method = userTxCheckerClass.getMethod("rollbackTxMandatoryEJB", new Class[0]);
+            method.invoke(checker, new Object[0]);
         } finally {
-            initialContext.close();
-        }
-    }
-
-    private void checkServerTransactionStatus(TransactionMandatoryRemote ejb) {
-        try {
-            System.out.println("We have a transaction on the server " + ejb.currentTransaction());
-        } catch (javax.ejb.EJBTransactionRequiredException ex) {
-            System.out.println("We have NO transaction on the server");
-        }
-    }
-
-    private void checkClientTransactionStatus(UserTransaction xact) throws SystemException {
-          System.out.println("We have local transaction " +  ((ClientUserTransaction)xact).getTransactionPropagationContext()
-                  + " " + getTransactionStatus(xact.getStatus()));
-
-    }
-
-    public String getTransactionStatus(int status) {
-        switch (status) {
-            case Status.STATUS_ACTIVE:
-                return "ACTIVE";
-            case Status.STATUS_COMMITTED:
-                return "COMMITTED";
-            case Status.STATUS_COMMITTING:
-                return "COMMITTING";
-            case Status.STATUS_MARKED_ROLLBACK:
-                return "MARKED_ROLLBACK";
-            case Status.STATUS_NO_TRANSACTION:
-                return "NO_TRANSACTION";
-            case Status.STATUS_PREPARED:
-                return "PREPARED";
-            case Status.STATUS_PREPARING:
-                return "PREPARING";
-            case Status.STATUS_ROLLEDBACK:
-                return "ROLLEDBACK";
-            case Status.STATUS_ROLLING_BACK:
-                return "ROLLING_BACK";
-            case Status.STATUS_UNKNOWN:
-            default:
-                return "UNKOWN";
+            Thread.currentThread().setContextClassLoader(originCl);
         }
     }
 }

@@ -56,22 +56,23 @@ import org.jboss.common.TransactionMandatoryRemote;
  */
 @Stateless
 @Remote(TransactionMandatoryRemote.class)
-@TransactionAttribute(value = TransactionAttributeType.MANDATORY)
+@TransactionAttribute(value = TransactionAttributeType.SUPPORTS)
 public class TransactionMandatoryBean implements TransactionMandatoryRemote {
 
     @Resource(mappedName = "java:comp/TransactionSynchronizationRegistry")
     TransactionSynchronizationRegistry txReg;
 
     @Override
+    @TransactionAttribute(value = TransactionAttributeType.MANDATORY)
     public void mandatoryTxOp() {
         System.out.println("Hey, I got my transaction " + currentTransaction());
     }
 
     @Override
     public String currentTransaction() {
-       return txReg.getTransactionKey() + " " + getTransactionStatus(txReg.getTransactionStatus());
+        return txReg.getTransactionKey() + " " + getTransactionStatus(txReg.getTransactionStatus());
     }
-    
+
     private String getTransactionStatus(int status) {
         switch (status) {
             case Status.STATUS_ACTIVE:
