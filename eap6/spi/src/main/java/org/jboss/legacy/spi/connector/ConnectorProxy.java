@@ -30,8 +30,11 @@ import java.util.logging.Logger;
 import org.jboss.aspects.remoting.AOPRemotingInvocationHandler;
 import org.jboss.legacy.spi.common.LegacyBean;
 
+import org.jboss.remoting.InvokerLocator;
 import org.jboss.remoting.ServerConfiguration;
+import org.jboss.remoting.ServerInvoker;
 import org.jboss.remoting.transport.Connector;
+import org.jboss.remoting.transport.socket.MicroSocketClientInvoker;
 
 /**
  * @author baranowb
@@ -81,18 +84,15 @@ public class ConnectorProxy extends LegacyBean {
             throw new IllegalArgumentException("Host value must not be null");
         if(this.port == null)
             throw new IllegalArgumentException("Port value must not be null");
-        Logger logger = Logger.getLogger("org.jboss.remoting");
-        logger.setLevel(Level.ALL);
-        logger = Logger.getLogger("org.jnp");
-        logger.setLevel(Level.ALL);
+
         final ServerConfiguration serverConfiguration = new ServerConfiguration(TRANSPORT);
         Map<String, String> parameters = new HashMap<String, String>(6);
-        parameters.put("serverBindAddress", this.host);
-        parameters.put("serverBindPort", this.port);
-        parameters.put("dataType", "invocation");
-        parameters.put("marshaller", "org.jboss.invocation.unified.marshall.InvocationMarshaller");
-        parameters.put("unmarshaller", "org.jboss.invocation.unified.marshall.InvocationUnMarshaller");
-        parameters.put("enableTcpNoDelay", Boolean.toString(this.tcpNoDelay));
+        parameters.put(ServerInvoker.SERVER_BIND_ADDRESS_KEY, this.host);
+        parameters.put(ServerInvoker.SERVER_BIND_PORT_KEY, this.port);
+        parameters.put(InvokerLocator.DATATYPE, "invocation");
+        parameters.put(InvokerLocator.MARSHALLER, "org.jboss.invocation.unified.marshall.InvocationMarshaller");
+        parameters.put(InvokerLocator.UNMARSHALLER, "org.jboss.invocation.unified.marshall.InvocationUnMarshaller");
+        parameters.put(MicroSocketClientInvoker.TCP_NODELAY_FLAG, Boolean.toString(this.tcpNoDelay));
         serverConfiguration.setInvokerLocatorParameters(parameters);
         final Map<String, String> invocationHandlers = new HashMap<String, String>(1);
         invocationHandlers.put(INVOCATION_HANDLER_KEY, INVOCATION_HANDLER_CLASS);
