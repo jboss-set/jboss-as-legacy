@@ -22,44 +22,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>jboss-parent</artifactId>
-        <groupId>org.jboss</groupId>
-        <version>11-redhat-1</version>
-        <relativePath/>
+        <artifactId>jboss-as-legacy-ejb3</artifactId>
+        <groupId>org.jboss.as.legacy</groupId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jboss-as-legacy-ejb3</artifactId>
+    <artifactId>jboss-as-legacy-ejb3-dist</artifactId>
     <groupId>org.jboss.as.legacy</groupId>
-    <version>1.0.0-SNAPSHOT</version>
-    <name>JBoss Application Server : Legacy : Parent</name>
+    <name>JBoss Application Server : Legacy : Distribution</name>
 
     <packaging>pom</packaging>
-
-    <properties>
-        <!-- for some reason deps are not inherited... -->
-        <version.checkstyle.plugin>2.10</version.checkstyle.plugin>
-        <version.compiler.plugin>3.1</version.compiler.plugin>
-
-        <version.jboss.as>7.3.1.Final-redhat-1</version.jboss.as>
-        <version.jboss.legacy.as>5.2.0</version.jboss.legacy.as>
-        
-        <version.javax.transaction>1.0.1.Final-redhat-1</version.javax.transaction>
-        <version.jboss.jts.itengration>4.17.15.Final-redhat-4</version.jboss.jts.itengration>
-    </properties>
-
-    <modules>
-        <module>eap5</module>
-        <module>eap6</module>
-	<module>dist</module>
-    </modules>
-
-   <scm>
-        <connection>scm:git:git://github.com/jboss-set/jboss-as-legacy.git</connection>
-        <developerConnection>scm:git:git@github.com:jboss-set/jboss-as-legacy.git</developerConnection>
-        <url>https://github.com/jboss-set/jboss-as-legacy</url>
-        <tag>HEAD</tag>
-    </scm>
-
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
@@ -69,7 +41,7 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>${project.basedir}</directory>
+                            <directory>${project.parent.basedir}</directory>
                             <includes>
                                 <include>*.zip</include>
                                 <include>*.tar.gz</include>
@@ -78,32 +50,30 @@
                         </fileset>
                     </filesets>
                 </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${version.compiler.plugin}</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
+            </plugin>       
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-            </plugin>            
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.4</version>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <id>create-distribution</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>legacy-ejb3-extension-${project.version}</finalName>
+                            <outputDirectory>${project.parent.basedir}</outputDirectory>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptors>
+                                <descriptor>src/main/assembly/assembly-dist.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>ci</id>
-            <activation>
-                <property>
-                    <name>jbossas.eap6.zip</name>
-                </property>
-            </activation>
-            <modules>
-                <module>test</module>
-            </modules>
-        </profile>
-    </profiles>
 </project>
