@@ -22,7 +22,7 @@ MA 02110-1301  USA
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
-    <id>JNP module Distribution</id>
+    <id>EJB3 module Distribution</id>
     <formats>
         <format>zip</format>
         <format>tar.gz</format>
@@ -30,7 +30,7 @@ MA 02110-1301  USA
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>eap6/ejb3/target/module</directory>
+            <directory>${project.parent.basedir}/eap6/ejb3/target/module</directory>
             <outputDirectory>modules/system/layers/base</outputDirectory>
             <includes>
                 <include>**/*.*</include>
@@ -38,7 +38,7 @@ MA 02110-1301  USA
             <useDefaultExcludes>true</useDefaultExcludes>
         </fileSet>
         <fileSet>
-            <directory>eap6/connector/target/module</directory>
+            <directory>${project.parent.basedir}/eap6/connector/target/module</directory>
             <outputDirectory>modules/system/layers/base</outputDirectory>
             <includes>
                 <include>**/*.*</include>
@@ -46,7 +46,7 @@ MA 02110-1301  USA
             <useDefaultExcludes>true</useDefaultExcludes>
         </fileSet>
         <fileSet>
-            <directory>eap6/ejb3-bridge/target/module</directory>
+            <directory>${project.parent.basedir}/eap6/ejb3-bridge/target/module</directory>
             <outputDirectory>modules/system/layers/base</outputDirectory>
             <includes>
                 <include>**/*.*</include>
@@ -54,7 +54,7 @@ MA 02110-1301  USA
             <useDefaultExcludes>true</useDefaultExcludes>
         </fileSet>
          <fileSet>
-            <directory>eap6/spi/target/module</directory>
+            <directory>${project.parent.basedir}/eap6/spi/target/module</directory>
             <outputDirectory>modules/system/layers/base</outputDirectory>
             <includes>
                 <include>**/*.*</include>
@@ -62,7 +62,7 @@ MA 02110-1301  USA
             <useDefaultExcludes>true</useDefaultExcludes>
         </fileSet>
          <fileSet>
-            <directory>eap6/tx/target/module</directory>
+            <directory>${project.parent.basedir}/eap6/tx/target/module</directory>
             <outputDirectory>modules/system/layers/base</outputDirectory>
             <includes>
                 <include>**/*.*</include>
@@ -70,7 +70,7 @@ MA 02110-1301  USA
             <useDefaultExcludes>true</useDefaultExcludes>
         </fileSet>
         <fileSet>
-            <directory>eap5/target/module</directory>
+            <directory>${project.parent.basedir}/eap5/target/module</directory>
             <outputDirectory>modules/system/layers/base</outputDirectory>
             <includes>
                 <include>**/*.*</include>
@@ -80,7 +80,7 @@ MA 02110-1301  USA
     </fileSets>    
     <files>
         <file>
-            <source>README.md</source>
+            <source>${project.parent.basedir}/README.md</source>
             <outputDirectory></outputDirectory>
         </file>
     </files>
