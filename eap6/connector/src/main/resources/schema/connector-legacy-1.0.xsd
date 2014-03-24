@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="urn:jboss:domain:legacy-ejb3:1.0" 
+targetNamespace="urn:jboss:domain:legacy-connector:1.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+
+    <xs:element name="subsystem" type="subsystemType"/>
+    <xs:complexType name="subsystemType">
+    	<xs:sequence>
+         <xs:element name="connector" minOccurs="1" maxOccurs="1" type="connectorType"/>
+       </xs:sequence>
+    </xs:complexType>
+     <xs:complexType name="connectorType">
+        <xs:attribute name="socket-binding" type="xs:string" use="required" />
+    </xs:complexType>
+</xs:schema>

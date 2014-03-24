@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2014 Red Hat, inc., and individual contributors
+as indicated by the @author tags. See the copyright.txt file in the
+distribution for a full listing of individual contributors.
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+MA 02110-1301  USA
+-->
+<arquillian xmlns="http://jboss.org/schema/arquillian"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="
+        http://jboss.org/schema/arquillian
+        http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+    <container qualifier="jbossas" default="true">
+        <configuration>
+            <property name="jbossHome">target/runtime/jboss-eap-6.2</property>
+            <property name="javaVmArguments">-Djboss.inst=${basedir}/target/target/runtime/jboss-eap-6.2 -Dtest.bind.address=${node0}</property>
+            <property name="serverConfig">${jboss.server.config.file.name:standalone-full.xml}</property>
+            <!-- -Djboss.inst is not necessarily needed, only in case the test case neeeds path to the instance it runs in.
+            In the future, Arquillian should capable of injecting it into @ArquillianResource File or such. -->
+            <property name="allowConnectingToRunningServer">true</property>
+            <property name="managementAddress">${node0:127.0.0.1}</property>
+            <property name="managementPort">${as.managementPort:9999}</property>
+            <property name="waitForPorts">${as.debug.port:8787} ${as.managementPort:9999}</property>
+            <property name="waitForPortsTimeoutInSeconds">8</property>
+        </configuration>
+    </container>
+</arquillian>

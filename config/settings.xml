@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    User-specific configuration for maven. Includes things that should not
+    be distributed with the pom.xml file, such as developer identity, along with
+    local settings, like proxy information. The default location for the
+    settings file is ~/.m2/settings.xml
+-->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">       
+    <profiles>
+        <profile>
+            <id>legacy</id>
+            <activation>
+                <property>
+                    <name>!skipLegacy</name>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                    <id>redhat.com-eap6</id>
+                    <url>http://download.eng.bos.redhat.com/brewroot/repos/jb-eap-6-rhel-6-build/latest/maven</url>
+                </repository>
+                <repository>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                    <id>redhat.com-eap6-2</id>
+                    <url>http://download.lab.bos.redhat.com/brewroot/repos/jb-eap-6.2.0-rhel-6-build/latest/maven</url>
+                </repository>
+                <repository>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                    <id>redhat.com-eap6-3</id>
+                    <url>http://download.lab.bos.redhat.com/brewroot/repos/jb-eap-6-rhel-6-build/latest/maven/</url>
+                </repository>
+                <repository>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                    <id>redhat.com-eap5</id>
+                    <url>http://download.eng.bos.redhat.com/brewroot/repos/jb-eap-5-rhel-6-build/latest/maven</url>
+                </repository>
+                <repository>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>repository.jboss.org</id>
+                    <name>JBoss Repository</name>
+                    <url>http://repository.jboss.org/maven2/</url>
+                    <layout>default</layout>
+                </repository>
+                <repository>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>snapshots.jboss.org</id>
+                    <name>JBoss Snapshots Repository</name>
+                    <url>http://snapshots.jboss.org/maven2/</url>
+                    <layout>default</layout>
+                </repository>
+                <repository>
+                    <id>central</id>
+                    <name>Main Apache Maven Repository</name>
+                    <url>http://repo.maven.apache.org/maven2/</url>
+                    <layout>default</layout>
+                    <releases>
+                        <enabled>false</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                    <id>redhat.com-deprecated</id>
+                    <url>http://repository.jboss.org/nexus/content/repositories/deprecated/</url>
+                </repository>
+                <!-- <repository>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                    <id>redhat.com-public-jboss</id>
+                    <url>https://repository.jboss.org/nexus/content/repositories/public-jboss/</url>
+                </repository>-->
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </snapshots>
+                    <id>central</id>
+                    <name>Main Apache Maven Repository</name>
+                    <url>http://repo.maven.apache.org/maven2/</url>
+                </pluginRepository>
+                <pluginRepository>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                    </snapshots>
+                    <id>jboss-public-repository-group</id>
+                    <name>JBoss Public Repository Group</name>
+                    <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+                </pluginRepository>
+                <pluginRepository>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </snapshots>
+                    <id>jboss-product-repository</id>
+                    <name>JBoss Internal Product Repository</name>
+                    <url>http://download.lab.bos.redhat.com/brewroot/repos/jb-eap-6-rhel-6-build/latest/maven/</url>
+                    <layout>default</layout>
+                </pluginRepository>
+            </pluginRepositories>        
+        </profile>
+    </profiles>
+</settings>

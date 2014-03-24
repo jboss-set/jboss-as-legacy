@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><module xmlns="urn:jboss:module:1.0" name="org.jboss.legacy.ejb3.eap5">
+    <resources>
+        <resource-root path="lib/jboss-aop.jar"/>
+        <resource-root path="lib/jboss-ejb3-common.jar"/>
+        <resource-root path="lib/jboss-ejb3-proxy-impl.jar"/>
+        <resource-root path="lib/jboss-ejb3-proxy-spi.jar"/>
+        <resource-root path="lib/jboss-metadata.jar"/>
+        <!--connector-->
+        <resource-root path="lib/jboss-remoting-aspects.jar"/>
+        <resource-root path="lib/jboss-ejb3-common.jar"/>
+        <resource-root path="lib/trove.jar"/>
+        <resource-root path="lib/jboss-mdr.jar"/>
+
+        <resource-root path="lib/jbosssx.jar"/>
+        <resource-root path="lib/jboss-ejb3-ext-api.jar"/>
+        <resource-root path="lib/jboss-ejb3-security.jar"/>
+        <resource-root path="lib/jboss-as-security.jar"/>
+        <resource-root path="lib/jbossws-spi.jar"/>
+        <resource-root path="lib/jboss-javaee.jar"/>
+        <!-- TX -->
+        <resource-root path="lib/jboss-transaction-aspects.jar"/>
+    </resources>
+
+    <dependencies>
+        <module name="org.javassist"/>
+
+        <module name="org.jboss.as.transactions" export="true"/>
+        <module name="org.jboss.jts.integration"export="true"/>
+        <module name="org.jboss.jts" export="true"/>
+        
+        <module name="org.jboss.legacy.naming.eap5" export="true"/>
+    </dependencies>
+</module>
