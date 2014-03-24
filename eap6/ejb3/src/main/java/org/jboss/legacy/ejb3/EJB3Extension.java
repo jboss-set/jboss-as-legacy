@@ -39,7 +39,7 @@ import org.jboss.as.controller.parsing.ExtensionParsingContext;
  */
 public class EJB3Extension implements Extension {
 
-    public static final String SUBSYSTEM_NAME = "legacy-ejb3";
+    public static final String SUBSYSTEM_NAME = "legacy-ejb3-proxy";
 
 
     public static final PathElement SUBSYSTEM_PATH = PathElement.pathElement(ModelDescriptionConstants.SUBSYSTEM, SUBSYSTEM_NAME);
