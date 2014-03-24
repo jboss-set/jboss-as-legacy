@@ -28,33 +28,115 @@
     </parent>
 
     <artifactId>jboss-as-legacy-ejb3-dist</artifactId>
-    <groupId>org.jboss.as.legacy</groupId>
     <name>JBoss Application Server : Legacy : Distribution</name>
 
     <packaging>pom</packaging>
+    
+    <properties>
+        <naming.dir>${project.build.directory}/naming</naming.dir>
+        <naming.zip.name>naming.zip</naming.zip.name>
+        <naming.zip.url>${naming.dir}/${naming.zip.name}</naming.zip.url>
+        <naming.modules.dir>${naming.dir}/modules/system/layers/base</naming.modules.dir>
+        <naming.eap5.module.dir>${naming.modules.dir}/org/jboss/legacy/naming/eap5/main</naming.eap5.module.dir>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.as.legacy</groupId>
+                <artifactId>jboss-as-legacy-naming-dist</artifactId>
+                <version>${version.jboss.legacy.naming}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
         <finalName>${project.artifactId}</finalName>
-        <plugins>
+        <plugins>      
             <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>${project.parent.basedir}</directory>
-                            <includes>
-                                <include>*.zip</include>
-                                <include>*.tar.gz</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>       
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-naming</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.jboss.as.legacy</groupId>
+                                    <artifactId>jboss-as-legacy-naming-dist</artifactId>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${naming.dir}</outputDirectory>
+                                    <destFileName>${naming.zip.name}</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <id>build-dist</id>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                           <target>
+                                <taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+                                <echo>Preparing legacy naming.</echo>
+                                <unjar src="${naming.zip.url}" dest="${naming.dir}">
+                                    <patternset>
+                                        <include name="**" />
+                                        <exclude name="README.md" />
+                                    </patternset>
+                                </unjar>
+                                <delete file="${naming.zip.url}"/>
+                                <echo>Enabling naming modules to load EJB3.</echo>
+                                <xslt destdir="${naming.eap5.module.dir}" style="src/main/xslt/dependency.xsl" extension=".xml.mod" useImplicitFileset="false">
+                                    <fileset dir="${naming.eap5.module.dir}">
+                                        <include name="module.xml" />
+                                    </fileset>
+                                </xslt>
+                                <move todir="${naming.eap5.module.dir}">
+                                    <fileset dir="${naming.eap5.module.dir}">
+                                        <include name="**/module.xml.mod" />
+                                    </fileset>
+                                    <mapper type="glob" from="*.mod" to="*" />
+                                </move>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>ant-contrib</groupId>
+                        <artifactId>ant-contrib</artifactId>
+                        <version>${version.ant.contrib}</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>ant</groupId>
+                                <artifactId>ant</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-nodeps</artifactId>
+                        <version>${version.ant.nodeps}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.4</version>
+                <version>${version.assembly.plugin}</version>
                 <inherited>false</inherited>
                 <executions>
                     <execution>

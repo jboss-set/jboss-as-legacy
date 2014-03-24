@@ -37,12 +37,18 @@
 
     <properties>
         <!-- for some reason deps are not inherited... -->
+        <version.ant.nodeps>1.8.1</version.ant.nodeps>
+        <version.ant.contrib>1.0b3</version.ant.contrib>
+         
+        <version.assembly.plugin>2.4</version.assembly.plugin>
         <version.checkstyle.plugin>2.10</version.checkstyle.plugin>
+        <version.clean.plugin>2.5</version.clean.plugin>
         <version.compiler.plugin>3.1</version.compiler.plugin>
 
         <version.jboss.as>7.3.1.Final-redhat-1</version.jboss.as>
         <version.jboss.legacy.as>5.2.0</version.jboss.legacy.as>
-        
+        <version.jboss.legacy.naming>1.1.0-SNAPSHOT</version.jboss.legacy.naming>
+
         <version.javax.transaction>1.0.1.Final-redhat-1</version.javax.transaction>
         <version.jboss.jts.itengration>4.17.15.Final-redhat-4</version.jboss.jts.itengration>
     </properties>
@@ -50,7 +56,7 @@
     <modules>
         <module>eap5</module>
         <module>eap6</module>
-	<module>dist</module>
+        <module>dist</module>
     </modules>
 
    <scm>
@@ -64,8 +70,16 @@
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.compiler.plugin}</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>2.5</version>
+                <version>${version.clean.plugin}</version>
                 <configuration>
                     <filesets>
                         <fileset>
@@ -80,16 +94,9 @@
                 </configuration>
             </plugin>
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${version.compiler.plugin}</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${version.checkstyle.plugin}</version>
             </plugin>            
         </plugins>
     </build>

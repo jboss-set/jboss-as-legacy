@@ -42,6 +42,10 @@ For these cases we have developed a set of extensions for seamless integration o
       ...  
     </socket-binding-group> 
     
+
+NOTE: jnp-connector is capable of using single IP/port pair - the rmi-socket-binding is not mandatory, it can be configured as follows:
+<jnp-connector socket-binding="jnp"/>
+
 #Build
 
 ##Simple build
