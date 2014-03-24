@@ -88,7 +88,7 @@
                 </subsystem>
                 <subsystem xmlns="urn:jboss:domain:legacy-tx:1.0" />
                 <subsystem xmlns="urn:jboss:domain:legacy-ejb3-bridge:1.0" />
-                <subsystem xmlns="urn:jboss:domain:legacy-ejb3:1.0">
+                <subsystem xmlns="urn:jboss:domain:legacy-ejb3-proxy:1.0">
                     <ejb3-registrar/>
                 </subsystem>
                 <subsystem xmlns="urn:jboss:domain:legacy-connector:1.0">

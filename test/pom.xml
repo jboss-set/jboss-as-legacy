@@ -189,7 +189,6 @@
         <surefire.forked.process.timeout>1500</surefire.forked.process.timeout>
 
         <jbossas.eap6.zip><!-- To be defined --></jbossas.eap6.zip>
-        <jnp.extension.zip><!-- To be defined --></jnp.extension.zip>
         <jboss.eap6.version>7.3.1.Final-redhat-2</jboss.eap6.version>        
         <jboss.xnio.version>3.0.7.GA-redhat-1</jboss.xnio.version>
         <jboss.netty.version>3.2.5.Final</jboss.netty.version>
@@ -226,7 +225,6 @@
                                     <else>
                                         <echo message="Unpacking target runtimes." />
                                         <unzip src="${jbossas.eap6.zip}" dest="target/runtime" />
-                                        <unzip src="${jnp.extension.zip}" dest="target/runtime/jboss-eap-6.2" />
                                         <unzip src="${project.basedir}/../legacy-ejb3-extension-${project.version}.zip" dest="target/runtime/jboss-eap-6.2" />
                                         <chmod dir="target/runtime/jboss-eap-6.2" perm="ugo+rx" includes="**/*.sh" />
 

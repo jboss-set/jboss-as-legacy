@@ -34,7 +34,7 @@ public enum EJB3SubsystemNamespace {
     // must be first
     UNKNOWN(null),
 
-    LEGACY_EJB3_1_0("urn:jboss:domain:legacy-ejb3:1.0");
+    LEGACY_EJB3_1_0("urn:jboss:domain:legacy-ejb3-proxy:1.0");
 
 
     private final String name;
