@@ -69,8 +69,8 @@ public abstract class LegacyBean {
     protected abstract void internalStop() throws Exception;
 
     public static ClassLoader switchLoader(final ClassLoader loader) {
-        ClassLoader current = Thread.currentThread().getContextClassLoader();
-        Thread.currentThread().setContextClassLoader(loader);
+        final ClassLoader current = SecurityActions.getContextClassLoader();
+        SecurityActions.setContextClassLoader(loader);
         return current;
     }
     

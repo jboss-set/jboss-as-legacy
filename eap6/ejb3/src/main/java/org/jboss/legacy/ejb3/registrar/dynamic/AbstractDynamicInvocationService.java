@@ -45,7 +45,6 @@ import org.jboss.as.ejb3.deployment.ModuleDeployment;
 import org.jboss.invocation.InterceptorContext;
 import org.jboss.legacy.common.DeploymentEJBDataProxyMap;
 import org.jboss.legacy.common.ExtendedEJBDataProxy;
-import org.jboss.legacy.common.SecurityActions;
 import org.jboss.legacy.spi.ejb3.dynamic.DynamicInvocationProxy;
 import org.jboss.legacy.spi.ejb3.dynamic.DynamicInvocationTarget;
 import org.jboss.legacy.spi.ejb3.registrar.EJB3RegistrarProxy;

@@ -43,7 +43,17 @@
             <artifactId>jboss-as-legacy-eap6-connector</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <dependency>
+            <artifactId>jboss-as-legacy-eap6-spi</artifactId>
+            <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>org.jboss.as</groupId>
             <artifactId>jboss-as-ejb3</artifactId>
