@@ -10,7 +10,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
                 xmlns:jnp10="urn:jboss:domain:legacy-jnp:1.0"
                 xmlns:connector10="urn:jboss:domain:legacy-connector:1.0"
-                xmlns:ejb3-proxy10="urn:jboss:domain:legacy-ejb3:1.0"
+                xmlns:ejb3-proxy10="urn:jboss:domain:legacy-ejb3-proxy:1.0"
                 xmlns:ejb3-bridge10="urn:jboss:domain:legacy-ejb3-bridge:1.0"
                 xmlns:usertx10="urn:jboss:domain:legacy-tx:1.0"
                 xmlns:domain15="urn:jboss:domain:1.5"
@@ -85,18 +85,10 @@
                 <subsystem xmlns="urn:jboss:domain:legacy-jnp:1.0">
                     <jnp-server/>
                     <jnp-connector socket-binding="jnp" rmi-socket-binding="rmi-jnp" />
-                </subsystem>
-                <subsystem xmlns="urn:jboss:domain:legacy-tx:1.0" />
-                <subsystem xmlns="urn:jboss:domain:legacy-ejb3-bridge:1.0" />
-                <subsystem xmlns="urn:jboss:domain:legacy-ejb3-proxy:1.0">
-                    <ejb3-registrar/>
-                </subsystem>
-                <subsystem xmlns="urn:jboss:domain:legacy-connector:1.0">
-                    <remoting socket-binding="remoting-socket-binding"/>
-                </subsystem>
+                </subsystem>                
             </xsl:otherwise>
         </xsl:choose>
-        <!--<xsl:choose>
+        <xsl:choose>
             <xsl:when test="//ejb3-bridge10:subsystem">
             </xsl:when>
             <xsl:otherwise>
@@ -104,10 +96,17 @@
             </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
+            <xsl:when test="//usertx10:subsystem">
+            </xsl:when>
+            <xsl:otherwise>
+                 <subsystem xmlns="urn:jboss:domain:legacy-tx:1.0" />
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:choose>
             <xsl:when test="//ejb3-proxy10:subsystem">
             </xsl:when>
             <xsl:otherwise>
-                <subsystem xmlns="urn:jboss:domain:legacy-ejb3:1.0">
+                <subsystem xmlns="urn:jboss:domain:legacy-ejb3-proxy:1.0">
                     <ejb3-registrar/>
                 </subsystem>
             </xsl:otherwise>
@@ -120,33 +119,15 @@
                     <remoting socket-binding="remoting-socket-binding"/>
                 </subsystem>
             </xsl:otherwise>
-        </xsl:choose>-->
+        </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="//domain15:socket-binding-group/domain15:socket-binding[last()]">
+    <xsl:template match="//*[local-name()='socket-binding-group']/*[local-name()='socket-binding'][last()]">
         <xsl:call-template name="copy" />
         <xsl:choose>
-            <xsl:when test="//domain15:socket-binding/@name='jnp'">
-            </xsl:when>
-            <xsl:when test="//domain15:socket-binding/@name='rmi-jnp'">
-            </xsl:when>
-            <xsl:when test="//domain15:socket-binding/@name='remoting-socket-binding'">
+            <xsl:when test="//*[local-name()='socket-binding-group']/*[local-name()='socket-binding']/@name='remoting-socket-binding'">
             </xsl:when>
             <xsl:otherwise>
-                <socket-binding>
-                    <xsl:attribute name="name">jnp</xsl:attribute>
-                    <xsl:attribute name="port">
-                        <xsl:value-of select="$jnpPort" />
-                    </xsl:attribute>
-                    <xsl:attribute name="interface">public</xsl:attribute>
-                </socket-binding>
-                <socket-binding>
-                    <xsl:attribute name="name">rmi-jnp</xsl:attribute>
-                    <xsl:attribute name="port">
-                        <xsl:value-of select="$rmijnpPort" />
-                    </xsl:attribute>
-                    <xsl:attribute name="interface">public</xsl:attribute>
-                </socket-binding>
                 <socket-binding>
                     <xsl:attribute name="name">remoting-socket-binding</xsl:attribute>
                     <xsl:attribute name="port">
@@ -156,6 +137,31 @@
                 </socket-binding>
             </xsl:otherwise>
         </xsl:choose>
+        <xsl:choose>
+            <xsl:when test="//*[local-name()='socket-binding-group']/*[local-name()='socket-binding']/@name='jnp'">
+            </xsl:when>
+            <xsl:otherwise>
+                <socket-binding>
+                    <xsl:attribute name="name">jnp</xsl:attribute>
+                    <xsl:attribute name="port">
+                        <xsl:value-of select="$jnpPort" />
+                    </xsl:attribute>
+                    <xsl:attribute name="interface">public</xsl:attribute>
+                </socket-binding>
+            </xsl:otherwise>
+        </xsl:choose> 
+        <xsl:choose>
+            <xsl:when test="//*[local-name()='socket-binding-group']/*[local-name()='socket-binding']/@name='rmi-jnp'">
+            </xsl:when>
+            <xsl:otherwise>
+                <socket-binding>
+                    <xsl:attribute name="name">rmi-jnp</xsl:attribute>
+                    <xsl:attribute name="port">
+                        <xsl:value-of select="$rmijnpPort" />
+                    </xsl:attribute>
+                    <xsl:attribute name="interface">public</xsl:attribute>
+                </socket-binding>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
-
 </xsl:stylesheet>
