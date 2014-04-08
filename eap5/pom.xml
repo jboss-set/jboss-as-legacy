@@ -52,6 +52,13 @@
             </dependency>
             <dependency>
                 <groupId>org.jboss.ejb3</groupId>
+                <artifactId>jboss-ejb3-core</artifactId>
+                <version>${version.jboss.legacy.as}</version>
+                <scope>system</scope>
+                <systemPath>${eap5.home}/common/lib/jboss-ejb3-core.jar</systemPath>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.ejb3</groupId>
                 <artifactId>jboss-ejb3-common</artifactId>
                 <version>${version.jboss.legacy.as}</version>
                 <scope>system</scope>
@@ -205,6 +212,10 @@
         <dependency>
             <groupId>org.jboss.aop</groupId>
             <artifactId>jboss-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.ejb3</groupId>
+            <artifactId>jboss-ejb3-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jboss.ejb3</groupId>

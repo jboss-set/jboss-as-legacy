@@ -10,7 +10,7 @@ if [ "x$JBOSS_HOME" = "x" ]; then
     return 1
 fi
 
-unzip legacy-ejb3-extension-1.0.0-SNAPSHOT.zip -d $JBOSS_HOME
+unzip -oq legacy-ejb3-extension-1.0.0-SNAPSHOT.zip -d $JBOSS_HOME
 
 
 echo "Edit configuration file - for instance $JBOSS_HOME/standalone/configuration/standalone.xml"

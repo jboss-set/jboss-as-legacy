@@ -25,6 +25,7 @@
         <artifactId>jboss-as-legacy-ejb3</artifactId>
         <groupId>org.jboss.as.legacy</groupId>
         <version>1.0.0-SNAPSHOT</version>
+	<relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>jboss-as-legacy-ejb3-dist</artifactId>
@@ -37,7 +38,8 @@
         <naming.zip.name>naming.zip</naming.zip.name>
         <naming.zip.url>${naming.dir}/${naming.zip.name}</naming.zip.url>
         <naming.modules.dir>${naming.dir}/modules/system/layers/base</naming.modules.dir>
-        <naming.eap5.module.dir>${naming.modules.dir}/org/jboss/legacy/naming/eap5/main</naming.eap5.module.dir>
+        <naming.module.eap5.dir>${naming.modules.dir}/org/jboss/legacy/naming/eap5/main</naming.module.eap5.dir>
+        <naming.module.spi.dir>${naming.modules.dir}/org/jboss/legacy/naming/spi/main</naming.module.spi.dir>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -99,13 +101,25 @@
                                 </unjar>
                                 <delete file="${naming.zip.url}"/>
                                 <echo>Enabling naming modules to load EJB3.</echo>
-                                <xslt destdir="${naming.eap5.module.dir}" style="src/main/xslt/dependency.xsl" extension=".xml.mod" useImplicitFileset="false">
-                                    <fileset dir="${naming.eap5.module.dir}">
+                                <xslt destdir="${naming.module.eap5.dir}" style="src/main/xslt/dependency.xsl" extension=".xml.mod" useImplicitFileset="false">
+                                    <fileset dir="${naming.module.eap5.dir}">
                                         <include name="module.xml" />
                                     </fileset>
                                 </xslt>
-                                <move todir="${naming.eap5.module.dir}">
-                                    <fileset dir="${naming.eap5.module.dir}">
+                                <move todir="${naming.module.eap5.dir}">
+                                    <fileset dir="${naming.module.eap5.dir}">
+                                        <include name="**/module.xml.mod" />
+                                    </fileset>
+                                    <mapper type="glob" from="*.mod" to="*" />
+                                </move>
+                                
+                                <xslt destdir="${naming.module.spi.dir}" style="src/main/xslt/dependency.xsl" extension=".xml.mod" useImplicitFileset="false">
+                                    <fileset dir="${naming.module.spi.dir}">
+                                        <include name="module.xml" />
+                                    </fileset>
+                                </xslt>
+                                <move todir="${naming.module.spi.dir}">
+                                    <fileset dir="${naming.module.spi.dir}">
                                         <include name="**/module.xml.mod" />
                                     </fileset>
                                     <mapper type="glob" from="*.mod" to="*" />

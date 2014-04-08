@@ -178,10 +178,9 @@ public abstract class AbstractDynamicInvocationService implements DynamicInvocat
     protected abstract DynamicInvocationProxy createInvocationProxy();
 
     @Override
-    public void setupSecurity(String securityDomain, String principal, char[] credential, Subject subject) {
-        //TODO: check CL, might need a switch
+    public void setupSecurity(final String securityDomain, final String principal, final char[] credential, final Subject subject) {
         if (principal != null && credential != null) {
-            this.serverSecurityManagerInjectedValue.getValue().push(securityDomain, principal.toString(), credential, subject);
+            this.serverSecurityManagerInjectedValue.getValue().push(securityDomain, principal, credential, subject);
         }
     }
 

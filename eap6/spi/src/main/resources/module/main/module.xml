@@ -5,7 +5,6 @@
 
     <dependencies>
         <module name="org.jboss.legacy.ejb3.eap5" export="false"/>
-        
         <!-- export , since this module cuts eap5 lib export -->
         <module name="javax.transaction.api" export="true"/>
         <module name="org.jboss.jboss-transaction-spi"export="true"/>
