@@ -44,6 +44,8 @@ import org.jboss.as.ejb3.deployment.EjbDeploymentInformation;
 import org.jboss.as.ejb3.deployment.ModuleDeployment;
 import org.jboss.invocation.InterceptorContext;
 import org.jboss.legacy.common.DeploymentEJBDataProxyMap;
+import org.jboss.legacy.common.EJB3Logger;
+import org.jboss.legacy.common.EJB3Messages;
 import org.jboss.legacy.common.ExtendedEJBDataProxy;
 import org.jboss.legacy.spi.ejb3.dynamic.DynamicInvocationProxy;
 import org.jboss.legacy.spi.ejb3.dynamic.DynamicInvocationTarget;
@@ -96,19 +98,21 @@ public abstract class AbstractDynamicInvocationService implements DynamicInvocat
     }
 
     public void start(StartContext context) throws StartException {
+        EJB3Logger.ROOT_LOGGER.startDynamicInvocationService(this.componentName);
         try {
             this.dynamicInvocationProxy = createInvocationProxy();
             this.dynamicInvocationProxy.start();
         } catch (Exception e) {
-            throw new StartException(e);
+            throw EJB3Messages.MESSAGES.couldNotStartDynamicInvocationService(this.componentName, e);
         }
     }
 
     public void stop(StopContext context) {
+        EJB3Logger.ROOT_LOGGER.stoppingDynamicInvocationService(this.componentName);
         try {
             this.dynamicInvocationProxy.stop();
         } catch (Exception e) {
-            e.printStackTrace();
+            EJB3Logger.ROOT_LOGGER.couldNotStopDynamicInvocationService(this.componentName, e);
         }
     }
 

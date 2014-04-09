@@ -77,6 +77,7 @@ public class EJB3BridgeDeploymentProcessor implements DeploymentUnitProcessor {
                             @Override
                             public void configure(DeploymentPhaseContext context, ComponentDescription description,
                                     ComponentConfiguration configuration) throws DeploymentUnitProcessingException {
+                                EJB3BridgeLogger.ROOT_LOGGER.preProcessingDeployment(description.getServiceName().getCanonicalName());
 
                                 viewClassLoader.setValue(Values.immediateValue(configuration.getModuleClassLoader()));
                                 final SessionBeanComponentDescription sessionBeanComponentDescription = (SessionBeanComponentDescription) description;
@@ -152,7 +153,7 @@ public class EJB3BridgeDeploymentProcessor implements DeploymentUnitProcessor {
                             }
                         });
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        EJB3BridgeMessages.MESSAGES.failedPreProcessingOfDeploymentUunit(componentDescription.getServiceName().getCanonicalName(), e);
                     }
                 }
             }

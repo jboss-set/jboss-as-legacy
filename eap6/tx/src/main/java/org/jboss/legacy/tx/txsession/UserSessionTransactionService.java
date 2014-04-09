@@ -28,6 +28,8 @@ import javax.transaction.TransactionManager;
 
 import org.jboss.legacy.spi.connector.ConnectorProxy;
 import org.jboss.legacy.spi.tx.session.UserSessionTransactionProxy;
+import org.jboss.legacy.tx.TXLogger;
+import org.jboss.legacy.tx.TXMessages;
 import org.jboss.msc.service.Service;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.StartContext;
@@ -60,22 +62,23 @@ public class UserSessionTransactionService implements Service<UserSessionTransac
 
     @Override
     public void start(StartContext context) throws StartException {
-
+        TXLogger.ROOT_LOGGER.startUserTransactionService();
         try {
             service = new UserSessionTransactionProxy();
             service.setConnector(this.injectedConnector.getValue());
             service.start();
         } catch (Exception ex) {
-            throw new StartException(ex);
+            throw TXMessages.MESSAGES.failedToStartUserTransactionService(ex);
         }
     }
 
     @Override
     public void stop(StopContext context) {
+        TXLogger.ROOT_LOGGER.stopUserTransactionService();
         try {
             service.stop();
         } catch (Exception ex) {
-            Logger.getLogger(UserSessionTransactionService.class.getName()).log(Level.SEVERE, null, ex);
+            TXLogger.ROOT_LOGGER.failedToStopUserTransactionService(ex);
         }
     }
 

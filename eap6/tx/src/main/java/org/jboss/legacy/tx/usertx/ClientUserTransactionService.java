@@ -39,6 +39,8 @@ import org.jboss.aspects.remoting.RemotingProxyFactory;
 import org.jboss.legacy.spi.connector.ConnectorProxy;
 import org.jboss.legacy.spi.tx.session.UserSessionTransactionProxy;
 import org.jboss.legacy.spi.tx.user.ClientUserTransactionProxy;
+import org.jboss.legacy.tx.TXLogger;
+import org.jboss.legacy.tx.TXMessages;
 import org.jboss.msc.service.Service;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.StartContext;
@@ -69,23 +71,24 @@ public class ClientUserTransactionService implements Service<ClientUserTransacti
 
     @Override
     public void start(StartContext context) throws StartException {
-        
+        TXLogger.ROOT_LOGGER.startClientUserTransactionService();
         try {
             this.service = new ClientUserTransactionProxy();
             this.service.setConnector(this.injectedConnector.getValue());
             this.service.setUserSessionTransactionProxy(this.injectedUserSessionTransactionProxyFactory.getValue());
             this.service.start();
         } catch (Exception ex) {
-            throw new StartException(ex);
+            throw TXMessages.MESSAGES.failedToStartClientUserTransactionService(ex);
         }
     }
 
     @Override
     public void stop(StopContext context) {
+        TXLogger.ROOT_LOGGER.stopClientUserTransactionService();
         try {
             this.service.stop();
         } catch (Exception ex) {
-            Logger.getLogger(ClientUserTransactionService.class.getName()).log(Level.SEVERE, null, ex);
+            TXLogger.ROOT_LOGGER.failedToStopClientUserTransactionService(ex);
         }
     }
 

@@ -22,6 +22,8 @@
 package org.jboss.legacy.connector.remoting;
 
 import org.jboss.as.network.SocketBinding;
+import org.jboss.legacy.connector.ConnectorLogger;
+import org.jboss.legacy.connector.ConnectorMessages;
 import org.jboss.legacy.spi.connector.ConnectorProxy;
 import org.jboss.msc.service.Service;
 import org.jboss.msc.service.ServiceName;
@@ -60,21 +62,24 @@ public class RemotingConnectorService implements Service<ConnectorProxy> {
     @Override
     public void start(StartContext startContext) throws StartException {
         try {
-            this.connector.setHost(this.getBinding().getValue().getAddress().getHostName());
-            this.connector.setPort(String.valueOf(this.getBinding().getValue().getAbsolutePort()));
+            final SocketBinding binding = this.getBinding().getValue(); 
+            ConnectorLogger.ROOT_LOGGER.startConnectorService(binding.getName(), binding.getAddress() , String.valueOf(binding.getAbsolutePort()));
+            this.connector.setHost(binding.getAddress().getHostName());
+            this.connector.setPort(String.valueOf(binding.getAbsolutePort()));
             this.connector.setTcpNoDelay(true);
             this.connector.start();
         } catch (Exception e) {
-            throw new StartException(e);
+            throw ConnectorMessages.MESSAGES.couldNotStartConnectorService(e);
         }
     }
 
     @Override
     public void stop(StopContext stopContext) {
         try {
+            ConnectorLogger.ROOT_LOGGER.stopConnectorService();
             this.connector.stop();
         } catch (Exception e) {
-            e.printStackTrace();
+            ConnectorLogger.ROOT_LOGGER.couldNotStopConnectorService(e);
         }
     }
 

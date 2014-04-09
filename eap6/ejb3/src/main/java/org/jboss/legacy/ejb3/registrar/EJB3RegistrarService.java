@@ -23,6 +23,8 @@
 package org.jboss.legacy.ejb3.registrar;
 
 import org.jboss.as.core.security.ServerSecurityManager;
+import org.jboss.legacy.common.EJB3Logger;
+import org.jboss.legacy.common.EJB3Messages;
 import org.jboss.legacy.spi.common.SecurityActions;
 import org.jboss.legacy.spi.connector.ConnectorProxy;
 import org.jboss.legacy.spi.ejb3.registrar.EJB3RegistrarProxy;
@@ -60,6 +62,7 @@ public class EJB3RegistrarService implements Service<EJB3RegistrarProxy> {
 
     @Override
     public void start(StartContext startContext) throws StartException {
+        EJB3Logger.ROOT_LOGGER.startRegistrar();
         try {
             final ClassLoader currentClassLoader = SecurityActions.getContextClassLoader();
             try {
@@ -67,20 +70,22 @@ public class EJB3RegistrarService implements Service<EJB3RegistrarProxy> {
                 this.value.setEjb3AOPInterceptorsURL(currentClassLoader.getResource(AOP_FILE));
                 this.value.start();
             } finally {
+                //TODO: remove this
                 SecurityActions.setContextClassLoader(currentClassLoader);
             }
         } catch (Exception e) {
-            throw new StartException(e);
+            throw EJB3Messages.MESSAGES.couldNotStartRegistrar(e);
         }
 
     }
 
     @Override
     public void stop(StopContext stopContext) {
+        EJB3Logger.ROOT_LOGGER.stoppingRegistrar();
         try {
             this.value.stop();
         } catch (Exception e) {
-            e.printStackTrace();
+            EJB3Logger.ROOT_LOGGER.couldNotStopRegistrar(e);
         }
     }
 

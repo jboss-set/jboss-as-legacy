@@ -45,6 +45,12 @@
             <artifactId>jboss-as-network</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging-processor</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <artifactId>jboss-as-legacy-eap6-spi</artifactId>
             <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
             <version>${project.version}</version>

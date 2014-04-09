@@ -39,8 +39,9 @@ import org.jboss.as.server.deployment.DeploymentUnitProcessingException;
 import org.jboss.as.server.deployment.DeploymentUnitProcessor;
 import org.jboss.as.server.deployment.EjbDeploymentMarker;
 import org.jboss.legacy.common.DeploymentEJBDataProxyMap;
+import org.jboss.legacy.common.EJB3Logger;
+import org.jboss.legacy.common.EJB3Messages;
 import org.jboss.legacy.common.ExtendedEJBDataProxy;
-import org.jboss.legacy.ejb3.registrar.dynamic.AbstractDynamicInvocationService;
 import org.jboss.legacy.ejb3.registrar.dynamic.stateful.StatefulDynamicInvokeService;
 import org.jboss.legacy.ejb3.registrar.dynamic.stateles.StatelesDynamicInvokeService;
 import org.jboss.legacy.spi.ejb3.dynamic.stateful.StatefulDynamicInvocationTarget;
@@ -83,11 +84,13 @@ public class EJB3DeploymentProcessor implements DeploymentUnitProcessor {
                                     ComponentConfiguration configuration) throws DeploymentUnitProcessingException {
                                 final DeploymentEJBDataProxyMap dataMap = deploymentUnit
                                         .getAttachment(DeploymentEJBDataProxyMap.ATTACHMENT_KEY);
+
                                 if (dataMap != null
                                         && dataMap.get(dataMap.getServiceName(moduleDescription, ejbComponentDescription)) != null) {
                                     final ExtendedEJBDataProxy data = dataMap.get(dataMap.getServiceName(moduleDescription,
                                             ejbComponentDescription));
-                                    // create servuce
+                                    EJB3Logger.ROOT_LOGGER.postProcessingDeployment(ejbComponentDescription.getServiceName().getCanonicalName());
+                                    // create service
                                     if (data.isStateful()) {
                                         StatefulDynamicInvokeService service = new StatefulDynamicInvokeService(data,
                                                 moduleDescription, ejbComponentDescription);
@@ -128,7 +131,7 @@ public class EJB3DeploymentProcessor implements DeploymentUnitProcessor {
                         });
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        throw EJB3Messages.MESSAGES.failedPostProcessingOfDeploymentUunit(componentDescription.getServiceName().getCanonicalName(),e);
                     }
 
                 }
