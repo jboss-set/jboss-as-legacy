@@ -23,6 +23,8 @@ package org.jboss.legacy.spi.ejb3.dynamic.stateles;
 
 import static org.jboss.legacy.spi.common.LegacyBean.switchLoader;
 
+import java.security.Principal;
+
 import javax.transaction.Transaction;
 import javax.transaction.TransactionManager;
 
@@ -112,64 +114,21 @@ public class StatelesDynamicInvokableContext implements InvokableContext {
         final Object principal = si.getMetaData(LEGACY_MD_SECURITY, LEGACY_MD_KEY_PRINCIPIAL);
         final Object credential = si.getMetaData(LEGACY_MD_SECURITY, LEGACY_MD_KEY_CREDENTIAL);
         if (principal != null && credential != null) {
-            // TODO: toString does not seem a good idea.
             // TODO: Subject might need a proxy ?
-            dynamicInvocationProxy.getDynamicInvocationTarget().setupSecurity(securityDomain, principal.toString(),
-                    credential.toString().toCharArray(), context.getSubjectInfo().getAuthenticatedSubject());
+            String stringPrincipal;
+            if(principal instanceof Principal){
+                stringPrincipal = ((Principal)principal).getName();
+            } else {
+                throw new IllegalArgumentException("Principal is not instanceof java.security.Principal! "+principal.getClass());
+            }
+            String stringCredential;
+            if( credential instanceof String){
+                stringCredential = (String)credential;
+            } else {
+                throw new IllegalArgumentException("Credential is not instanceof java.lang.String! "+credential.getClass());
+            }
+            dynamicInvocationProxy.getDynamicInvocationTarget().setupSecurity(securityDomain, stringPrincipal,
+                    stringCredential.toCharArray(), context.getSubjectInfo().getAuthenticatedSubject());
         }
     }
-
-    // protected InterceptorContext createInterceptorContext(final MethodInvocation si) throws NamingException {
-    // final InitialContext ic = new InitialContext();
-    // final SerializableMethod invokedMethod = (SerializableMethod) si.getMetaData(
-    // SessionSpecRemotingMetadata.TAG_SESSION_INVOCATION, SessionSpecRemotingMetadata.KEY_INVOKED_METHOD);
-    // final ComponentView view = viewInjectedValue.getValue();
-    // final InterceptorContext customContext = new InterceptorContext();
-    // // Just a copy paste: TODO: this is not very efficient
-    // final Method method = view.getMethod(invokedMethod.toMethod().getName(),
-    // DescriptorUtils.methodDescriptor(invokedMethod.toMethod()));
-    // customContext.setMethod(method);
-    // customContext.setParameters(si.getArguments());
-    // customContext.setTarget(ic.lookup(ejb3Data.getLocalASBinding()));
-    // // setup private data
-    // final EjbDeploymentInformation ejb = findBean();
-    // final EJBComponent ejbComponent = ejb.getEjbComponent();
-    // customContext.putPrivateData(ComponentView.class, view);
-    // customContext.putPrivateData(Component.class, ejbComponent);
-    // return customContext;
-    // }
-    //
-    // public Object transactionalInvokation(final MethodInvocation invocation, final InterceptorContext customContext) throws
-    // Throwable {
-    // TransactionManager tm = ((EJBComponent) viewInjectedValue.getValue().getComponent()).getTransactionManager();
-    // Object tpc = invocation.getMetaData(ClientTxPropagationInterceptor.TRANSACTION_PROPAGATION_CONTEXT,
-    // ClientTxPropagationInterceptor.TRANSACTION_PROPAGATION_CONTEXT);
-    // if (tpc != null) {
-    // Transaction tx = tm.getTransaction();
-    // if (tx != null) {
-    // throw new
-    // RuntimeException("cannot import a transaction context when a transaction is already associated with the thread");
-    // }
-    // Transaction importedTx = importTPC(tpc);
-    // tm.resume(importedTx);
-    // try {
-    // return doRealInvocation(customContext);
-    // } finally {
-    // tm.suspend();
-    // }
-    // } else {
-    // return doRealInvocation(customContext);
-    // }
-    // }
-    //
-    // private Object doRealInvocation(final InterceptorContext customContext) throws Throwable {
-    // final ComponentView view = viewInjectedValue.getValue();
-    // return view.invoke(customContext);
-    // }
-    //
-    // protected Transaction importTPC(Object tpc) throws NamingException {
-    // Uid importedTx = new Uid((String) tpc);
-    // return com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionImple.getTransaction(importedTx);
-    // }
-
 }

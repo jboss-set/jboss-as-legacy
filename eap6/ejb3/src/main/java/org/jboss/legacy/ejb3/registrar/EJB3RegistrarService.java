@@ -22,9 +22,10 @@
 
 package org.jboss.legacy.ejb3.registrar;
 
-import static org.jboss.legacy.common.SecurityActions.moduleClassLoader;
-
 import org.jboss.as.core.security.ServerSecurityManager;
+import org.jboss.legacy.common.EJB3Logger;
+import org.jboss.legacy.common.EJB3Messages;
+import org.jboss.legacy.spi.common.SecurityActions;
 import org.jboss.legacy.spi.connector.ConnectorProxy;
 import org.jboss.legacy.spi.ejb3.registrar.EJB3RegistrarProxy;
 import org.jboss.msc.service.Service;
@@ -61,31 +62,30 @@ public class EJB3RegistrarService implements Service<EJB3RegistrarProxy> {
 
     @Override
     public void start(StartContext startContext) throws StartException {
+        EJB3Logger.ROOT_LOGGER.startRegistrar();
         try {
-            final ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
-            // this has no effect if there is no dep on loader which already has this class
-//            final ClassLoader cl = moduleClassLoader("org.jboss.legacy.ejb3.spi");
-//            Thread.currentThread().setContextClassLoader(cl);
-//            System.err.println(Class.forName("org.jboss.logging.Logger", false, cl).getClassLoader());
+            final ClassLoader currentClassLoader = SecurityActions.getContextClassLoader();
             try {
                 this.value.setConnector(this.connector.getValue());
                 this.value.setEjb3AOPInterceptorsURL(currentClassLoader.getResource(AOP_FILE));
                 this.value.start();
             } finally {
-                Thread.currentThread().setContextClassLoader(currentClassLoader);
+                //TODO: remove this
+                SecurityActions.setContextClassLoader(currentClassLoader);
             }
         } catch (Exception e) {
-            throw new StartException(e);
+            throw EJB3Messages.MESSAGES.couldNotStartRegistrar(e);
         }
 
     }
 
     @Override
     public void stop(StopContext stopContext) {
+        EJB3Logger.ROOT_LOGGER.stoppingRegistrar();
         try {
             this.value.stop();
         } catch (Exception e) {
-            e.printStackTrace();
+            EJB3Logger.ROOT_LOGGER.couldNotStopRegistrar(e);
         }
     }
 

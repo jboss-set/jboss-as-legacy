@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><module xmlns="urn:jboss:module:1.0" name="org.jboss.legacy.ejb3.eap5">
     <resources>
         <resource-root path="lib/jboss-aop.jar"/>
+        <resource-root path="lib/jboss-ejb3-core.jar"/>
         <resource-root path="lib/jboss-ejb3-common.jar"/>
         <resource-root path="lib/jboss-ejb3-proxy-impl.jar"/>
         <resource-root path="lib/jboss-ejb3-proxy-spi.jar"/>

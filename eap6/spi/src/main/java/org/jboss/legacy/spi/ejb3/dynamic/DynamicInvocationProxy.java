@@ -144,7 +144,7 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
                     e.printStackTrace();
                 }
             try {
-                Thread.currentThread().setContextClassLoader(oldLoader);
+                switchLoader(oldLoader);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -169,7 +169,7 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
                     e.printStackTrace();
                 }
             try {
-                Thread.currentThread().setContextClassLoader(old);
+                switchLoader(old);
             } catch (Exception e) {
                 e.printStackTrace();
             }
