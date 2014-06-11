@@ -108,6 +108,7 @@ public class EJB3DeploymentProcessor implements DeploymentUnitProcessor {
                                                 DeploymentRepository.class, service.getDeploymentRepositoryInjectedValue());
                                         serviceBuilder.addDependency(ejbComponentDescription.getCreateServiceName(),
                                                 Component.class, service.getComponentCreateInjectedValue());
+                                        chainLegacyService(dataMap,serviceName,serviceBuilder);
                                         serviceBuilder.install();
                                     } else {
                                         StatelesDynamicInvokeService service = new StatelesDynamicInvokeService(data,
@@ -124,6 +125,7 @@ public class EJB3DeploymentProcessor implements DeploymentUnitProcessor {
                                                 service.getViewInjectedValue());
                                         serviceBuilder.addDependency(DeploymentRepository.SERVICE_NAME,
                                                 DeploymentRepository.class, service.getDeploymentRepositoryInjectedValue());
+                                        chainLegacyService(dataMap,serviceName,serviceBuilder);
                                         serviceBuilder.install();
                                     }
                                 }
@@ -144,4 +146,19 @@ public class EJB3DeploymentProcessor implements DeploymentUnitProcessor {
         // what about undeploy?
     }
 
+    /**
+     * Create chain from legacy services.
+     * @param dataMap
+     * @param serviceName
+     * @param serviceBuilder
+     */
+    private void chainLegacyService(final DeploymentEJBDataProxyMap dataMap, final ServiceName serviceName, final ServiceBuilder<?> serviceBuilder){
+        final ServiceName tail = dataMap.getProcessTail();
+        if(tail == null){
+            dataMap.setProcessTail(serviceName);
+        } else {
+            dataMap.setProcessTail(serviceName);
+            serviceBuilder.addDependency(tail);
+        }
+    }
 }
