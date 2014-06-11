@@ -31,7 +31,7 @@ import org.jboss.msc.service.ServiceName;
 
 /**
  * Simple map like object with additional method to calculate keys. This class is used to store ejb-service->EAP5-data-proxy
- * values in deploy context.
+ * values in deploy context and information about last legacy service processed.
  * 
  * @author baranowb
  */
@@ -51,4 +51,22 @@ public class DeploymentEJBDataProxyMap extends HashMap<ServiceName, ExtendedEJBD
                     moduleDescription.getModuleName(), ejbComponentDescription.getComponentName());
         }
     }
+
+    private ServiceName processTail;
+
+    /**
+     * Return last processed service name.
+     * @return the processTail
+     */
+    public ServiceName getProcessTail() {
+        return processTail;
+    }
+
+    /**
+     * @param processTail the processTail to set
+     */
+    public void setProcessTail(ServiceName processTail) {
+        this.processTail = processTail;
+    }
+
 }

@@ -51,7 +51,6 @@ import org.jboss.legacy.spi.ejb3.dynamic.DynamicInvocationProxy;
 import org.jboss.legacy.spi.ejb3.dynamic.DynamicInvocationTarget;
 import org.jboss.legacy.spi.ejb3.registrar.EJB3RegistrarProxy;
 import org.jboss.modules.ModuleClassLoader;
-import org.jboss.modules.ModuleLoadException;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
@@ -61,6 +60,8 @@ import org.jboss.msc.value.InjectedValue;
 import com.arjuna.ats.arjuna.common.Uid;
 
 /**
+ * Base for invocation service. Service starts EAP5 invocation proxy which handle invocation translation from EAP5 to EAP5+.
+ * Concrete implementation provide instance of proxy via {@link #createInvocationProxy()}.
  * @author baranowb
  */
 public abstract class AbstractDynamicInvocationService implements DynamicInvocationTarget{
