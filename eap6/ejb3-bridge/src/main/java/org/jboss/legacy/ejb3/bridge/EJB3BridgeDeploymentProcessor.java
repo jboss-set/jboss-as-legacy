@@ -62,6 +62,7 @@ public class EJB3BridgeDeploymentProcessor implements DeploymentUnitProcessor {
             return;
         }
         final EEModuleDescription moduleDescription = deploymentUnit.getAttachment(Attachments.EE_MODULE_DESCRIPTION);
+
         if (moduleDescription != null) {
 
             for (final ComponentDescription componentDescription : moduleDescription.getComponentDescriptions()) {
@@ -89,7 +90,7 @@ public class EJB3BridgeDeploymentProcessor implements DeploymentUnitProcessor {
                                         final ViewDescription viewDescription = vd;
                                         final String globalBinding = getGlobalBinding(viewDescription.getBindingNames());
                                         deploymentEJBDataProxyMap.put(deploymentEJBDataProxyMap.getServiceName(moduleDescription, ejbComponentDescription), new ExtendedEJBDataProxy() {
-
+                                            //TODO: this might need remote bindings support
                                             @Override
                                             public String getName() {
                                                 return ejbComponentDescription.getComponentName();
@@ -114,7 +115,11 @@ public class EJB3BridgeDeploymentProcessor implements DeploymentUnitProcessor {
                                             public boolean isStateful() {
                                                 return sessionBeanComponentDescription.getSessionBeanType() != SessionBeanType.STATELESS;
                                             }
-
+                                            
+                                            @Override
+                                            public boolean isEar() {
+                                                return getEARName()!=null;
+                                            }
                                             @Override
                                             public String getLocalASBinding() {
                                                 return globalBinding;
@@ -132,18 +137,27 @@ public class EJB3BridgeDeploymentProcessor implements DeploymentUnitProcessor {
 
                                             @Override
                                             public String getDeploymentScopeBaseName() {
-                                                if (deploymentUnit.getParent() != null) {
-                                                    return stripExtension(deploymentUnit.getParent().getName());
-                                                }
-                                                return getDeploymentName();
+                                                return getEARName();
                                             }
 
-                                            String stripExtension(String name) {
-                                                int index = name.lastIndexOf('.');
-                                                if (index > 0) {
-                                                    name = name.substring(0, index);
-                                                }
-                                                return name;
+                                            /**
+                                             * Iterate over deployment units name and:
+                                             * 
+                                             * @return <ul>
+                                             *  <li> non null value which is name of EAR</li>
+                                             *  <li>null - if DUs are not part of EAR</li>
+                                             * </ul>
+                                             */
+                                            private String getEARName(){
+                                                DeploymentUnit du = deploymentUnit;
+                                                //check if main archive is EAR than iterate over parents.
+                                                do{
+                                                    final String duName = du.getName();
+                                                    if(duName.endsWith(".ear")){
+                                                        return duName.substring(0,duName.lastIndexOf('.'));
+                                                    }
+                                                } while ( (du = du.getParent()) != null);
+                                                return null;
                                             }
                                         });
                                         // break from loop

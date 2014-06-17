@@ -45,4 +45,6 @@ public interface EJBDataProxy {
     String getDeploymentName();
 
     String getDeploymentScopeBaseName();
+
+    boolean isEar();
 }

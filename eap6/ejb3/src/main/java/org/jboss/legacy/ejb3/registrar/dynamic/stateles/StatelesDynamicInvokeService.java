@@ -59,7 +59,7 @@ public class StatelesDynamicInvokeService extends AbstractDynamicInvocationServi
 
     @Override
     protected DynamicInvocationProxy createInvocationProxy() {
-        StatelesDynamicInvocationProxy value = new StatelesDynamicInvocationProxy();
+        StatelesDynamicInvocationProxy value = new StatelesDynamicInvocationProxy(getServiceName().getCanonicalName());
         value.setDynamicInvocationTarget(this);
         value.setEjb3Data(ejb3Data);
         value.setEjb3RegistrarProxy(super.ejb3RegistrarInjectedValue.getValue());

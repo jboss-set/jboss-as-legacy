@@ -31,6 +31,13 @@ import org.jboss.legacy.spi.ejb3.dynamic.DynamicInvocationProxy;
  */
 public class StatelesDynamicInvocationProxy extends DynamicInvocationProxy {
 
+    /**
+     * @param containerName
+     */
+    public StatelesDynamicInvocationProxy(String containerName) {
+        super(containerName);
+    }
+
     @Override
     protected InvokableContext createInvokableContext() {
         return new StatelesDynamicInvokableContext(this);
