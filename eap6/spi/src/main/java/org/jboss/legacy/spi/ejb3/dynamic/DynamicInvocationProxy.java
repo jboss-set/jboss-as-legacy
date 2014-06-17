@@ -42,6 +42,7 @@ import org.jboss.metadata.ejb.jboss.JBossEnterpriseBeansMetaData;
 import org.jboss.metadata.ejb.jboss.JBossMetaData;
 import org.jboss.metadata.ejb.jboss.JBossSessionBeanMetaData;
 import org.jboss.metadata.ejb.jboss.jndipolicy.spi.DeploymentSummary;
+import org.jboss.metadata.ejb.jboss.jndipolicy.spi.PackagingType;
 import org.jboss.metadata.ejb.spec.BusinessRemotesMetaData;
 
 /**
@@ -54,6 +55,15 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
     protected EJB3RegistrarProxy ejb3RegistrarProxy;
     protected JBossSessionBeanMetaData metadata;
     protected DynamicInvocationTarget dynamicInvocationTarget;
+    protected final String containerName;
+
+    /**
+     * @param containerName
+     */
+    public DynamicInvocationProxy(String containerName) {
+        super();
+        this.containerName = containerName;
+    }
 
     /**
      * @return the ejb3Data
@@ -121,8 +131,8 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
     }
 
     protected void createLegacyBinding() throws NamingException {
-        final JBossSessionBeanMetaData metaData = createMetaData(ejb3Data);
-        final String containerName = metaData.getName();
+        final JBossSessionBeanMetaData metaData = createMetaData();
+        final String containerName = metaData.getContainerName();
         final ClassLoader beanClassLoader = ejb3Data.getBeanClassLoader();
         Dispatcher.singleton.registerTarget(containerName, new InvokableContextClassProxyHack(createInvokableContext()));
 
@@ -154,7 +164,7 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
 
     protected void removeLegacyBinding() throws NamingException {
 
-        final JBossSessionBeanMetaData metaData = createMetaData(this.ejb3Data);
+        final JBossSessionBeanMetaData metaData = createMetaData();
         final JndiSessionRegistrarBase registrar = getJndiSessionRegistrarBase(this.ejb3Data, this.ejb3RegistrarProxy);
         final ClassLoader old = switchLoader(this.getClass().getClassLoader());
         InitialContext context = null;
@@ -178,32 +188,34 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
 
     protected abstract InvokableContext createInvokableContext();
 
-    protected JBossSessionBeanMetaData createMetaData(final EJBDataProxy data) {
+    protected JBossSessionBeanMetaData createMetaData() {
         if (this.metadata != null) {
             return (JBossSessionBeanMetaData) metadata;
         }
 
         final JBossMetaData jarMetaData = new JBossMetaData();
         DeploymentSummary deploymentSumary = new DeploymentSummary();
-        deploymentSumary.setDeploymentName(data.getDeploymentName());
-        if (data.getDeploymentScopeBaseName() != null) {
-            deploymentSumary.setDeploymentScopeBaseName(data.getDeploymentScopeBaseName());
+        deploymentSumary.setDeploymentName(this.ejb3Data.getDeploymentName());
+        if (this.ejb3Data.isEar()) {
+            deploymentSumary.setDeploymentScopeBaseName(this.ejb3Data.getDeploymentScopeBaseName());
+            deploymentSumary.setPackagingType(PackagingType.EAR);
         }
-        // TODO: deploymentSummary.packagingType && deploymentSummary.loader ?
+
         jarMetaData.setDeploymentSummary(deploymentSumary);
-        jarMetaData.setEjbVersion(data.getEJBVersion());
+        jarMetaData.setEjbVersion(this.ejb3Data.getEJBVersion());
         final JBossEnterpriseBeansMetaData enterpriseBeansMetaData = new JBossEnterpriseBeansMetaData();
         jarMetaData.setEnterpriseBeans(enterpriseBeansMetaData);
         enterpriseBeansMetaData.setEjbJarMetaData(jarMetaData);
         final JBossSessionBeanMetaData smd = new JBossSessionBeanMetaData();
         smd.setEnterpriseBeansMetaData(enterpriseBeansMetaData);
-        smd.setEjbName(data.getName());
+        smd.setEjbName(this.ejb3Data.getName());
         enterpriseBeansMetaData.add(smd);
         final BusinessRemotesMetaData businessRemotes = new BusinessRemotesMetaData();
-        businessRemotes.add(data.getRemoteInterfaceClass());
+        businessRemotes.add(this.ejb3Data.getRemoteInterfaceClass());
         smd.setBusinessRemotes(businessRemotes);
-        MetadataUtil.decorateEjbsWithJndiPolicy(jarMetaData, data.getBeanClassLoader());
+        MetadataUtil.decorateEjbsWithJndiPolicy(jarMetaData, this.ejb3Data.getBeanClassLoader());
         this.metadata = (JBossSessionBeanMetaData) jarMetaData.getEnterpriseBean(smd.getName());
+        this.metadata.setContainerName(this.containerName);
         return (JBossSessionBeanMetaData) this.metadata;
     }
 

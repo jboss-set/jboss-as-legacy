@@ -34,6 +34,13 @@ import org.jboss.legacy.spi.ejb3.dynamic.DynamicInvocationProxy;
  */
 public class StatefulDynamicInvocationProxy extends DynamicInvocationProxy {
 
+    /**
+     * @param containerName
+     */
+    public StatefulDynamicInvocationProxy(String containerName) {
+        super(containerName);
+    }
+
     protected StatefulSessionFactory sessionFactory;
 
     protected StatefulSessionFactory getSessionFactory() {
