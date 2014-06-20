@@ -22,11 +22,14 @@
 
 package org.jboss.legacy.common;
 
+import java.util.Set;
+
 import org.jboss.as.server.deployment.DeploymentUnitProcessingException;
 import org.jboss.logging.Messages;
 import org.jboss.logging.annotations.Cause;
 import org.jboss.logging.annotations.Message;
 import org.jboss.logging.annotations.MessageBundle;
+import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.StartException;
 
 /**
@@ -52,4 +55,10 @@ public interface EJB3Messages {
     
     @Message(id = 51103, value = "Could not start legacy invocation service for '%s' EJB.")
     StartException couldNotStartDynamicInvocationService(String ejbName, @Cause Exception e);
+
+    @Message(id = 51104, value = "Service entry '%s', already exist, can not duplicate.")
+    IllegalArgumentException ejbNameCollision(ServiceName serviceName);
+
+    @Message(id = 51105, value = "Service entries '%s' already exist, can not duplicate.")
+    IllegalArgumentException multipleEjbNameCollision(Set<ServiceName> serviceName);
 }

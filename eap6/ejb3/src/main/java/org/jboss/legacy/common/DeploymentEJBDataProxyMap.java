@@ -22,7 +22,11 @@
 
 package org.jboss.legacy.common;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.jboss.as.ee.component.EEModuleDescription;
 import org.jboss.as.ejb3.component.EJBComponentDescription;
@@ -44,14 +48,48 @@ public class DeploymentEJBDataProxyMap extends HashMap<ServiceName, ExtendedEJBD
             final EJBComponentDescription ejbComponentDescription) {
         // TODO: what about ear/war/jar/ejb ?
         if (moduleDescription.getEarApplicationName() == null) {
-            return SERVICE_NAME_BASE.of(SERVICE_NAME_BASE, moduleDescription.getModuleName(),
+            return SERVICE_NAME_BASE.of(SERVICE_NAME_BASE, 
                     ejbComponentDescription.getComponentName());
         } else {
-            return SERVICE_NAME_BASE.of(SERVICE_NAME_BASE, moduleDescription.getEarApplicationName(),
-                    moduleDescription.getModuleName(), ejbComponentDescription.getComponentName());
+            return SERVICE_NAME_BASE.of(SERVICE_NAME_BASE, moduleDescription.getEarApplicationName(), ejbComponentDescription.getComponentName());
         }
     }
 
+    @Override
+    public ExtendedEJBDataProxy put(ServiceName key, ExtendedEJBDataProxy value) {
+        if(super.containsKey(key)){
+            throw EJB3Messages.MESSAGES.ejbNameCollision(key);
+        }
+        return super.put(key, value);
+    }
+
+    @Override
+    public void putAll(Map<? extends ServiceName, ? extends ExtendedEJBDataProxy> m) {
+        Set<ServiceName> intersection = intersection(m.keySet());
+        if(intersection.size() > 0){
+            throw EJB3Messages.MESSAGES.multipleEjbNameCollision(intersection); 
+        }
+        super.putAll(m);
+    }
+
+    private Set<ServiceName> intersection(Set<? extends ServiceName> otherSet){
+        TreeSet<ServiceName> tree = new TreeSet<ServiceName>(new Comparator<ServiceName>() {
+
+            @Override
+            public int compare(ServiceName o1, ServiceName o2) {
+                if(o1 == null && o2 == null)
+                    return 0;
+                if(o1 !=null && o2 == null)
+                    return 1;
+                if(o1== null && o2 != null)
+                    return -1;
+                return o1.getCanonicalName().compareTo(o2.getCanonicalName());
+            }
+        });
+        tree.addAll(this.keySet());
+        tree.retainAll(otherSet);
+        return tree;
+    }
     private ServiceName processTail;
 
     /**

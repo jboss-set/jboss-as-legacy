@@ -55,14 +55,12 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
     protected EJB3RegistrarProxy ejb3RegistrarProxy;
     protected JBossSessionBeanMetaData metadata;
     protected DynamicInvocationTarget dynamicInvocationTarget;
-    protected final String containerName;
 
     /**
      * @param containerName
      */
-    public DynamicInvocationProxy(String containerName) {
+    public DynamicInvocationProxy() {
         super();
-        this.containerName = containerName;
     }
 
     /**
@@ -215,7 +213,8 @@ public abstract class DynamicInvocationProxy extends LegacyBean {
         smd.setBusinessRemotes(businessRemotes);
         MetadataUtil.decorateEjbsWithJndiPolicy(jarMetaData, this.ejb3Data.getBeanClassLoader());
         this.metadata = (JBossSessionBeanMetaData) jarMetaData.getEnterpriseBean(smd.getName());
-        this.metadata.setContainerName(this.containerName);
+        //ugly hack...
+        this.metadata.setContainerName(this.metadata.getJndiName().replace("/remote", ""));
         return (JBossSessionBeanMetaData) this.metadata;
     }
 
