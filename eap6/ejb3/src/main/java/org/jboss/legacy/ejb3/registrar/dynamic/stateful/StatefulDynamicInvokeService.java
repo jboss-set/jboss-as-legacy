@@ -74,7 +74,7 @@ public class StatefulDynamicInvokeService extends AbstractDynamicInvocationServi
 
     @Override
     protected DynamicInvocationProxy createInvocationProxy() {
-        StatefulDynamicInvocationProxy value = new StatefulDynamicInvocationProxy(getServiceName().getCanonicalName());
+        StatefulDynamicInvocationProxy value = new StatefulDynamicInvocationProxy();
         value.setDynamicInvocationTarget(this);
         value.setEjb3Data(ejb3Data);
         value.setEjb3RegistrarProxy(super.ejb3RegistrarInjectedValue.getValue());

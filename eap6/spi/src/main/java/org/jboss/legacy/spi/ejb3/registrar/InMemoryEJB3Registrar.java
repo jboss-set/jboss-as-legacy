@@ -28,8 +28,10 @@ import org.jboss.ejb3.common.registrar.spi.NotBoundException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author <a href="mailto:cdewolf@redhat.com">Carlo de Wolf</a>
@@ -75,9 +77,11 @@ public class InMemoryEJB3Registrar implements Ejb3Registrar {
 
     @Override
     public void unbind(Object name) throws NotBoundException {
-        if (this.registrar.remove(name) == null) {
+        final Object val = this.registrar.remove(name); 
+        if (val == null) {
             throw new NotBoundException("Name not bound: " + name);
         }
+        invokeOptionalMethod(val, "stop");
     }
 
     @Override
@@ -102,5 +106,4 @@ public class InMemoryEJB3Registrar implements Ejb3Registrar {
             throw new RuntimeException(e);
         }
     }
-
 }

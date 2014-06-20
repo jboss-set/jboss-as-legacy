@@ -37,8 +37,8 @@ public class StatefulDynamicInvocationProxy extends DynamicInvocationProxy {
     /**
      * @param containerName
      */
-    public StatefulDynamicInvocationProxy(String containerName) {
-        super(containerName);
+    public StatefulDynamicInvocationProxy() {
+        super();
     }
 
     protected StatefulSessionFactory sessionFactory;

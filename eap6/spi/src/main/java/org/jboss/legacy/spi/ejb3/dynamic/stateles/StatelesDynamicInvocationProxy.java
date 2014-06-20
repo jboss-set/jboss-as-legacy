@@ -34,8 +34,8 @@ public class StatelesDynamicInvocationProxy extends DynamicInvocationProxy {
     /**
      * @param containerName
      */
-    public StatelesDynamicInvocationProxy(String containerName) {
-        super(containerName);
+    public StatelesDynamicInvocationProxy() {
+        super();
     }
 
     @Override
