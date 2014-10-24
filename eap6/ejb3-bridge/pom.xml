@@ -22,12 +22,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>jboss-as-legacy-eap6</artifactId>
+        <artifactId>jboss-as-legacy-ejb3-eap6</artifactId>
         <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jboss-as-legacy-eap6-ejb3-bridge</artifactId>
+    <artifactId>jboss-as-legacy-ejb3-eap6-ejb3-bridge</artifactId>
 
     <name>JBoss Application Server : Legacy : EAP6 : EJB3 Bridge</name>
 
@@ -38,7 +38,7 @@
     </properties>
     <dependencies>
         <dependency>
-            <artifactId>jboss-as-legacy-eap6-ejb3</artifactId>
+            <artifactId>jboss-as-legacy-ejb3-eap6-ejb3</artifactId>
             <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
             <version>${project.version}</version>
             <exclusions>
@@ -49,7 +49,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <artifactId>jboss-as-legacy-eap6-spi</artifactId>
+            <artifactId>jboss-as-legacy-ejb3-eap6-spi</artifactId>
             <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
             <version>${project.version}</version>
             <exclusions>

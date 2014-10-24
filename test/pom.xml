@@ -27,8 +27,8 @@
         <groupId>org.jboss.as.legacy</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <groupId>org.jboss.as.legacy</groupId>
-    <artifactId>jboss-as-legacy-test</artifactId>
+    <groupId>org.jboss.as.legacy.ejb3.</groupId>
+    <artifactId>jboss-as-legacy-ejb3-test</artifactId>
     <packaging>jar</packaging>
     <name>JBoss Application Server : Legacy : Test</name>
     
@@ -59,6 +59,7 @@
     </dependencyManagement>
     
     <dependencies>
+	<!--
         <dependency>
             <groupId>org.jboss.spec</groupId>
             <artifactId>jboss-javaee-6.0</artifactId>
@@ -66,6 +67,7 @@
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
+	-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -224,24 +226,30 @@
                                     </then>
                                     <else>
                                         <echo message="Unpacking target runtimes." />
-                                        <unzip src="${jbossas.eap6.zip}" dest="target/runtime" />
-                                        <unzip src="${project.basedir}/../legacy-ejb3-extension-${project.version}.zip" dest="target/runtime/jboss-eap-6.2" />
-                                        <chmod dir="target/runtime/jboss-eap-6.2" perm="ugo+rx" includes="**/*.sh" />
+                                        <copy todir="target/runtime/jboss-eap" overwrite="true">
+                                           <zipfileset src="${jbossas.eap6.zip}" />
+                                           <regexpmapper from="[^/]*(.*)" to="\1" />
+                                           <!-- 
+                                           <cutdirsmapper dirs="1" />
+                                            -->
+                                        </copy>
+                                        <unzip src="${project.basedir}/../legacy-ejb3-extension-${project.version}.zip" dest="target/runtime/jboss-eap" />
+                                        <chmod dir="target/runtime/jboss-eap" perm="ugo+rx" includes="**/*.sh" />
 
                                         <echo message="Enabling JNP for EAP6." />
-                                        <xslt destdir="target/runtime/jboss-eap-6.2/standalone/configuration" style="src/test/resources/xslt/enableEJB3.xsl" extension=".xml.mod" useImplicitFileset="false">
-                                            <fileset dir="target/runtime/jboss-eap-6.2/standalone/configuration">
+                                        <xslt destdir="target/runtime/jboss-eap/standalone/configuration" style="src/test/resources/xslt/enableEJB3.xsl" extension=".xml.mod" useImplicitFileset="false">
+                                            <fileset dir="target/runtime/jboss-eap/standalone/configuration">
                                                 <include name="**/standalone-full.xml" />
                                             </fileset>
                                         </xslt>
-                                        <move todir="target/runtime/jboss-eap-6.2/standalone/configuration">
-                                            <fileset dir="target/runtime/jboss-eap-6.2/standalone/configuration">
+                                        <move todir="target/runtime/jboss-eap/standalone/configuration">
+                                            <fileset dir="target/runtime/jboss-eap/standalone/configuration">
                                                 <include name="**/standalone-full.xml.mod" />
                                             </fileset>
                                             <mapper type="glob" from="*.mod" to="*" />
                                         </move>
-                                        <copy file="src/test/resources/config/application-roles.properties" todir="target/runtime/jboss-eap-6.2/standalone/configuration" overwrite="true" verbose="true" />
-                                        <copy file="src/test/resources/config/application-users.properties" todir="target/runtime/jboss-eap-6.2/standalone/configuration" overwrite="true" verbose="true" />
+                                        <copy file="src/test/resources/config/application-roles.properties" todir="target/runtime/jboss-eap/standalone/configuration" overwrite="true" verbose="true" />
+                                        <copy file="src/test/resources/config/application-users.properties" todir="target/runtime/jboss-eap/standalone/configuration" overwrite="true" verbose="true" />
                                     </else>
                                 </if>
                             </target>

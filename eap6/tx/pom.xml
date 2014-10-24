@@ -22,12 +22,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>jboss-as-legacy-eap6</artifactId>
+        <artifactId>jboss-as-legacy-ejb3-eap6</artifactId>
         <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jboss-as-legacy-eap6-ejb3-tx</artifactId>
+    <artifactId>jboss-as-legacy-ejb3-eap6-tx</artifactId>
     <name>JBoss Application Server : Legacy : EAP6 : UserTransaction</name>
     <packaging>jar</packaging>
 
@@ -38,7 +38,7 @@
     <dependencies>
        
         <dependency>
-            <artifactId>jboss-as-legacy-eap6-connector</artifactId>
+            <artifactId>jboss-as-legacy-ejb3-eap6-connector</artifactId>
             <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
             <version>${project.version}</version>
         </dependency>

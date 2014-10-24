@@ -1,6 +1,6 @@
 <module xmlns="urn:jboss:module:1.0" name="org.jboss.legacy.ejb3.tx">
     <resources>
-        <resource-root path="jboss-as-legacy-eap6-ejb3-tx.jar"/>
+        <resource-root path="jboss-as-legacy-ejb3-eap6-tx.jar"/>
     </resources>
 
     <dependencies>

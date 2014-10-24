@@ -14,6 +14,7 @@
                 xmlns:ejb3-bridge10="urn:jboss:domain:legacy-ejb3-bridge:1.0"
                 xmlns:usertx10="urn:jboss:domain:legacy-tx:1.0"
                 xmlns:domain15="urn:jboss:domain:1.5"
+                xmlns:domain16="urn:jboss:domain:1.6"
                 exclude-result-prefixes="domain15 jnp10 ejb3-bridge10 ejb3-proxy10 connector10 usertx10">
 
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
@@ -69,6 +70,47 @@
         </xsl:copy>
     </xsl:template>
 
+    <xsl:template match="//domain16:extensions">
+        <xsl:copy>
+            <xsl:apply-templates />
+            <xsl:choose>
+                <xsl:when test="//domain16:extension/@module='org.jboss.legacy.jnp'">
+                </xsl:when>
+                <xsl:otherwise>
+                    <extension module="org.jboss.legacy.jnp" />
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="//domain16:extension/@module='org.jboss.legacy.ejb3.bridge'">
+                </xsl:when>
+                <xsl:otherwise>
+                    <extension module="org.jboss.legacy.ejb3.bridge" />
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="//domain16:extension/@module='org.jboss.legacy.ejb3.connector'">
+                </xsl:when>
+                <xsl:otherwise>
+                    <extension module="org.jboss.legacy.ejb3.connector" />
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="//domain16:extension/@module='org.jboss.legacy.ejb3.proxy'">
+                </xsl:when>
+                <xsl:otherwise>
+                    <extension module="org.jboss.legacy.ejb3.proxy" />
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="//domain16:extension/@module='org.jboss.legacy.ejb3.tx'">
+                </xsl:when>
+                <xsl:otherwise>
+                    <extension module="org.jboss.legacy.ejb3.tx" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:copy>
+    </xsl:template>
+    
     <xsl:template match="node() | @*" name="copy">
         <xsl:copy>
             <xsl:apply-templates select="node() | @*"/>
