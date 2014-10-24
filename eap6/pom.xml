@@ -28,7 +28,7 @@
         <relativePath>..</relativePath>
     </parent>
 
-    <artifactId>jboss-as-legacy-eap6</artifactId>
+    <artifactId>jboss-as-legacy-ejb3-eap6</artifactId>
     <groupId>org.jboss.as.legacy.ejb3.eap6</groupId>
     <name>JBoss Application Server : Legacy : EAP6 : Parent</name>
 
