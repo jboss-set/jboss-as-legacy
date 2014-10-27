@@ -47,7 +47,7 @@
 
         <version.jboss.as>7.3.1.Final-redhat-1</version.jboss.as>
         <version.jboss.legacy.as>5.2.0</version.jboss.legacy.as>
-        <version.jboss.legacy.naming>1.2.0-SNAPSHOT</version.jboss.legacy.naming>
+        <version.jboss.legacy.naming>1.2.0</version.jboss.legacy.naming>
 
         <version.javax.transaction>1.0.1.Final-redhat-1</version.javax.transaction>
         <version.jboss.jts.itengration>4.17.15.Final-redhat-4</version.jboss.jts.itengration>
