@@ -54,13 +54,13 @@ Run _build.sh_
 
 ##Build and Test
 
-Download a zip archive of EAP 6.2.1 (at least).
+Download a zip archive of EAP 6.3.x (at least).
 
-Run _build.sh -Djbossas.eap6.zip=/path to archive/jboss-eap-6.2.1-full-build.zip_
+Run _build.sh -Djbossas.eap6.zip=/path to archive/jboss-eap-6.3.x-full-build.zip_
 
 #Build and deploy
 
-Download and install EAP 6.2.1 (at least).
+Download and install EAP 6.3.x (at least).
 
 Define the environment variable $JBOSS_HOME pointing towards your EAP6 installation.
 
