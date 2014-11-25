@@ -31,7 +31,9 @@ import org.jboss.as.controller.SubsystemRegistration;
 import org.jboss.as.controller.descriptions.ModelDescriptionConstants;
 import org.jboss.as.controller.descriptions.ResourceDescriptionResolver;
 import org.jboss.as.controller.descriptions.StandardResourceDescriptionResolver;
+import org.jboss.as.controller.operations.common.GenericSubsystemDescribeHandler;
 import org.jboss.as.controller.parsing.ExtensionParsingContext;
+import org.jboss.as.controller.registry.ManagementResourceRegistration;
 
 /**
  * @author baranowb
@@ -59,8 +61,9 @@ public class EJB3Extension implements Extension {
                 MANAGEMENT_API_MINOR_VERSION, MANAGEMENT_API_MICRO_VERSION);
 
         //subsystem.registerXMLElementWriter(EJB3SubsystemXMLPersister.INSTANCE);
-        subsystem.registerSubsystemModel(EJB3SubsystemRootResourceDefinition.INSTANCE);
+        final ManagementResourceRegistration registration = subsystem.registerSubsystemModel(EJB3SubsystemRootResourceDefinition.INSTANCE);
         subsystem.registerXMLElementWriter(EJB3SubsystemXMLPersister.INSTANCE);
+        registration.registerOperationHandler(GenericSubsystemDescribeHandler.DEFINITION, GenericSubsystemDescribeHandler.INSTANCE);
     }
 
     @Override
