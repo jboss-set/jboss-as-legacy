@@ -44,6 +44,20 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.jboss</groupId>
+                <artifactId>jboss-common-core</artifactId>
+                <version>${version.jboss.legacy.as}</version>
+                <scope>system</scope>
+                <systemPath>${eap5.home}/lib/jboss-common-core.jar</systemPath>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss</groupId>
+                <artifactId>jboss-integration</artifactId>
+                <version>${version.jboss.legacy.as}</version>
+                <scope>system</scope>
+                <systemPath>${eap5.home}/common/lib/jboss-integration.jar</systemPath>
+            </dependency>
+            <dependency>
                 <groupId>org.jboss.aop</groupId>
                 <artifactId>jboss-aop</artifactId>
                 <version>${version.jboss.legacy.as}</version>

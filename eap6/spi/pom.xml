@@ -82,6 +82,14 @@
             <groupId>org.jboss.jbossas</groupId>
             <artifactId>jboss-as-server</artifactId>
         </dependency>
+        <dependency>
+        	<groupId>org.jboss</groupId>
+            <artifactId>jboss-common-core</artifactId>
+        </dependency>
+        <dependency>
+        	<groupId>org.jboss</groupId>
+            <artifactId>jboss-integration</artifactId>
+        </dependency>
         <!-- EAP6 -->
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
