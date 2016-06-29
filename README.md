@@ -56,7 +56,7 @@ Run _build.sh_
 
 Download a zip archive of EAP 6.3.x (at least).
 
-Run _build.sh -Djbossas.eap6.zip=/path to archive/jboss-eap-6.3.x-full-build.zip_
+Run _build.sh -Djbossas.eap.zip=/path to archive/jboss-eap-6.3.x-full-build.zip_
 
 #Build and deploy
 

@@ -37,7 +37,7 @@
             <dependency>
                 <groupId>org.jboss.as</groupId>
                 <artifactId>jboss-as-parent</artifactId>
-                <version>${jboss.eap6.version}</version>
+                <version>${version.jboss.as}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -190,8 +190,7 @@
         <surefire.system.args>${surefire.memory.args} ${surefire.jpda.args} -Djboss.dist=${jboss.dist}</surefire.system.args>
         <surefire.forked.process.timeout>1500</surefire.forked.process.timeout>
 
-        <jbossas.eap6.zip><!-- To be defined --></jbossas.eap6.zip>
-        <jboss.eap6.version>7.3.1.Final-redhat-2</jboss.eap6.version>        
+        <jbossas.eap.zip><!-- To be defined --></jbossas.eap.zip>
         <jboss.xnio.version>3.0.7.GA-redhat-1</jboss.xnio.version>
         <jboss.netty.version>3.2.5.Final</jboss.netty.version>
         <version.org.jboss.naming>5.0.3.GA_CP02</version.org.jboss.naming>
@@ -227,7 +226,7 @@
                                     <else>
                                         <echo message="Unpacking target runtimes." />
                                         <copy todir="target/runtime/jboss-eap" overwrite="true">
-                                           <zipfileset src="${jbossas.eap6.zip}" />
+                                           <zipfileset src="${jbossas.eap.zip}" />
                                            <regexpmapper from="[^/]*(.*)" to="\1" />
                                            <!-- 
                                            <cutdirsmapper dirs="1" />
