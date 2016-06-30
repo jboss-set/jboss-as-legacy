@@ -55,8 +55,8 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-ejb3</artifactId>
+            <groupId>org.jboss.eap</groupId>
+    		<artifactId>wildfly-ejb3</artifactId>
             <!-- to be gone -->
             <exclusions>
                 <exclusion>

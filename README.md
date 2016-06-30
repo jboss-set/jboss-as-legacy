@@ -5,12 +5,12 @@ jboss-as-legacy-ejb3
 
 The full documentation is at https://mojo.redhat.com/docs/DOC-928901
 
-EAP5 used a different naming, ejb3 implementation and remote protocols than EAP6. 
-Thus when you want to interact with EAP6 from an EAP5 client (or server) you are confronted with a lot of issues.
+EAP5 used a different naming, ejb3 implementation and remote protocols than EAP7. 
+Thus when you want to interact with EAP7 from an EAP5 client (or server) you are confronted with a lot of issues.
 
-One solution would be to upgrade your client to EAP6, but sometimes this is not as simple as it seems.
+One solution would be to upgrade your client to EAP7, but sometimes this is not as simple as it seems.
 
-For these cases we have developed a set of extensions for seamless integration of legacy clients with EAP6 and above.
+For these cases we have developed a set of extensions for seamless integration of legacy clients with EAP7 and above.
 
 #Full configuration example
 
@@ -54,24 +54,24 @@ Run _build.sh_
 
 ##Build and Test
 
-Download a zip archive of EAP 6.3.x (at least).
+Download a zip archive of EAP 7.x (at least).
 
-Run _build.sh -Djbossas.eap6.zip=/path to archive/jboss-eap-6.3.x-full-build.zip_
+Run _build.sh -Djbossas.eap.zip=/path to archive/jboss-eap-7.0.0.zip_
 
 #Build and deploy
 
-Download and install EAP 6.3.x (at least).
+Download and install EAP 7.x (at least).
 
-Define the environment variable $JBOSS_HOME pointing towards your EAP6 installation.
+Define the environment variable $JBOSS_HOME pointing towards your EAP7 installation.
 
 Run _deploy.sh_
 
-Define your configuration in the EAP6 server.
+Define your configuration in the EAP7 server.
 
 #Installation
 
 Download the zip or tar.gz archive of the extension.
 
-Unarchive it in the EAP6 installation directory.
+Unarchive it in the EAP7 installation directory.
 
-Define your configuration in the EAP6 server. 
+Define your configuration in the EAP7 server. 

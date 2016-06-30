@@ -25,8 +25,8 @@
                         <enabled>false</enabled>
                         <updatePolicy>always</updatePolicy>
                     </snapshots>
-                    <id>redhat.com-eap6</id>
-                    <url>http://download.eng.bos.redhat.com/brewroot/repos/jb-eap-6-rhel-6-build/latest/maven</url>
+                    <id>redhat.com-eap7</id>
+                    <url>http://download.eng.bos.redhat.com/brewroot/repos/jb-eap-7.0-rhel-7-maven-build/latest/maven</url>
                 </repository>
                 <repository>
                     <releases>
@@ -165,7 +165,7 @@
                     </snapshots>
                     <id>jboss-product-repository</id>
                     <name>JBoss Internal Product Repository</name>
-                    <url>http://download.lab.bos.redhat.com/brewroot/repos/jb-eap-6-rhel-6-build/latest/maven/</url>
+                    <url>http://download.eng.bos.redhat.com/brewroot/repos/jb-eap-7.0-rhel-7-maven-build/latest/maven</url>
                     <layout>default</layout>
                 </pluginRepository>
             </pluginRepositories>        

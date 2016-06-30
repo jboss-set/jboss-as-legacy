@@ -35,9 +35,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.jboss.as</groupId>
-                <artifactId>jboss-as-parent</artifactId>
-                <version>${version.jboss.as}</version>
+                <groupId>org.jboss.eap</groupId>
+    			<artifactId>jboss-eap-parent</artifactId>
+    			<version>${version.jboss.as}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -85,13 +85,13 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-arquillian-container-managed</artifactId>
+            <groupId>org.wildfly.arquillian</groupId>
+            <artifactId>wildfly-arquillian-container-managed</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-testsuite-shared</artifactId>
+            <groupId>org.jboss.eap</groupId>
+    		<artifactId>wildfly-testsuite-shared</artifactId>
             <exclusions>
                 <exclusion>
                     <artifactId>jboss-transaction-spi</artifactId>
@@ -109,8 +109,9 @@
             <version>${jboss.netty.version}</version>
         </dependency>
         <dependency>
-            <artifactId>jboss-remoting</artifactId>
             <groupId>org.jboss.remoting</groupId>
+            <artifactId>jboss-remoting</artifactId>
+            <version>${version.jboss-remoting}</version>
         </dependency>
         <dependency>
             <artifactId>xnio-api</artifactId>

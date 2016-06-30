@@ -33,14 +33,19 @@
 
     <properties>
         <module.name>org.jboss.legacy.ejb3.spi</module.name>
+        <eap5.home>${env.EAP5_HOME}</eap5.home>
     </properties>
     
     <dependencies>
         <!-- connector -->
         <dependency>
-            <groupId>org.jboss.remoting</groupId>
-            <artifactId>jboss-remoting</artifactId>
-        </dependency>
+        		<!--  for some reason, maven sucks remoting from EAP7, even with exclusions -->
+                <groupId>org.jboss.remoting</groupId>
+                <artifactId>jboss-remoting</artifactId>
+                <version>${version.jboss.legacy.as}</version>
+                <scope>system</scope>
+                <systemPath>${eap5.home}/common/lib/jboss-remoting.jar</systemPath>
+            </dependency>
         <dependency>
             <groupId>org.jboss.aspects</groupId>
             <artifactId>jboss-remoting-aspects</artifactId>

@@ -47,9 +47,9 @@
         <dependencies>
            <!-- TODO MOVE IT -->
            <dependency>
-                <groupId>org.jboss.as</groupId>
-                <artifactId>jboss-as-parent</artifactId>
-                <version>${version.jboss.as}</version>
+                <groupId>org.jboss.eap</groupId>
+    			<artifactId>jboss-eap-parent</artifactId>
+    			<version>${version.jboss.as}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

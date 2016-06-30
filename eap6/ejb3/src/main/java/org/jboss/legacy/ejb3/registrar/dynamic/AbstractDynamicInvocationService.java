@@ -22,9 +22,10 @@
 
 package org.jboss.legacy.ejb3.registrar.dynamic;
 
-import static org.jboss.as.ejb3.EjbMessages.MESSAGES;
+import static org.jboss.as.ejb3.logging.EjbLogger.ROOT_LOGGER;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 
 import org.jboss.as.naming.InitialContext;
 import javax.security.auth.Subject;
@@ -151,6 +152,7 @@ public abstract class AbstractDynamicInvocationService implements DynamicInvocat
             customContext.setMethod(localMethod);
             customContext.setParameters(arguments);
             customContext.setTarget(ic.lookup(ejb3Data.getLocalASBinding()));
+            customContext.setContextData(new HashMap<String, Object>());
             // setup private data
             final EjbDeploymentInformation ejb = findBean();
             final EJBComponent ejbComponent = ejb.getEjbComponent();
@@ -168,11 +170,11 @@ public abstract class AbstractDynamicInvocationService implements DynamicInvocat
         }
         final ModuleDeployment module = deploymentRepositoryInjectedValue.getValue().getModules().get(new DeploymentModuleIdentifier(this.applicationName, this.moduleName, this.distinctName));
         if (module == null) {
-            throw MESSAGES.unknownDeployment(this.applicationName, this.moduleName, this.distinctName);
+            throw ROOT_LOGGER.unknownDeployment(this.applicationName, this.moduleName, this.distinctName);
         }
         this.ejbDeploymentInformation = module.getEjbs().get(this.componentName);
         if (this.ejbDeploymentInformation == null) {
-            throw MESSAGES.ejbNotFoundInDeployment(this.componentName, this.applicationName, this.moduleName, this.distinctName);
+            throw ROOT_LOGGER.ejbNotFoundInDeployment(this.componentName, this.applicationName, this.moduleName, this.distinctName);
         }
         return this.ejbDeploymentInformation;
     }
